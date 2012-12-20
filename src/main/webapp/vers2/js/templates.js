@@ -55,3 +55,6 @@ var windowTemp2 =
 
 //窗口拖动模板
 var resizeTemp = '<div resize="{resize_type}" style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block;{css}" class="resize"></div>';
+
+//窗口内饰
+var windowLabel = '<div style="left: 3px; right: 3px;@; position: absolute; background-color: #DFDFDF; bottom: 3px; top: 3px;"></div>';
