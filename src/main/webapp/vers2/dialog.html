@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<link rel="stylesheet" href="js/jquery.HooRay/jquery.HooRay.css">
+<style>
+*{font-size:12px}</style>
+<script src="js/jquery-1.7.min.js"></script>
+<script src="js/jquery.HooRay/jquery.HooRay.js"></script>
+<script src="js/shortcut.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/core.js"></script>
+<script>
+function show(){
+	window.parent.ZENG.msgbox.show("设置成功！", 4, 2000);
+}
+function showinfo(){
+	window.parent.Core.create("",{title:"一款腾讯UED设计的提示插件（使用教程）",url:"http://www.cnblogs.com/hooray/archive/2011/09/26/2191770.html",width:1000,height:500});
+}
+</script>
+</head>
+
+<body>
+<input type="button" value="显示提示" onClick="show()"><br>
+提示使用方法参见：《<a href="#" onClick="showinfo()">一款腾讯UED设计的提示插件（使用教程）</a>》
+</body>
+</html>

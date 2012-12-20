@@ -1,0 +1,37 @@
+<web-app version="3.0"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+metadata-complete="true">
+
+	<display-name>html5test</display-name>
+	<welcome-file-list>
+		<welcome-file>vers2/index.html</welcome-file>
+		<welcome-file>index2.html</welcome-file>
+		<welcome-file>hello.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>initServlet</servlet-name>
+		<servlet-class>com.chat.ws.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>mywebsocket</servlet-name>
+		<servlet-class>com.chat.ws.MyWebSocketServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mywebsocket</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>handleAjax</servlet-name>
+		<servlet-class>com.chat.servlet.AjaxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>handleAjax</servlet-name>
+		<url-pattern>ajax.action</url-pattern>
+	</servlet-mapping>
+</web-app>

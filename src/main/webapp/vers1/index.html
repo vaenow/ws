@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>EonerCMS</title>
+<link rel="stylesheet" href="img/ui/css.css">
+<link rel="stylesheet" href="js/jquery.HooRay/jquery.HooRay.css">
+<script src="js/jquery-1.6.4.min.js"></script>
+<script src="js/jquery.HooRay/jquery.HooRay.js"></script>
+<script src="js/templates.js?v=20111022"></script>
+<script src="js/core.js?v=20111022"></script>
+<script>
+$().ready(function(){
+	//IE下禁止选中
+	document.body.onselectstart = document.body.ondrag = function(){return false;}
+	//初始化
+	Core.init();
+});
+</script>
+<!--[if lte IE 6]>
+<style>
+body{behavior:url("img/ui/csshover3.htc")}
+</style>
+<![endif]-->
+</head>
+
+<body>
+<!--[if lte IE 8]>
+<noscript>
+<style>
+//当脚本警用时，将网页上不需要显示的模块都进行隐藏
+#task-bar,#desk{display:none!important}
+</style>
+<div class="ie-noscript-warning"><div>
+您的浏览器禁用了脚本，请<a href="">查看这里</a>
+来启用脚本!或者<a href="/?noscript=1">继续访问</a>
+</div></div>
+</noscript>
+<![endif]-->
+<div class="bgloader"></div>
+<div id="task-bar">
+	<ul class="task-window"></ul>
+	<ul class="task-panel">
+		<li title="显示桌面" onclick="Core.showDesktop();">
+			<b class="desktop-view"></b>
+		</li>
+	</ul>
+</div>
+<div id="desk"><ul></ul></div>
+</body>
+</html>
