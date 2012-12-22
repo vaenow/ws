@@ -1,0 +1,177 @@
+diff --git a/.classpath b/.classpath
+index b1dc619..0f41a6a 100644
+--- a/.classpath
++++ b/.classpath
+@@ -4,6 +4,7 @@
+ 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+ 	<classpathentry kind="src" path="src/main/resources"/>
+ 	<classpathentry kind="src" path="src/test/resources"/>
++	<classpathentry kind="src" path="src/main/webapp/vers2/js"/>
+ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+ 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+ 	<classpathentry kind="output" path="target/classes"/>
+diff --git a/src/main/webapp/vers2/js/core.js b/src/main/webapp/vers2/js/core.js
+index cd898a3..8ce03bc 100644
+--- a/src/main/webapp/vers2/js/core.js
++++ b/src/main/webapp/vers2/js/core.js
+@@ -5,9 +5,21 @@ Website		:http://www.cnblogs.com/hooray/archive/2011/10/07/2200322.html
+ Version		:20111023
+ */
+ 
+-var Core = _cache = {};
++var Core=_cache = {};
+ var jsonsc;
+ 
++/******************/
++/** constant list */
++/******************/
++//常量 constance
++Core.CST = {}
++
++//空白 element
++Core.CST.ELE_BLANK = "";
++/**********************/
++/** constant list end */
++/**********************/
++
+ Core.config = {
+ 	shortcutTop:20,			//快捷方式top初始位置
+ 	shortcutLeft:20,		//快捷方式left初始位置
+@@ -107,29 +119,32 @@ Core.init = function(update){
+ 
+ //创建窗体
+ Core.create = function(obj,opt){
++	var options = {};
+ 	if(obj==""){
+-		var options = {
++		options = {
+ 			num		:Date.parse(new Date()),
+ 			imgsrc	:"img/shortcut/news.png",
+ 			title	:opt.title,
+ 			url		:opt.url,
+ 			width	:opt.width,
+ 			height	:opt.height,
+-			resize	:opt.resize
++			resize	:opt.resize,
++			conf	:opt.conf||{} //opt.conf = {}
+ 		};
+ 	}else{
+ 		var sc = obj.attr('shortcut');
+ 		//通过循环json找到那条数据
+ 		for(i=0; i<jsonsc['data'].length; i++){
+ 			if(jsonsc['data'][i]['id'] == sc){
+-				var options = {
++				options = {
+ 					num		:jsonsc['data'][i]['id'],
+ 					title	:jsonsc['data'][i]['iconName'],
+ 					imgsrc	:jsonsc['data'][i]['iconUrl'],
+ 					url		:jsonsc['data'][i]['url'],
+ 					width	:jsonsc['data'][i]['width'],
+ 					height	:jsonsc['data'][i]['height'],
+-					resize	:jsonsc['data'][i]['resize']
++					resize	:jsonsc['data'][i]['resize'],
++					conf	:jsonsc['data'][i]['conf']||{}	//conf = {}
+ 				};
+ 				break;
+ 			}
+@@ -174,13 +189,29 @@ Core.create = function(obj,opt){
+ 		var ele = "";
+ 		if(options.resize){
+ 			//添加窗口缩放模板
+-			for(var k in _cache.resizeTemp){
+-				ele += FormatModel(resizeTemp,{resize_type:k,css:_cache.resizeTemp[k]});
++			if(!_cache.resizeEleTemp){
++				for(var k in _cache.resizeTemp){
++					ele += FormatModel(resizeTemp,{resize_type:k,css:_cache.resizeTemp[k]});
++				}
++				_cache.resizeEleTemp = ele;
+ 			}
+-			ele = FormatModel(FormatModel(windowTemp,{resize:ele}),_cache.windowTemp);
++			ele = FormatModel(windowTemp,{resize:_cache.resizeEleTemp});
+ 		}else{
+-			ele = FormatModel(FormatModel(windowTemp2,{resize:ele}),_cache.windowTemp);
++			ele = FormatModel(windowTemp2,{resize:Core.CST.ELE_BLANK});
+ 		}
++		// default frameCont is false
++		if(options.conf.frameCont){
++			//内容为list body
++			ele = FormatModel(ele,{frameCont:listContTemp});
++			
++			//转化list元素
++			ele = FormatModel(ele,{listEle:listEle});
++		}else{
++			//默认为 Iframe
++			ele = FormatModel(ele,{frameCont:iframeContTemp});
++		}
++		//格式化窗口的最终效果
++		ele = FormatModel(ele, _cache.windowTemp);
+ 		$('#desk').append(ele);
+ 		$("#"+window_warp).data("info",_cache.windowTemp);
+ 		Core.config.createIndexid += 1;
+@@ -193,6 +224,14 @@ Core.create = function(obj,opt){
+ 			//隐藏loading
+ 			$('#'+window_inner+' .window-frame').children('div').eq(1).fadeOut();
+ 		});
++		
++		//frame为自定义内容时
++		if(options.conf.frameCont){
++			//绑定窗口缩放事件
++			Core.bindWindowResize($('#'+window_warp));
++			//隐藏loading
++			$('#'+window_inner+' .window-loading').fadeOut();
++		}
+ 	}
+ };
+ 
+diff --git a/src/main/webapp/vers2/js/global.js b/src/main/webapp/vers2/js/global.js
+index 91f94ba..1db3bab 100644
+--- a/src/main/webapp/vers2/js/global.js
++++ b/src/main/webapp/vers2/js/global.js
+@@ -1,5 +1,6 @@
+ //回到顶部
+ function scrollTop(){
+ 	$("html,body").animate({scrollTop:0},500);
++	console.log("scroll to top..");
+ 	return false;
+ }
+\ No newline at end of file
+diff --git a/src/main/webapp/vers2/js/templates.js b/src/main/webapp/vers2/js/templates.js
+index 1ffac78..493c454 100644
+--- a/src/main/webapp/vers2/js/templates.js
++++ b/src/main/webapp/vers2/js/templates.js
+@@ -20,7 +20,7 @@ var windowTemp =
+ 		'</div>'+
+ 		'<div class="window-frame">'+
+ 			'<div class="window-mask"></div><div class="window-loading"></div>'+
+-			'<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>'+
++			'{frameCont}'+
+ 		'</div>'+
+ 		'<div class="set-bar"><div class="fr">'+
+ 			'<a class="btn setting"><i class="icon ico-setting"></i><span class="btn-con">设置</span></a>'+
+@@ -42,7 +42,7 @@ var windowTemp2 =
+ 		'</div>'+
+ 		'<div class="window-frame">'+
+ 			'<div class="window-mask"></div><div class="window-loading"></div>'+
+-			'<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>'+
++			'{frameCont}'+
+ 		'</div>'+
+ 		'<div class="set-bar"><div class="fr">'+
+ 			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
+@@ -57,4 +57,16 @@ var windowTemp2 =
+ var resizeTemp = '<div resize="{resize_type}" style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block;{css}" class="resize"></div>';
+ 
+ //窗口内饰
+-var windowLabel = '<div style="left: 3px; right: 3px;@; position: absolute; background-color: #DFDFDF; bottom: 3px; top: 3px;"></div>';
++var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; background-color: #DFDFDF; bottom: 3px; top: 3px;"></div>';
++
++//内容为 iframe 
++var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
++
++//内容为 list content
++var listContTemp = '<ul id="UserListBody">{listEle}</ul>';
++
++//每条 list 元素
++var listEle = '<li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-2</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-3</li>';
++
++
++
