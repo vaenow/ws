@@ -20,7 +20,7 @@ var windowTemp =
 		'</div>'+
 		'<div class="window-frame">'+
 			'<div class="window-mask"></div><div class="window-loading"></div>'+
-			'<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>'+
+			'{frameCont}'+
 		'</div>'+
 		'<div class="set-bar"><div class="fr">'+
 			'<a class="btn setting"><i class="icon ico-setting"></i><span class="btn-con">设置</span></a>'+
@@ -42,7 +42,7 @@ var windowTemp2 =
 		'</div>'+
 		'<div class="window-frame">'+
 			'<div class="window-mask"></div><div class="window-loading"></div>'+
-			'<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>'+
+			'{frameCont}'+
 		'</div>'+
 		'<div class="set-bar"><div class="fr">'+
 			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
@@ -57,4 +57,16 @@ var windowTemp2 =
 var resizeTemp = '<div resize="{resize_type}" style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block;{css}" class="resize"></div>';
 
 //窗口内饰
-var windowLabel = '<div style="left: 3px; right: 3px;@; position: absolute; background-color: #DFDFDF; bottom: 3px; top: 3px;"></div>';
+var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; background-color: #DFDFDF; bottom: 3px; top: 3px;"></div>';
+
+//内容为 iframe 
+var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
+
+//内容为 list content
+var listContTemp = '<ul id="UserListBody">{listEle}</ul>';
+
+//每条 list 元素
+var listEle = '<li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-2</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-3</li>';
+
+
+

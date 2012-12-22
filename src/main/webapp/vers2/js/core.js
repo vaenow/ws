@@ -5,8 +5,20 @@ Website		:http://www.cnblogs.com/hooray/archive/2011/10/07/2200322.html
 Version		:20111023
 */
 
-var Core = _cache = {};
+var Core=_cache = {};
 var jsonsc;
+
+/******************/
+/** constant list */
+/******************/
+//常量 constance
+Core.CST = {}
+
+//空白 element
+Core.CST.ELE_BLANK = "";
+/**********************/
+/** constant list end */
+/**********************/
 
 Core.config = {
 	shortcutTop:20,			//快捷方式top初始位置
@@ -107,29 +119,32 @@ Core.init = function(update){
 
 //创建窗体
 Core.create = function(obj,opt){
+	var options = {};
 	if(obj==""){
-		var options = {
+		options = {
 			num		:Date.parse(new Date()),
 			imgsrc	:"img/shortcut/news.png",
 			title	:opt.title,
 			url		:opt.url,
 			width	:opt.width,
 			height	:opt.height,
-			resize	:opt.resize
+			resize	:opt.resize,
+			conf	:opt.conf||{} //opt.conf = {}
 		};
 	}else{
 		var sc = obj.attr('shortcut');
 		//通过循环json找到那条数据
 		for(i=0; i<jsonsc['data'].length; i++){
 			if(jsonsc['data'][i]['id'] == sc){
-				var options = {
+				options = {
 					num		:jsonsc['data'][i]['id'],
 					title	:jsonsc['data'][i]['iconName'],
 					imgsrc	:jsonsc['data'][i]['iconUrl'],
 					url		:jsonsc['data'][i]['url'],
 					width	:jsonsc['data'][i]['width'],
 					height	:jsonsc['data'][i]['height'],
-					resize	:jsonsc['data'][i]['resize']
+					resize	:jsonsc['data'][i]['resize'],
+					conf	:jsonsc['data'][i]['conf']||{}	//conf = {}
 				};
 				break;
 			}
@@ -174,13 +189,29 @@ Core.create = function(obj,opt){
 		var ele = "";
 		if(options.resize){
 			//添加窗口缩放模板
-			for(var k in _cache.resizeTemp){
-				ele += FormatModel(resizeTemp,{resize_type:k,css:_cache.resizeTemp[k]});
+			if(!_cache.resizeEleTemp){
+				for(var k in _cache.resizeTemp){
+					ele += FormatModel(resizeTemp,{resize_type:k,css:_cache.resizeTemp[k]});
+				}
+				_cache.resizeEleTemp = ele;
 			}
-			ele = FormatModel(FormatModel(windowTemp,{resize:ele}),_cache.windowTemp);
+			ele = FormatModel(windowTemp,{resize:_cache.resizeEleTemp});
 		}else{
-			ele = FormatModel(FormatModel(windowTemp2,{resize:ele}),_cache.windowTemp);
+			ele = FormatModel(windowTemp2,{resize:Core.CST.ELE_BLANK});
 		}
+		// default frameCont is false
+		if(options.conf.frameCont){
+			//内容为list body
+			ele = FormatModel(ele,{frameCont:listContTemp});
+			
+			//转化list元素
+			ele = FormatModel(ele,{listEle:listEle});
+		}else{
+			//默认为 Iframe
+			ele = FormatModel(ele,{frameCont:iframeContTemp});
+		}
+		//格式化窗口的最终效果
+		ele = FormatModel(ele, _cache.windowTemp);
 		$('#desk').append(ele);
 		$("#"+window_warp).data("info",_cache.windowTemp);
 		Core.config.createIndexid += 1;
@@ -193,6 +224,14 @@ Core.create = function(obj,opt){
 			//隐藏loading
 			$('#'+window_inner+' .window-frame').children('div').eq(1).fadeOut();
 		});
+		
+		//frame为自定义内容时
+		if(options.conf.frameCont){
+			//绑定窗口缩放事件
+			Core.bindWindowResize($('#'+window_warp));
+			//隐藏loading
+			$('#'+window_inner+' .window-loading').fadeOut();
+		}
 	}
 };
 
