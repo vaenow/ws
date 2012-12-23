@@ -11,17 +11,31 @@ public class AjaxServlet extends BaseServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		super.doGet(req, resp);
 		log(AjaxServlet.class + " doGet");
-//		super.doGet(req, resp);
+		handle(req,resp);
 	}
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		super.doPost(req, resp);
 		log(AjaxServlet.class + " doPost");
-//		super.doPost(req, resp);
+		handle(req, resp);
 	}
 	
+	private void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		// 处理编码问题
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html;charset=UTF-8");
+		
+		
+		
+		
+		
+		resp.getWriter().write("");
+	}
 	
 
 }

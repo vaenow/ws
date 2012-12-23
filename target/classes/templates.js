@@ -66,7 +66,7 @@ var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="wind
 var listContTemp = '<ul id="UserListBody">{listEle}</ul>';
 
 //每条 list 元素
-var listEle = '<li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-2</li><li style="position:relative;left: 3px;right: 3px;background-color: lightBlue;width: auto;height: auto;">list-content-3</li>';
+var listEle = '<li style="position:relative;background-color: lightBlue;width: auto;height: auto;margin: 3px 3px 0;">{listDetails}</li>';
 
 
 

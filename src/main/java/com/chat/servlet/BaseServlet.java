@@ -13,29 +13,25 @@ public class BaseServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		log("doGet");
-		super.doGet(req, resp);
+		log("BaseServlet - doGet");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		log("doPost");
-		super.doPost(req, resp);
+		log("BaseServlet - doPost");
 	}
 
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-		log("destroy");
-		super.destroy();
+		log("BaseServlet - destroy");
 	}
 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		log("init");
-		super.init();
+		log("BaseServlet - init");
 	}
 
 //	private void log(String log) {
