@@ -59,4 +59,40 @@
     	<scope>compile</scope>
     </dependency>
   </dependencies>
+  
+  <!-- Local repositories -->
+  <!-- <repositories>
+               <repository>
+                      <id>central</id>
+                      <url>http://localhost:8080/res/repo</url>
+                      <snapshots>
+                              <enabled>false</enabled>
+                      </snapshots>
+              </repository>
+              <repository>
+                      <id>snapshots</id>
+                      <url>http://localhost:8080/res/repo</url>
+                      <releases>
+                              <enabled>false</enabled>
+                      </releases>
+              </repository>
+  </repositories>
+  <pluginRepositories>
+              <pluginRepository>
+                      <id>central</id>
+                      <url>http://localhost:8080/res/repo</url>
+                      <snapshots>
+                              <enabled>false</enabled>
+                      </snapshots>
+              </pluginRepository>
+              <pluginRepository>
+                      <id>snapshots</id>
+                      <url>http://localhost:8080/res/repo</url>
+                      <releases>
+                              <enabled>false</enabled>
+                      </releases>
+              </pluginRepository>
+  </pluginRepositories> -->
+  <!-- Local repositories end -->
+  
 </project>
