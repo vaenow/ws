@@ -34,7 +34,7 @@ public class AjaxServlet extends BaseServlet {
 		
 		
 		
-		resp.getWriter().write("");
+		resp.getWriter().write("hello world!");
 	}
 	
 
