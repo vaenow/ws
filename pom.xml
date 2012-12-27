@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ws2</name>
+	<name>ws</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -25,7 +25,7 @@
 					<scanIntervalSeconds>2</scanIntervalSeconds>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>80</port>
+							<port>8080</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
@@ -66,14 +66,14 @@
 	<repositories>
 		<repository>
 			<id>central</id>
-			<url>file:///C:/Users/LUOWEN/Documents/GitHub/ws/src/main/webapp/res/repo</url>
+			<url>file://${basedir}/src/main/webapp/res/repo</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 		<repository>
 			<id>snapshots</id>
-			<url>file:///C:/Users/LUOWEN/Documents/GitHub/ws/src/main/webapp/res/repo</url>
+			<url>file://${basedir}/src/main/webapp/res/repo</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -82,14 +82,14 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>central</id>
-			<url>file:///C:/Users/LUOWEN/Documents/GitHub/ws/src/main/webapp/res/repo</url>
+			<url>file://${basedir}/src/main/webapp/res/repo</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
 			<id>snapshots</id>
-			<url>file:///C:/Users/LUOWEN/Documents/GitHub/ws/src/main/webapp/res/repo</url>
+			<url>file://${basedir}/src/main/webapp/res/repo</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
