@@ -2,41 +2,34 @@ package com.chat.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chat.jdbc.JDBCOperator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-public class AjaxServlet extends BaseServlet {
+import com.chat.jdbc.dao.IJDBCOperator;
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
-		log(AjaxServlet.class + " doGet");
-		handle(req, resp);
-	}
+@Controller
+public class AjaxServlet {
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-		log(AjaxServlet.class + " doPost");
-		handle(req, resp);
-	}
+	@Autowired
+	IJDBCOperator JDBCOperator;
 
-	private void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	@RequestMapping(value = "/app")
+	@ResponseBody
+	public String handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// 处理编码问题
-		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html;charset=UTF-8");
+		// req.setCharacterEncoding("UTF-8");
+		// resp.setContentType("text/html;charset=UTF-8");
 
-		JDBCOperator op = new JDBCOperator();
-		
-//		op.getFriendsByUID(1);
-		
-		
-		resp.getWriter().write("hello world!");
+
+		JDBCOperator.getFriendsByUID(1);
+
+		return "ok.";
+		// resp.getWriter().write("hello world!");
 	}
 
 }

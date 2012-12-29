@@ -12,6 +12,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.1.0.RELEASE</spring.version>
+		<repo.url.ws>file://${basedir}/src/main/webapp/res/repo</repo.url.ws>
+		<repo.url.linux>file://${user.home}/.m2/repository</repo.url.linux>
+		<repo.url.origin>http://repo1.maven.org/maven2</repo.url.origin>
+		<repo.url>${repo.url.origin}</repo.url>
 	</properties>
 
 	<build>
@@ -40,6 +45,8 @@
 		</plugins>
 	</build>
 	<dependencies>
+	
+		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -47,12 +54,16 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Junit for Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Servlets -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -60,6 +71,8 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Jetty-WebSocket -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
@@ -67,20 +80,99 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kenai.nbpwr</groupId>
+			<artifactId>org-apache-commons-dbcp</artifactId>
+			<version>1.2.2-201002241055</version>
+			<type>nbm</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>compile</scope>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<!-- Local repositories -->
-	<!-- <repositories>
+	<!-- --> <repositories>
 		<repository>
 			<id>central</id>
-			<url>file://${basedir}/src/main/webapp/res/repo</url>
+			<url>${repo.url}</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 		<repository>
 			<id>snapshots</id>
-			<url>file://${basedir}/src/main/webapp/res/repo</url>
+			<url>${repo.url}</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -89,19 +181,19 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>central</id>
-			<url>file://${basedir}/src/main/webapp/res/repo</url>
+			<url>${repo.url}</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
 			<id>snapshots</id>
-			<url>file://${basedir}/src/main/webapp/res/repo</url>
+			<url>${repo.url}</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories> -->
+	</pluginRepositories>
 	<!-- Local repositories end -->
 
 </project>
