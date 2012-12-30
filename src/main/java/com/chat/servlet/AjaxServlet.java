@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chat.jdbc.dao.IJDBCOperator;
+import com.chat.jdbc.service.IJDBCService;
 
 @Controller
 public class AjaxServlet {
 
 	@Autowired
-	IJDBCOperator JDBCOperator;
+	IJDBCService JDBCService;
 
 	@RequestMapping(value = "/app")
 	@ResponseBody
@@ -25,9 +25,8 @@ public class AjaxServlet {
 		// req.setCharacterEncoding("UTF-8");
 		// resp.setContentType("text/html;charset=UTF-8");
 
-
-		JDBCOperator.getFriendsByUID(1);
-
+		JDBCService.getFriendsListByUID(1);
+		
 		return "ok.";
 		// resp.getWriter().write("hello world!");
 	}

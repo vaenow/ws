@@ -18,11 +18,11 @@ import com.chat.jdbc.to.UserInfoTO;
  * @author vane
  * 
  */
-public interface IJDBCOperator {
+public interface IOperatorDAO {
 	/**
 	 * 得到指定用户的朋友
 	 * */
-	public List<UserFriendsTO> getFriendsByUID(final long uid);
+	public List<UserFriendsTO> getFriendsListByUID(final long uid);
 
 	/**
 	 * 得到指定用户

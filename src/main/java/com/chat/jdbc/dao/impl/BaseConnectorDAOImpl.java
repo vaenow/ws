@@ -7,7 +7,7 @@
  * vane				TODO
  * 
  */
-package com.chat.jdbc;
+package com.chat.jdbc.dao.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
@@ -16,26 +16,66 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.chat.jdbc.dao.IBaseConnectorDAO;
 import com.chat.util.Constant;
 
 /**
  * @author vane
  * 
  */
-public class JDBCBaseConnection {
+@Repository
+public  class BaseConnectorDAOImpl implements IBaseConnectorDAO {
+	Log logger = LogFactory.getLog(BaseConnectorDAOImpl.class);
+
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
+
+
+	public void setDataSource(DataSource dataSource) {
+		this.setJdbcTemplate(new JdbcTemplate(dataSource));
+		this.setNamedParameterJdbcTemplate(new NamedParameterJdbcTemplate(dataSource));
+	}
+
+	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
+		return namedParameterJdbcTemplate;
+	}
+
+	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+
+
+	
+	
+	
+	
+	// ///////////////////////////////////////////////////////////////////////////
+	// -------------------------------------------------------------------------//
+	// -------------------------------------------------------------------------//
+	// -------------------------------------------------------------------------//
+	// -------------------------------------------------------------------------//
+	// -------------------------------------------------------------------------//
+	// ///////////////////////////////////////////////////////////////////////////
 	protected Connection con = null;
 	protected PreparedStatement ps = null;
 	protected ResultSet rs = null;
-
-	// ///////////////////////////////////////////////////////////////////////////
-	// -------------------------------------------------------------------------//
-	// -------------------------------------------------------------------------//
-	// -------------------------------------------------------------------------//
-	// -------------------------------------------------------------------------//
-	// -------------------------------------------------------------------------//
-	// ///////////////////////////////////////////////////////////////////////////
 
 	public static void main(String[] args) {
 		// StudentsInfo si = new StudentsInfo();
@@ -126,4 +166,5 @@ public class JDBCBaseConnection {
 	protected boolean islegal(String str) {
 		return str.indexOf("&") != -1 || str.indexOf(">") != -1 || str.indexOf("<") != -1 ? false : true;
 	}
+
 }

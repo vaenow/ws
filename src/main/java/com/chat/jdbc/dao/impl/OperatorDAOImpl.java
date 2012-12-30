@@ -7,7 +7,7 @@
  * vane				TODO
  * 
  */
-package com.chat.jdbc;
+package com.chat.jdbc.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,18 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.chat.jdbc.dao.IJDBCOperator;
+import com.chat.jdbc.dao.IOperatorDAO;
 import com.chat.jdbc.to.DBQueryTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
@@ -37,38 +33,15 @@ import com.chat.util.Constant;
  * 
  */
 @Repository
-public class JDBCOperator/* extends JDBCBaseConnection*/ implements IJDBCOperator {
-	Log logger = LogFactory.getLog(JDBCOperator.class);
+public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDAO {
+	Log logger = LogFactory.getLog(OperatorDAOImpl.class);
 	
-	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	private JdbcTemplate jdbcTemplate;
 
 	/**
 	 * 	用戶信息緩存
 	 */
 	Map<Long, UserInfoTO> userInfoCache = new HashMap<Long, UserInfoTO>();
-	
-	public void setDataSource(DataSource dataSource) {
-		this.setJdbcTemplate(new JdbcTemplate(dataSource));
-		this.setNamedParameterJdbcTemplate(new NamedParameterJdbcTemplate(dataSource));
-	}
 
-	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-	}
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
-
-	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
-		return namedParameterJdbcTemplate;
-	}
-
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
-	}
-	
 	/**
 	 * 查询建立映射关系
 	 */
@@ -103,7 +76,7 @@ public class JDBCOperator/* extends JDBCBaseConnection*/ implements IJDBCOperato
 	/**
 	 * 得到指定用户的朋友
 	 * */
-	public List<UserFriendsTO> getFriendsByUID(final long uid) {
+	public List<UserFriendsTO> getFriendsListByUID(final long uid) {
 		logger.fatal("getting friends by user id: "+ uid);
 		
 		String sql = Constant.JDBCConnection.GET_USER_FRIENDS_BY_UID;
