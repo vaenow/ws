@@ -56,7 +56,7 @@ metadata-complete="true">
 	
 	<servlet-mapping>
 		<servlet-name>controller</servlet-name>
-		<url-pattern>/controller/*</url-pattern>
+		<url-pattern>/ajax/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- Servlets -->

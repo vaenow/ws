@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chat.jdbc.dao.IOperatorDAO;
 import com.chat.jdbc.to.DBQueryTO;
+import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.util.Constant;
@@ -41,11 +42,16 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 	 * 	用戶信息緩存
 	 */
 	Map<Long, UserInfoTO> userInfoCache = new HashMap<Long, UserInfoTO>();
+	
+	/**
+	 * 	用戶详细信息緩存
+	 */
+	Map<Long, UserDetailsTO> userDetailsCache = new HashMap<Long, UserDetailsTO>();
 
 	/**
 	 * 查询建立映射关系
 	 */
-	private ParameterizedRowMapper<UserFriendsTO> mapper1 = new ParameterizedRowMapper<UserFriendsTO>() {
+	private ParameterizedRowMapper<UserFriendsTO> userFriendsMapper = new ParameterizedRowMapper<UserFriendsTO>() {
 		public UserFriendsTO mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
 			UserFriendsTO record = new UserFriendsTO();
@@ -54,13 +60,13 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 			record.setFriend(rs.getLong(3));
 			record.setCreateDateTime(rs.getDate(4));
 			record.setCreateIPAddress(rs.getString(5));
-			record.setOwnerInfoTO(getUserInfo(record.getOwner()));
-			record.setFriendInfoTO(getUserInfo(record.getFriend()));
+			record.setOwnerDetailsTO(getUserDetails(record.getOwner()));
+			record.setFriendDetailsTO(getUserDetails(record.getFriend()));
 			return record;
 		}
 	};
 	
-	private ParameterizedRowMapper<UserInfoTO> mapper2 = new ParameterizedRowMapper<UserInfoTO>() {
+	private ParameterizedRowMapper<UserInfoTO> userInfoMapper = new ParameterizedRowMapper<UserInfoTO>() {
 		public UserInfoTO mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
 			UserInfoTO record = new UserInfoTO();
@@ -69,6 +75,23 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 			record.setPassw(rs.getString(3));
 			record.setCreateDateTime(rs.getDate(4));
 			record.setCreateIPAddress(rs.getString(5));
+			return record;
+		}
+	};	
+	
+	private ParameterizedRowMapper<UserDetailsTO> userDetailsMapper = new ParameterizedRowMapper<UserDetailsTO>() {
+		public UserDetailsTO mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+			UserDetailsTO record = new UserDetailsTO();
+			record.setUid(rs.getLong(1));
+			record.setAlias(rs.getString(2));
+			record.setMobile(rs.getString(3));
+			record.setEmail(rs.getString(4));
+			record.setUpdateIPAddress(rs.getString(5));
+			record.setUpdateDateTime(rs.getDate(6));
+			record.setHeadImg(rs.getString(7));
+			record.setBgImg(rs.getString(8));
+			record.setPhrase(rs.getString(9));
 			return record;
 		}
 	};
@@ -83,7 +106,7 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		DBQueryTO bean  = new DBQueryTO();
 		bean.setUid(uid);
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(bean);
-		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, mapper1);
+		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userFriendsMapper);
 	}
 
 	/**
@@ -97,9 +120,25 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 			DBQueryTO bean = new DBQueryTO();
 			bean.setUid(uid);
 			SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(bean);
-			userInfoCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, mapper2).get(0));
+			userInfoCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).get(0));
 		}
 		return userInfoCache.get(uid);
+	}
+
+	/**
+	 * 得到指定用户详细资料
+	 * */
+	public UserDetailsTO getUserDetails(final long uid) {
+		if (!userDetailsCache.containsKey(uid)) {
+			logger.fatal("getting user details by id: " + uid);
+
+			String sql = Constant.JDBCConnection.GET_USER_DETAILS;
+			DBQueryTO bean = new DBQueryTO();
+			bean.setUid(uid);
+			SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(bean);
+			userDetailsCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper).get(0));
+		}
+		return userDetailsCache.get(uid);
 	}
 	
 }

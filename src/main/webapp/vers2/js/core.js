@@ -12,10 +12,20 @@ var jsonsc;
 /** constant list */
 /******************/
 //常量 constance
-Core.CST = {}
-
-//空白 element
-Core.CST.ELE_BLANK = "";
+Core.CST = {
+	//空白 element
+	ELE_BLANK:"",
+	//根地址
+	BASE_URL:"http://localhost:8080/ajax",
+	//数据源
+	AJAX_URL:{
+		//本地数据
+		LOCAL:"/js/shortcut.js",
+		//服务器数据
+		REMOTE:"/handle",
+	}
+}
+Core.url = Core.CST.BASE_URL + Core.CST.AJAX_URL.REMOTE;
 /**********************/
 /** constant list end */
 /**********************/
@@ -45,10 +55,11 @@ Core.init = function(update){
 	
 	var loadShortcut = function(){
 		//获取json数组并循环输出每个图标
-		$.getJSON("js/shortcut.js",function(sc){
+		var url = Core.url+"?act=gsc";
+		$.get(url,function(sc){
 			$(ul).html("");
 			//把返回的json数组存为全局变量
-			jsonsc = sc;
+			sc = jsonsc = JSON.parse(sc);
 			for(i=0; i<sc['data'].length; i++){
 				_cache.shortcutTemp = {"top":_top,"left":_left,"title":sc['data'][i]['iconName'],"shortcut":sc['data'][i]['id'],"imgsrc":sc['data'][i]['iconUrl']};
 				$(ul).append(FormatModel(shortcutTemp,_cache.shortcutTemp));
@@ -203,9 +214,6 @@ Core.create = function(obj,opt){
 		if(options.conf.frameCont){
 			//内容为list body
 			ele = FormatModel(ele,{frameCont:listContTemp});
-			
-			//转化list元素
-			ele = FormatModel(ele,{listEle:listEle});
 		}else{
 			//默认为 Iframe
 			ele = FormatModel(ele,{frameCont:iframeContTemp});
@@ -227,10 +235,27 @@ Core.create = function(obj,opt){
 		
 		//frame为自定义内容时
 		if(options.conf.frameCont){
-			//绑定窗口缩放事件
-			Core.bindWindowResize($('#'+window_warp));
-			//隐藏loading
-			$('#'+window_inner+' .window-loading').fadeOut();
+			var url = Core.url+"?act=gufl";
+			$.get(url, function(resp){
+				var result = JSON.parse(resp);
+				var b = $('#UserListBody');
+				b.html("");
+				for(var i=0;i<result.flist.length;i++){
+					b.append(FormatModel(listEle, {listDetails:result.flist[i].name}));
+				}
+
+				//delegate?
+				
+				b.live('.window-frame ul li').children().each(function(){
+					$(this).bind('mouseup', function(){
+						$(this).addClass('listEle'); 
+					});
+				});
+				//绑定窗口缩放事件
+				Core.bindWindowResize($('#'+window_warp));
+				//隐藏loading
+				$('#'+window_inner+' .window-loading').fadeOut();
+			});
 		}
 	}
 };

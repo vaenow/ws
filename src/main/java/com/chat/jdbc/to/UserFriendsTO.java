@@ -10,6 +10,10 @@
 package com.chat.jdbc.to;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
  * @author vane
@@ -18,28 +22,28 @@ import java.sql.Date;
 public class UserFriendsTO {
 
 	private Long fid;
-	private Long owner;		//好友者
-	private Long friend;	//好友列表
+	private Long owner; // 好友者
+	private Long friend; // 好友列表
 	private String createIPAddress;
 	private Date createDateTime;
 
-	private UserInfoTO ownerInfoTO;
-	private UserInfoTO friendInfoTO;
+	private UserDetailsTO ownerDetailsTO;
+	private UserDetailsTO friendDetailsTO;
 
-	public UserInfoTO getOwnerInfoTO() {
-		return ownerInfoTO;
+	public UserDetailsTO getOwnerDetailsTO() {
+		return ownerDetailsTO;
 	}
 
-	public void setOwnerInfoTO(UserInfoTO ownerInfoTO) {
-		this.ownerInfoTO = ownerInfoTO;
+	public void setOwnerDetailsTO(UserDetailsTO ownerDetailsTO) {
+		this.ownerDetailsTO = ownerDetailsTO;
 	}
 
-	public UserInfoTO getFriendInfoTO() {
-		return friendInfoTO;
+	public UserDetailsTO getFriendDetailsTO() {
+		return friendDetailsTO;
 	}
 
-	public void setFriendInfoTO(UserInfoTO friendInfoTO) {
-		this.friendInfoTO = friendInfoTO;
+	public void setFriendDetailsTO(UserDetailsTO friendDetailsTO) {
+		this.friendDetailsTO = friendDetailsTO;
 	}
 
 	public Long getFid() {

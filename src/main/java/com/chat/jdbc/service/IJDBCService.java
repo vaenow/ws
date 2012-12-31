@@ -9,12 +9,16 @@
  */
 package com.chat.jdbc.service;
 
+import java.util.List;
+
+import com.chat.jdbc.to.UserFriendsTO;
+
 /**
  * @author vane
  *
  */
 public interface IJDBCService {
 
-	void getFriendsListByUID(long i);
+	List<UserFriendsTO> getFriendsListByUID(long i);
 
 }
