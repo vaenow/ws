@@ -143,14 +143,15 @@ Core.create = function(obj,opt){
 			conf	:opt.conf||{} //opt.conf = {}
 		};
 	}else{
+		//RealID
 		var sc = obj.attr('shortcut');
 		//通过循环json找到那条数据
 		for(i=0; i<jsonsc['data'].length; i++){
 			if(jsonsc['data'][i]['id'] == sc){
 				options = {
 					num		:jsonsc['data'][i]['id'],
-					title	:jsonsc['data'][i]['iconName'],
 					imgsrc	:jsonsc['data'][i]['iconUrl'],
+					title	:jsonsc['data'][i]['iconName'],
 					url		:jsonsc['data'][i]['url'],
 					width	:jsonsc['data'][i]['width'],
 					height	:jsonsc['data'][i]['height'],
@@ -242,17 +243,19 @@ Core.create = function(obj,opt){
 				b.html("");
 				for(var i=0;i<result.flist.length;i++){
 					b.append(FormatModel(listEle, {listDetails:result.flist[i].name}));
+					b.children().last().data('info', result);
 				}
-
-				//delegate?
-//				b.delegate('.window-frame ul li', 'mouseenter', function(){
-//					$(this).addClass('listEle');
-//				});
-				//绑定窗口缩放事件
-				Core.bindWindowResize($('#'+window_warp));
+				b.delegate('.window-frame ul li', 'click', function(){
+					var chatFrame = {"num":123,"title":"{title}","imgsrc":"{imgsrc}","url":"url","width":250,"height":300,"resize":true,"conf":{"frameCont":"textArea"}};
+					Core.create("",chatFrame);
+				});
 				//隐藏loading
 				$('#'+window_inner+' .window-loading').fadeOut();
 			});
+			if(options.resize){
+				//绑定窗口缩放事件
+				Core.bindWindowResize($('#'+window_warp));
+			}
 		}
 	}
 };
