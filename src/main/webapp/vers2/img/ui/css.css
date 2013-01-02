@@ -110,4 +110,8 @@ body{background:url(../background2.jpg) no-repeat right bottom transparent;heigh
 .popup-menu a{background-position:100px 100px;border-radius:2px 2px 2px 2px;color:#333333;display:block;height:24px;line-height:24px;overflow:hidden;padding-left:35px}
 .popup-menu a:hover,.popup-menu a.focus{background-color:#3B7CE6;background-position:0 -780px;color:#FFFFFF;text-decoration:none}
 
-.listEle{background-color:#DB7093;color:#EBE2D3}
+#desk .userListBody{overflow:auto;}
+#desk .userListBody li{position:relative;background-color: lightBlue;width: auto;height: auto;margin: 3px 3px 0;}
+#desk .userListBody li:hover{background-color:#DB7093;color:#EBE2D3}
+
+

@@ -63,10 +63,10 @@ var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; backgr
 var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
 
 //内容为 list content
-var listContTemp = '<ul id="UserListBody" style="overflow:auto;">{listEle}</ul>';
+var listContTemp = '<ul class="userListBody">{listEle}</ul>';
 
 //每条 list 元素
-var listEle = '<li style="position:relative;background-color: lightBlue;width: auto;height: auto;margin: 3px 3px 0;">{listDetails}</li>';
+var listEle = '<li>{listDetails}</li>';
 
 
 

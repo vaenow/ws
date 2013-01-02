@@ -238,19 +238,16 @@ Core.create = function(obj,opt){
 			var url = Core.url+"?act=gufl";
 			$.get(url, function(resp){
 				var result = JSON.parse(resp);
-				var b = $('#UserListBody');
+				var b = $('.userListBody');
 				b.html("");
 				for(var i=0;i<result.flist.length;i++){
 					b.append(FormatModel(listEle, {listDetails:result.flist[i].name}));
 				}
 
 				//delegate?
-				
-				b.live('.window-frame ul li').children().each(function(){
-					$(this).bind('mouseup', function(){
-						$(this).addClass('listEle'); 
-					});
-				});
+//				b.delegate('.window-frame ul li', 'mouseenter', function(){
+//					$(this).addClass('listEle');
+//				});
 				//绑定窗口缩放事件
 				Core.bindWindowResize($('#'+window_warp));
 				//隐藏loading
