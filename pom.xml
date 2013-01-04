@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.1.0.RELEASE</spring.version>
-		<repo.url.ws>file://${basedir}/src/main/webapp/res/repo</repo.url.ws>
+		<repo.url.ws>file://${basedir}/src/main/resources/repo</repo.url.ws>
 		<repo.url.linux>file://${user.home}/.m2/repository</repo.url.linux>
 		<repo.url.origin>http://repo1.maven.org/maven2</repo.url.origin>
 		<repo.url>${repo.url.ws}</repo.url>
