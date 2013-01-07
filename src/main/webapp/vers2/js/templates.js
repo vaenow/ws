@@ -65,8 +65,12 @@ var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="wind
 //内容为 list content
 var listContTemp = '<ul class="userListBody">{listEle}</ul>';
 
+//内容为 label content
+var labelContTemp = '<div class="windowLabel">{listEle}</div>';
+
 //每条 list 元素
 var listEle = '<li>{listDetails}</li>';
+
 
 
 
