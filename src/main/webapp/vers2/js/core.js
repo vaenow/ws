@@ -144,7 +144,7 @@ Core.create = function(obj,opt){
 		};
 	}else{
 		//RealID
-		var sc = obj.attr('shortcut');
+		var sc = obj['attr']?obj['attr']('shortcut'):obj.id;
 		//通过循环json找到那条数据
 		for(i=0; i<jsonsc['data'].length; i++){
 			if(jsonsc['data'][i]['id'] == sc){
@@ -213,8 +213,12 @@ Core.create = function(obj,opt){
 		}
 		// default frameCont is false
 		if(options.conf.frameCont){
-			//内容为list body
-			ele = FormatModel(ele,{frameCont:listContTemp});
+			if(options.conf.frameCont=="listContTemp"){
+				//内容为list body
+				ele = FormatModel(ele,{frameCont:listContTemp});
+			}else if(options.conf.frameCont=="labelContTemp"){
+				ele = FormatModel(ele,{frameCont:labelContTemp});
+			}
 		}else{
 			//默认为 Iframe
 			ele = FormatModel(ele,{frameCont:iframeContTemp});
@@ -235,27 +239,54 @@ Core.create = function(obj,opt){
 		});
 		
 		//frame为自定义内容时
-		if(options.conf.frameCont){
-			var url = Core.url+"?act=gufl";
-			$.get(url, function(resp){
-				var result = JSON.parse(resp);
-				var b = $('.userListBody');
-				b.html("");
-				for(var i=0;i<result.flist.length;i++){
-					b.append(FormatModel(listEle, {listDetails:result.flist[i].name}));
-					b.children().last().data('info', result);
-				}
-				b.delegate('.window-frame ul li', 'click', function(){
-					var chatFrame = {"num":123,"title":"{title}","imgsrc":"{imgsrc}","url":"url","width":250,"height":300,"resize":true,"conf":{"frameCont":"textArea"}};
-					Core.create("",chatFrame);
+		if (options.conf.frameCont) {
+			if (options.conf.frameCont == "listContTemp") {
+				var url = Core.url + "?act=gufl";
+				$.get(url, function(resp) {
+					var result = JSON.parse(resp);
+					var b = $('.userListBody');
+					b.html("");
+					for ( var i = 0; i < result.flist.length; i++) {
+						b.append(FormatModel(listEle, {
+							listDetails : result.flist[i].name
+						}));
+						b.children().last().data('info', result);
+					}
+					b.delegate('.window-frame ul li', 'click', function() {
+						var chatFrame = {
+							"id" : "list-",/* "title":"{title}","imgsrc":"{imgsrc}", */
+							"iconUrl" : "iconUrl",
+							"iconName" : "iconName",
+							"url" : "url",
+							"width" : 250,
+							"height" : 300,
+							"resize" : true,
+							"conf" : {
+								"frameCont" : "labelContTemp"
+							}
+						};
+						var isContains = false;
+						for ( var e in jsonsc.data) {
+							if (jsonsc.data[e].id === chatFrame.id)
+								isContains = true;
+						}
+						if (!isContains)
+							jsonsc['data'].push(chatFrame);
+						Core.create(chatFrame);
+					});
+					// 隐藏loading
+					$('#' + window_inner + ' .window-loading').fadeOut();
 				});
-				//隐藏loading
-				$('#'+window_inner+' .window-loading').fadeOut();
-			});
-			if(options.resize){
-				//绑定窗口缩放事件
-				Core.bindWindowResize($('#'+window_warp));
+			}else if (options.conf.frameCont == "labelContTemp") {
+				
+				// 隐藏loading
+				$('#' + window_inner + ' .window-loading').fadeOut();
 			}
+			if (options.resize) {
+				// 绑定窗口缩放事件
+				Core.bindWindowResize($('#' + window_warp));
+			}
+
 		}
 	}
 };
