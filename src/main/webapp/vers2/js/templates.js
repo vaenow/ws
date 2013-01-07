@@ -66,11 +66,19 @@ var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="wind
 var listContTemp = '<ul class="userListBody">{listEle}</ul>';
 
 //内容为 label content
-var labelContTemp = '<div class="windowLabel">{listEle}</div>';
+var labelContTemp = '<div class="windowLabel">{frameBody}</div>';
 
 //每条 list 元素
 var listEle = '<li>{listDetails}</li>';
 
-
+//消息窗口
+var chatWindow = 
+'<div id="vid_chat" style="overflow: hidden;">'+
+	'<div class="vid_chat_content" id="vid_chat_content" style="overflow:auto; "><div class="message"><center>留言数据 加载中...</center></div></div>'+
+	'<div class="vid_chat_bottom">'+
+		'<input id="name_" value="snow" maxlength="4">&nbsp;'+
+		'<input class="input_message" name="msg" id="msg_">&nbsp;<input class="btns" type="button" value="发言" onclick="send_msg()" maxlength="100" style="opacity: 0.3; color: black;">&nbsp;<input id="autoFresh" class="btns" type="button" value="刷新 5" onclick="ajax_2();" style="opacity: 0.3; color: black;">&nbsp;<input id="stopFresh" class="btns" type="button" value="停止" onclick="ajax_3();" style="opacity: 0.3; color: black;">'+
+	'</div>'+
+'</div>'
 
 

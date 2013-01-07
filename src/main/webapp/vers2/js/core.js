@@ -218,6 +218,7 @@ Core.create = function(obj,opt){
 				ele = FormatModel(ele,{frameCont:listContTemp});
 			}else if(options.conf.frameCont=="labelContTemp"){
 				ele = FormatModel(ele,{frameCont:labelContTemp});
+				ele = FormatModel(ele,{frameBody:chatWindow});
 			}
 		}else{
 			//默认为 Iframe
@@ -258,8 +259,8 @@ Core.create = function(obj,opt){
 							"iconUrl" : "iconUrl",
 							"iconName" : "iconName",
 							"url" : "url",
-							"width" : 250,
-							"height" : 300,
+							"width" : 447,
+							"height" : 320,
 							"resize" : true,
 							"conf" : {
 								"frameCont" : "labelContTemp"
