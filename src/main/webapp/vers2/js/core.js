@@ -16,13 +16,20 @@ Core.CST = {
 	//空白 element
 	ELE_BLANK:"",
 	//根地址
-	BASE_URL:"http://localhost:8080/ajax",
+	BASE_URL:"http://localhost:8080",
+	HOST: window.location.host,
+	HOST_NAME: window.location.hostname,
+	HREF: window.location.href,
+	ORIGIN:window.location.origin,
+	PATH_NAME:window.location.pathname,
+	PORT:window.location.port,
+	PORTOCOL:window.location.portocol,
 	//数据源
 	AJAX_URL:{
 		//本地数据
 		LOCAL:"/js/shortcut.js",
 		//服务器数据
-		REMOTE:"/handle",
+		REMOTE:"/ajax/handle",
 	}
 }
 Core.url = Core.CST.BASE_URL + Core.CST.AJAX_URL.REMOTE;
@@ -260,7 +267,7 @@ Core.create = function(obj,opt){
 							"iconName" : "iconName",
 							"url" : "url",
 							"width" : 447,
-							"height" : 320,
+							"height" : 322,
 							"resize" : true,
 							"conf" : {
 								"frameCont" : "labelContTemp"
@@ -279,7 +286,7 @@ Core.create = function(obj,opt){
 					$('#' + window_inner + ' .window-loading').fadeOut();
 				});
 			}else if (options.conf.frameCont == "labelContTemp") {
-				
+				startWebSocket();
 				// 隐藏loading
 				$('#' + window_inner + ' .window-loading').fadeOut();
 			}

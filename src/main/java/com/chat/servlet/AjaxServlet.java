@@ -41,7 +41,7 @@ public class AjaxServlet {
 		req.getSession();
 
 		String action = req.getParameter("act");
-		String result = null;
+		String result = "";
 		if (action.equals(Constant.ACTION_TYPE.GET_SHORTCUTS)) {
 
 			result = Constant.AJAX_FORMATS.SC_FORMAT;
