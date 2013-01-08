@@ -37,7 +37,7 @@
 					<webAppConfig>
 						<contextPath>/</contextPath>
 						<!-- try to unlock js,css file when the server running -->
-						<defaultsDescriptor>webdefault.xml</defaultsDescriptor>
+						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
 					</webAppConfig>
 					<stopPort>9999</stopPort>
 					<stopKey>jetty</stopKey>
