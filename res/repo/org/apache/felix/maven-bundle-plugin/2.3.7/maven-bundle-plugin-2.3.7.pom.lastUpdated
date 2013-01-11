@@ -1,0 +1,4 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Dec 30 09:42:39 CST 2012
+default-http\://repo1.maven.org/maven2/.lastUpdated=1356831759844
+http\://repo1.maven.org/maven2/.error=Could not transfer artifact org.apache.felix\:maven-bundle-plugin\:pom\:2.3.7 from/to central (http\://repo1.maven.org/maven2)\: ConnectException

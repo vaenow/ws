@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.kenai.nbpwr</groupId>
+        <artifactId>wrappers</artifactId>
+        <version>201002241055</version>
+    </parent>
+
+    <artifactId>org-apache-commons-dbcp</artifactId>
+    <packaging>nbm</packaging>
+    <version>1.2.2-201002241055</version>
+    <name>Wrappers - Apache DBCP</name>
+    <description>Apache DBCP</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kenai.nbpwr</groupId>
+            <artifactId>org-apache-commons-pool</artifactId>
+            <version>1.4-201002241055</version>
+            <type>nbm</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <publicPackages>
+                        <publicPackage>org.apache.commons.dbcp</publicPackage>
+                        <publicPackage>org.apache.commons.dbcp.cpdsadapter</publicPackage>
+                        <publicPackage>org.apache.commons.dbcp.datasources</publicPackage>
+                        <publicPackage>org.apache.commons.jocl</publicPackage>
+                    </publicPackages>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+
+

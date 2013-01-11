@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sat Dec 29 23:05:17 CST 2012
+log4j-1.2.15.jar>=
+log4j-1.2.15.pom>central=
+log4j-1.2.15.jar>central=

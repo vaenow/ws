@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.kenai.nbpwr</groupId>
+        <artifactId>wrappers</artifactId>
+        <version>201002241055</version>
+    </parent>
+
+    <artifactId>org-apache-commons-pool</artifactId>
+    <packaging>nbm</packaging>
+    <version>1.4-201002241055</version>
+    <name>Wrappers - Apache Commons Pool</name>
+    <description>Apache Commons Pool</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <publicPackages>
+                        <publicPackage>org.apache.commons.pool</publicPackage>
+                        <publicPackage>org.apache.commons.pool.impl</publicPackage>
+                    </publicPackages>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+
+
