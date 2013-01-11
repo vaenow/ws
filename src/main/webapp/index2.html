@@ -9,24 +9,24 @@
 	function startWebSocket() {
 		if (!window.WebSocket)
 			alert("WebSocket not supported by this browser!");
-		// 创建WebSocket   
-		ws = new WebSocket("ws://localhost:8080/mywebsocket.do");
-		// 收到消息时在消息框内显示   
+		// 创建WebSocket
+		ws = new WebSocket("ws://localhost:8080/mywebsocket.ws");
+		// 收到消息时在消息框内显示
 		ws.onmessage = function(evt) {
 			$('#msgBox').append(evt.data);
 			$('#msgBox').append('</br>');
 		};
-		// 断开时会走这个方法   
+		// 断开时会走这个方法
 		ws.onclose = function() {
 			$('#msgBox').append('close~~~~~~~');
 		};
-		// 连接上时走这个方法   
+		// 连接上时走这个方法
 		ws.onopen = function() {
-			$('#msgBox').append('open~~~~~~~');
+			$('#msgBox').append('open~~~~~~~~');
 		};
 	}
 
-	// 发送消息   
+	// 发送消息
 	function sendMsg() {
 		var data = document.getElementById('msgSendBox').value;
 		ws.send(data);

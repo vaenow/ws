@@ -59,7 +59,6 @@ public class TailorWebSocketServlet extends WebSocketServlet {
 	class TailorSocket implements WebSocket.OnTextMessage {
 		private Connection _connection;
 		
-		@Override
 		public void onClose(int closeCode, String message) {
 			_members.remove(this);
 		}
@@ -68,7 +67,6 @@ public class TailorWebSocketServlet extends WebSocketServlet {
 			_connection.sendMessage(data);
 		}
 		
-		@Override
 		public void onMessage(String data) {
 			System.out.println("Received: "+data);
 		}
@@ -77,7 +75,6 @@ public class TailorWebSocketServlet extends WebSocketServlet {
 			return _connection.isOpen();
 		}
  
-		@Override
 		public void onOpen(Connection connection) {
 			_members.add(this);
 			_connection = connection;
