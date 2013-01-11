@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.1.0.RELEASE</spring.version>
-		<repo.url.ws>file://${basedir}/src/main/resources/repo</repo.url.ws>
+		<repo.url.ws>file://${basedir}/repo</repo.url.ws>
 		<repo.url.linux>file://${user.home}/.m2/repository</repo.url.linux>
 		<repo.url.origin>http://repo1.maven.org/maven2</repo.url.origin>
 		<repo.url>${repo.url.ws}</repo.url>
@@ -30,14 +30,14 @@
 					<scanIntervalSeconds>2</scanIntervalSeconds>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
+							<port>8888</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
 					<webAppConfig>
 						<contextPath>/</contextPath>
-						<!-- try to unlock js,css file when the server running -->
-						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+						<!-- try to unlock js,css file when the server running
+						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor> -->
 					</webAppConfig>
 					<stopPort>9999</stopPort>
 					<stopKey>jetty</stopKey>
@@ -47,14 +47,6 @@
 	</build>
 	<dependencies>
 	
-		<!-- MySQL Connector -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.22</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
 		
 		<!-- Junit for Test -->
 		<dependency>
@@ -79,83 +71,6 @@
 			<artifactId>jetty-websocket</artifactId>
 			<version>8.0.4.v20111024</version>
 			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		
-		<!-- Spring dependencies -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>3.2.0.RELEASE</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.kenai.nbpwr</groupId>
-			<artifactId>org-apache-commons-dbcp</artifactId>
-			<version>1.2.2-201002241055</version>
-			<type>nbm</type>
-			<scope>compile</scope>
-		</dependency>
-		
-		<!-- Log4j -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
 			<scope>compile</scope>
 		</dependency>
 		
