@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="img/ui/chatframe.css">
+</head>
+<body>
+<div id="vid_chat" style="overflow: hidden;">
+	<div class="vid_chat_content" id="vid_chat_content" style="overflow:auto; "></div>
+	<div class="vid_chat_bottom">
+		<input id="name_" value="snow" maxlength="4">&nbsp;
+		<input class="input_message" name="msg" id="msg_">&nbsp;<input class="btns" type="button" value="发言" onclick="send_msg()" maxlength="100" style="opacity: 0.3; color: black;">&nbsp;<input id="autoFresh" class="btns" type="button" value="刷新 5" onclick="ajax_2();" style="opacity: 0.3; color: black;">&nbsp;<input id="stopFresh" class="btns" type="button" value="停止" onclick="ajax_3();" style="opacity: 0.3; color: black;">
+	</div>
+</div>
+</body>
+</html>

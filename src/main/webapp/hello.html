@@ -6,14 +6,14 @@
 		<link rel="stylesheet" href="res/css/core.css">
 		<link rel="stylesheet" href="js/HoorayLibs/hooraylibs.css">
 		<link rel="stylesheet" href="img/ui/index.css?v=120615">
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="vers2/js/jquery-1.7.min.js"></script>
 		<script type="text/javascript">
 			var ws = null;
 			function startWebSocket() {
 				if(!window.WebSocket)
 					alert("WebSocket not supported by this browser!");
 				// 创建WebSocket
-				ws = new WebSocket("ws://localhost:8080/html5chart/mywebsocket.do");
+				ws = new WebSocket("ws://localhost:8080/mywebsocket.do");
 				// 收到消息时在消息框内显示
 				ws.onmessage = function(evt) {
 					appendMsg(evt.data);

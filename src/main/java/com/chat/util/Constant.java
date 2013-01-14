@@ -37,7 +37,7 @@ public class Constant {
 	public interface AJAX_FORMATS {
 
 		// shortcuts in desktop.
-		String SC_FORMAT = "{'data':[{'id':20,'iconName':'自定义窗口','iconUrl':'img/shortcut/news.png','url':'window.html','width':200,'height':300,'resize':true}, {'id':123,'iconName':'好友列表','iconUrl':'img/shortcut/news.png','title':'百度','url':'http://www.baidu.com','width':214,'height':381,'resize':true,'conf':{'frameCont':'listContTemp'}}]}";
+		String SC_FORMAT = "{'data':[{'id':20,'iconName':'自定义窗口','iconUrl':'img/shortcut/news.png','url':'window.html','width':200,'height':300,'resize':true}, {'id':123,'iconName':'好友列表','iconUrl':'img/shortcut/news.png','title':'百度','url':'http://www.baidu.com','width':279,'height':600,'resize':true,'conf':{'frameCont':'listContTemp'}}]}";
 
 		// friends list name.
 		String FRIENDS_LIST_NAME = "{'name':%name%}";

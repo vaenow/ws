@@ -15,15 +15,13 @@ var jsonsc;
 Core.CST = {
 	//空白 element
 	ELE_BLANK:"",
-	//根地址
-	BASE_URL:"http://localhost:8080",
-	HOST: window.location.host,
-	HOST_NAME: window.location.hostname,
-	HREF: window.location.href,
-	ORIGIN:window.location.origin,
-	PATH_NAME:window.location.pathname,
-	PORT:window.location.port,
-	PORTOCOL:window.location.portocol,
+	HOST: 		window.location.host,		//"localhost:8080"
+	HOST_NAME: 	window.location.hostname,	//"localhost"
+	HREF: 		window.location.href,		//"http://localhost:8080/vers2/index.html"
+	ORIGIN:		window.location.origin,		//"http://localhost:8080"
+	PATH_NAME:	window.location.pathname,	//"/vers2/index.html"
+	PORT:		window.location.port,		//"8080"
+	PORTOCOL:	window.location.portocol,	//"http:"
 	//数据源
 	AJAX_URL:{
 		//本地数据
@@ -32,7 +30,7 @@ Core.CST = {
 		REMOTE:"/ajax/handle",
 	}
 }
-Core.url = Core.CST.BASE_URL + Core.CST.AJAX_URL.REMOTE;
+Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
 /**********************/
 /** constant list end */
 /**********************/
@@ -265,13 +263,14 @@ Core.create = function(obj,opt){
 							"id" : "list-",/* "title":"{title}","imgsrc":"{imgsrc}", */
 							"iconUrl" : "iconUrl",
 							"iconName" : "iconName",
-							"url" : "url",
+//							"url" : "url",
+							"url" : Core.CST.ORIGIN+"/vers2/chatframe.html",
 							"width" : 447,
 							"height" : 322,
 							"resize" : true,
-							"conf" : {
-								"frameCont" : "labelContTemp"
-							}
+//							"conf" : {
+//								"frameCont" : "labelContTemp"
+//							}
 						};
 						var isContains = false;
 						for ( var e in jsonsc.data) {

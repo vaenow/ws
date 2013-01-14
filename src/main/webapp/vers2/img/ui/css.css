@@ -22,7 +22,7 @@ a img{border:none}
 .fl{float:left}
 
 html{height:100%;overflow:hidden}
-body{background:url(../background2.jpg) no-repeat right bottom transparent;height:100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;}
+body{background:url(../background.jpg) no-repeat right bottom transparent;height:100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;}
 
 /*noscript*/
 .ie-noscript-warning{position:absolute;left:50%;top:50%}
@@ -71,7 +71,7 @@ body{background:url(../background2.jpg) no-repeat right bottom transparent;heigh
 
 /*窗口*/
 .window-container{position:absolute;padding:2px;overflow:hidden;border-radius:3px;background:#656672;box-shadow:0 1px 5px rgba(0, 0, 0, 0.4)}
-.window-current{background:#363740;box-shadow:0 1px 10px rgba(0, 0, 0, 0.6)}
+.window-current{background:#363740;box-shadow:0 2px 20px rgba(0, 0, 0, 0.6)}
 .title-bar{position:relative;z-index:10;height:27px;padding:0 10px;line-height:27px;overflow:hidden;color:#FFF;border-bottom:1px solid #000;background:url(spr_x.png) repeat-x 0 -108px;cursor:default}
 .window-current .title-bar{background-position:0 -31px}
 .title-handle{position:absolute;top:6px;right:8px}
@@ -110,8 +110,9 @@ body{background:url(../background2.jpg) no-repeat right bottom transparent;heigh
 .popup-menu a{background-position:100px 100px;border-radius:2px 2px 2px 2px;color:#333333;display:block;height:24px;line-height:24px;overflow:hidden;padding-left:35px}
 .popup-menu a:hover,.popup-menu a.focus{background-color:#3B7CE6;background-position:0 -780px;color:#FFFFFF;text-decoration:none}
 
+/* 新增 */
 #desk .userListBody{overflow:auto;}
 #desk .userListBody li{position:relative;background-color: lightBlue;width: auto;height: auto;margin: 3px 3px 0;}
 #desk .userListBody li:hover{background-color:#DB7093;color:#EBE2D3}
 
-
+#desk .u_banner{height:20%;border:1px;background-image:url(u_banner.png);}
