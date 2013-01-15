@@ -11,6 +11,7 @@ package com.chat.jdbc.dao;
 
 import java.util.List;
 
+import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 
@@ -28,4 +29,11 @@ public interface IOperatorDAO {
 	 * 得到指定用户
 	 * */
 	public UserInfoTO getUserInfo(final long uid);
+
+	/**
+	 * 得到用户详细资料
+	 * @param uid
+	 * @return
+	 */
+	public List<UserDetailsTO> getUserDetails(long uid);
 }

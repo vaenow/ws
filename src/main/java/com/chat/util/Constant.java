@@ -53,6 +53,9 @@ public class Constant {
 
 		// get user friends list.
 		String GET_USER_FRIENDS_LIST = "gufl";
+		
+		// get user details.
+		String GET_USER_DETAILS = "gud";
 
 	}
 

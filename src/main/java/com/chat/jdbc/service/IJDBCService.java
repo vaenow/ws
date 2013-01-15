@@ -11,6 +11,7 @@ package com.chat.jdbc.service;
 
 import java.util.List;
 
+import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 
 /**
@@ -20,5 +21,7 @@ import com.chat.jdbc.to.UserFriendsTO;
 public interface IJDBCService {
 
 	List<UserFriendsTO> getFriendsListByUID(long i);
-
+	
+	List<UserDetailsTO> getUserDetails(long i);
+	
 }

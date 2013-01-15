@@ -2,8 +2,6 @@ package com.chat.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chat.jdbc.service.IJDBCService;
+import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
@@ -42,13 +41,14 @@ public class AjaxServlet {
 
 		String action = req.getParameter("act");
 		String result = "";
+		
 		if (action.equals(Constant.ACTION_TYPE.GET_SHORTCUTS)) {
 
 			result = Constant.AJAX_FORMATS.SC_FORMAT;
 
 		} else if (action.equals(Constant.ACTION_TYPE.GET_USER_FRIENDS_LIST)) {
-
-			List<UserFriendsTO> list = JDBCService.getFriendsListByUID(1);
+			long uid = parseUID(req);
+			List<UserFriendsTO> list = JDBCService.getFriendsListByUID(uid);
 
 			StringBuilder names = new StringBuilder();
 			// String str = "";
@@ -64,7 +64,15 @@ public class AjaxServlet {
 			names.deleteCharAt(names.length() - 1);
 			result = WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST, Constant.REGX.LIST_NAME_PATERN,
 					names.toString());
+		}else if(action.equals(Constant.ACTION_TYPE.GET_USER_DETAILS)){
+			long uid = parseUID(req);
+			List<UserDetailsTO> list = JDBCService.getUserDetails(uid);
+			//TODO
+			result= list.toString();
 		}
+
+		System.out.println("action: " + action);
+		System.out.println("result: " + result.replaceAll("'", "\""));
 
 		resp.getWriter().write(result.replaceAll("'", "\""));
 	}
@@ -77,5 +85,15 @@ public class AjaxServlet {
 		"da@%aaDd%sd".split("%[a-zA-z]{0,}%");
 
 		System.out.println(b + " " + a);
+	}
+	
+	private long parseUID(HttpServletRequest req){
+		long uid = 1;
+		try {
+			 uid = Long.parseLong(req.getParameter("uid"));
+		} catch (NumberFormatException e) {
+			System.err.println("[error]: UID number formate error. "+e);
+		} 
+		return uid;
 	}
 }

@@ -1,47 +1,7 @@
 /*
-FileName	:core.js
-Author		:胡尐睿丶
-Website		:http://www.cnblogs.com/hooray/archive/2011/10/07/2200322.html
-Version		:20111023
+**core.js
+**胡尐睿丶
 */
-
-var Core=_cache = {};
-var jsonsc;
-
-/******************/
-/** constant list */
-/******************/
-//常量 constance
-Core.CST = {
-	//空白 element
-	ELE_BLANK:"",
-	HOST: 		window.location.host,		//"localhost:8080"
-	HOST_NAME: 	window.location.hostname,	//"localhost"
-	HREF: 		window.location.href,		//"http://localhost:8080/vers2/index.html"
-	ORIGIN:		window.location.origin,		//"http://localhost:8080"
-	PATH_NAME:	window.location.pathname,	//"/vers2/index.html"
-	PORT:		window.location.port,		//"8080"
-	PORTOCOL:	window.location.portocol,	//"http:"
-	//数据源
-	AJAX_URL:{
-		//本地数据
-		LOCAL:"/js/shortcut.js",
-		//服务器数据
-		REMOTE:"/ajax/handle",
-	}
-}
-Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
-/**********************/
-/** constant list end */
-/**********************/
-
-Core.config = {
-	shortcutTop:20,			//快捷方式top初始位置
-	shortcutLeft:20,		//快捷方式left初始位置
-	createIndexid:1,		//z-index初始值
-	windowMinWidth:150,		//窗口最小宽度
-	windowMinHeight:56		//窗口最小高度
-};
 
 Core.init = function(update){
 	$(document.body).bind('click',function(){
@@ -247,7 +207,8 @@ Core.create = function(obj,opt){
 		//frame为自定义内容时
 		if (options.conf.frameCont) {
 			if (options.conf.frameCont == "listContTemp") {
-				var url = Core.url + "?act=gufl";
+				var uid = GetStoragedUID();
+				var url = Core.url + "?act=gufl&uid="+uid;
 				$.get(url, function(resp) {
 					var result = JSON.parse(resp);
 					var b = $('.userListBody');
@@ -627,3 +588,29 @@ var ie6iframeheight = function(obj){
 		$(obj).find('.window-frame').css("height",($(obj).find('.window-frame').parent().height()-59)+"px");
 	}
 };
+
+GetStoragedUID = function() {
+	//默认 uid=1 的用户
+	var uid = 1;
+	if(localStorage){
+		uid = localStorage.getItem('uid');
+		if(uid!=null && isNaN(uid)){
+			uid = 1;
+			localStorage.setItem('uid', uid);
+		}
+	}
+	return uid;
+}
+
+//InitUserDetails = (function() {
+//	
+//})()
+//
+//GetUserDetails = function() {
+//	if(localStorage){
+//		ud = localStorage.getItem('u_details');
+//		if(!ud){
+//			InitUserDetails();
+//		}
+//	}
+//}

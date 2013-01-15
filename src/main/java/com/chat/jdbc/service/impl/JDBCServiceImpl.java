@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.chat.jdbc.dao.IOperatorDAO;
 import com.chat.jdbc.service.IJDBCService;
+import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 
 /**
@@ -28,8 +29,15 @@ public class JDBCServiceImpl implements IJDBCService {
 	@Autowired
 	IOperatorDAO operatorDAOImpl;
 	
+	@Override
 	public List<UserFriendsTO> getFriendsListByUID(long uid) {
 
 		return operatorDAOImpl.getFriendsListByUID(uid);
+	}
+
+	@Override
+	public List<UserDetailsTO> getUserDetails(long uid) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.getUserDetails(uid);
 	}
 }

@@ -22,7 +22,7 @@ a img{border:none}
 .fl{float:left}
 
 html{height:100%;overflow:hidden}
-body{background:url(../background.jpg) no-repeat right bottom transparent;height:100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;}
+body{background:url(../bg2.jpg) no-repeat right bottom transparent;height:100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;}
 
 /*noscript*/
 .ie-noscript-warning{position:absolute;left:50%;top:50%}
@@ -116,3 +116,4 @@ body{background:url(../background.jpg) no-repeat right bottom transparent;height
 #desk .userListBody li:hover{background-color:#DB7093;color:#EBE2D3}
 
 #desk .u_banner{height:20%;border:1px;background-image:url(u_banner.png);}
+#desk .u_b_head{left:10px;top:10px;border-radius:7px;position:relative;}
