@@ -59,19 +59,19 @@ metadata-complete="true">
 		<url-pattern>/ajax/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- Servlets -->
+	<!-- Servlets 
 	<servlet>
 		<servlet-name>initServlet</servlet-name>
 		<servlet-class>com.chat.ws.InitServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
-	</servlet>
+	</servlet> -->
 	<servlet>
 		<servlet-name>mywebsocket</servlet-name>
-		<servlet-class>com.chat.ws.MyWebSocketServlet</servlet-class>
+		<servlet-class>com.chat.ws.WebSocketChatServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>mywebsocket</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/mychat/*</url-pattern>
 	</servlet-mapping>
 	
 	

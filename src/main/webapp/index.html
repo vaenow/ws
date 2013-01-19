@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;">
+		<title>Chat</title>
+		<script type="text/javascript" src="vers2/js/jquery-1.7.min.js"></script>
+		<script type="text/javascript">
+			var ws = null;
+			function startWebSocket() {
+				if(!window.WebSocket)
+					alert("WebSocket not supported by this browser!");
+				// 创建WebSocket
+				ws = new WebSocket("ws://localhost:8080/mychat/ws");
+				// 收到消息时在消息框内显示
+				ws.onmessage = function(evt) {
+					appendMsg(evt.data);
+				};
+				// 断开时会走这个方法
+				ws.onclose = function() {
+					appendMsg('websocket closed');
+				};
+				// 连接上时走这个方法
+				ws.onopen = function() {
+					appendMsg('websocket opened');
+				};
+			}
+
+			// 发送消息
+			function sendMsg() {
+				var data = document.getElementById('msgSendBox').value;
+				ws.send(data);
+				document.getElementById('msgSendBox').value = '';
+
+			}
+
+			//添加消息
+			function appendMsg(data) {
+				$('#msgBox').append(data + '</br>');
+			}
+		</script>
+	</head>
+	<body onload="startWebSocket();">
+		<div id="msgBox" style="width:400px;height:300px;border:1px solid #000000"></div>
+		<textarea id="msgSendBox" rows="5" cols="32"></textarea>
+		<input type="button" value="send" onclick="sendMsg()">
+	</body>
+</html>

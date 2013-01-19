@@ -17,6 +17,10 @@
 		<repo.url.linux>file://${user.home}/.m2/repository</repo.url.linux>
 		<repo.url.origin>http://repo1.maven.org/maven2</repo.url.origin>
 		<repo.url>${repo.url.ws}</repo.url>
+		
+		<jetty.version>8.1.2.v20120308</jetty.version>
+		<webapi.version>6.0</webapi.version>
+		<junit.version>4.4</junit.version>
 	</properties>
 
 	<build>
@@ -25,7 +29,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.0.0.M2</version>
+				<version>${jetty.version}</version>
 				<configuration>
 					<scanIntervalSeconds>2</scanIntervalSeconds>
 					<connectors>
@@ -49,8 +53,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
 					<source>1.6</source>
 					<target>1.6</target>
+					<minmemory>256m</minmemory>
+					<maxmemory>2048m</maxmemory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -66,31 +74,31 @@
 			<scope>compile</scope>
 		</dependency>
 		
+		<!-- Jetty-WebSocket      					 START -->
 		<!-- Junit for Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- Servlets -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1-b02</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty.version}</version>
 		</dependency>
-		
-		<!-- Jetty-WebSocket -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
-			<version>8.0.4.v20111024</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>${jetty.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>${webapi.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Jetty-WebSocket 							END -->
 		
 		<!-- Spring dependencies -->
 		<dependency>
