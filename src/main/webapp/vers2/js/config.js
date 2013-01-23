@@ -1,4 +1,7 @@
-
+/**
+ * @date 2012-10-12
+ * @author luowen
+ */
 var Core=_cache = {};
 var jsonsc;
 

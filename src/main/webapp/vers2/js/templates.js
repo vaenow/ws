@@ -63,7 +63,7 @@ var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; backgr
 var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
 
 //内容为 list content
-var listContTemp = '<div class="u_banner"><img class="u_b_head" src="{head_src}" width="70px" height="70px" /></div><ul class="userListBody">{listEle}</ul>';
+var listContTemp = '<div class="u_banner"><img class="u_b_head" src="img/avatar/{headSrc}" width="70px" height="70px" /></div><ul class="userListBody">{listEle}</ul>';
 
 //内容为 label content
 var labelContTemp = '<div class="windowLabel">{frameBody}</div>';

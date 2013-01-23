@@ -35,5 +35,5 @@ public interface IOperatorDAO {
 	 * @param uid
 	 * @return
 	 */
-	public List<UserDetailsTO> getUserDetails(long uid);
+	public UserDetailsTO getUserDetails(long uid);
 }

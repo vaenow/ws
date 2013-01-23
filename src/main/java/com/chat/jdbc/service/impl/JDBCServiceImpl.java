@@ -36,7 +36,7 @@ public class JDBCServiceImpl implements IJDBCService {
 	}
 
 	@Override
-	public List<UserDetailsTO> getUserDetails(long uid) {
+	public UserDetailsTO getUserDetails(long uid) {
 		// TODO Auto-generated method stub
 		return operatorDAOImpl.getUserDetails(uid);
 	}

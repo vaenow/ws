@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,9 +67,10 @@ public class AjaxServlet {
 					names.toString());
 		}else if(action.equals(Constant.ACTION_TYPE.GET_USER_DETAILS)){
 			long uid = parseUID(req);
-			List<UserDetailsTO> list = JDBCService.getUserDetails(uid);
+			UserDetailsTO list = JDBCService.getUserDetails(uid);
 			//TODO
-			result= list.toString();
+			ObjectMapper mapper = new ObjectMapper();
+			result = mapper.writeValueAsString(list);
 		}
 
 		System.out.println("action: " + action);

@@ -22,6 +22,6 @@ public interface IJDBCService {
 
 	List<UserFriendsTO> getFriendsListByUID(long i);
 	
-	List<UserDetailsTO> getUserDetails(long i);
+	UserDetailsTO getUserDetails(long i);
 	
 }
