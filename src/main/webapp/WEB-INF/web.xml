@@ -7,10 +7,8 @@ metadata-complete="true">
 
 	<display-name>html5test</display-name>
 	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
 		<welcome-file>vers2/index.html</welcome-file>
-		<welcome-file>vers1/index.html</welcome-file>
-		<welcome-file>index2.html</welcome-file>
-		<welcome-file>hello.html</welcome-file>
 	</welcome-file-list>
 	
 	<!-- Spring 上下文 -->

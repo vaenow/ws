@@ -9,11 +9,25 @@
  */
 package com.chat.util;
 
+import org.springframework.context.ApplicationContext;
+
+import com.chat.jdbc.service.IWSService;
+
 /**
  * @author vane
  * 
  */
 public class WSUtil {
+
+	private static IWSService wsService;
+	
+	public static IWSService getWsService() {
+		return wsService;
+	}
+
+	public static void setWsService(IWSService wsService) {
+		WSUtil.wsService = wsService;
+	}
 
 	public static String formatUtil(String str, String regex, String replacement) {
 		
@@ -27,4 +41,5 @@ public class WSUtil {
 		}
 		return sb.toString();
 	}
+	
 }

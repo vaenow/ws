@@ -10,14 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+
+import com.chat.jdbc.service.IWSService;
+import com.chat.util.WSUtil;
 
 
 
-//@WebServlet(name="mychat", 
-//        urlPatterns={"/mychat/*"} )
+@Controller("webSocketChatServlet")
 public class WebSocketChatServlet extends WebSocketServlet {
 
+	@Autowired
+	IWSService wsService;
 
+	public void setWsService(IWSService wsService) {
+		System.out.println("setWsService: "+wsService);
+		WSUtil.setWsService(wsService);
+	}
 
 	/**
 	 * 
@@ -42,6 +53,8 @@ public class WebSocketChatServlet extends WebSocketServlet {
 	public WebSocket doWebSocketConnect(HttpServletRequest arg0, String arg1) {
 
 		System.out.println("doWebSocketConnect.. arg0: "+ arg0);
+		System.out.println("wsService: "+ wsService);
+		System.out.println("WSUtil.getWsService(): "+ WSUtil.getWsService());
 		return new ChatWebSocket(users);
 	}
 

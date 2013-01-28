@@ -11,6 +11,8 @@ package com.chat.jdbc.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 
