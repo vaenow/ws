@@ -90,6 +90,9 @@ Core.init = function(update){
 			//屏蔽浏览器自带右键菜单
 			return false;
 		});
+		
+		//绑定用户列表点击事件
+		Core.bindUserListEvent();
 	}
 };
 
@@ -140,12 +143,10 @@ Core.create = function(obj,opt){
 			$('.task-window li b').removeClass('focus');
 			$(this).children('b').addClass('focus');
 			//改变窗口样式
-			$('.window-container').removeClass('window-current');
-			$('#'+window_warp).addClass('window-current').css({'z-index':Core.config.createIndexid}).show();
+			Core.currentFocus($('#'+window_warp)).show(Core.animate.CDW);
 			//改变窗口遮罩层样式
 			$('.window-frame').children('div.mask').show();
 			$('#'+window_inner+' .window-frame').children('div.mask').hide();
-			Core.config.createIndexid += 1;
 		}
 	});
 	if(iswindowopen == 0){
@@ -215,35 +216,13 @@ Core.create = function(obj,opt){
 					var result = JSON.parse(resp);
 					var b = $('.userListBody');
 					b.html("");
-					for ( var i = 0; i < result.flist.length; i++) {
+					for ( var i = 0; i < result.length; i++) {
 						b.append(FormatModel(listEle, {
-							listDetails : result.flist[i].name
+							//friends name
+							listDetails : result[i].friendDetailsTO.alias
 						}));
-						b.children().last().data('info', result);
+						b.children().last().data('info', result[i]);
 					}
-					b.delegate('.window-frame ul li', 'click', function() {
-						var chatFrame = {
-							"id" : "list-",/* "title":"{title}","imgsrc":"{imgsrc}", */
-							"iconUrl" : "iconUrl",
-							"iconName" : "iconName",
-//							"url" : "url",
-							"url" : Core.CST.ORIGIN+"/vers2/chatframe.html",
-							"width" : 447,
-							"height" : 322,
-							"resize" : true,
-//							"conf" : {
-//								"frameCont" : "labelContTemp"
-//							}
-						};
-						var isContains = false;
-						for ( var e in jsonsc.data) {
-							if (jsonsc.data[e].id === chatFrame.id)
-								isContains = true;
-						}
-						if (!isContains)
-							jsonsc['data'].push(chatFrame);
-						Core.create(chatFrame);
-					});
 					// 隐藏loading
 					$('#' + window_inner + ' .window-loading').fadeOut();
 				});
@@ -267,25 +246,23 @@ Core.taskwindow = function(obj){
 	var window_inner = 'window_'+obj.attr('window')+'_inner';
 	if(obj.children('b').hasClass('focus')){
 		obj.children('b').removeClass('focus');
-		$('#'+window_warp).hide();
+		$('#'+window_warp).hide(Core.animate.TW);
 	}else{
 		//改变任务栏样式
 		$('.task-window li b').removeClass('focus');
 		obj.children('b').addClass('focus');
 		//改变窗口样式
-		$('.window-container').removeClass('window-current');
-		$('#'+window_warp).addClass('window-current').css({'z-index':Core.config.createIndexid}).show();
+		Core.currentFocus($('#'+window_warp)).show(Core.animate.TW);
 		//改变窗口遮罩层样式
 		$('.window-frame').children('div').eq(0).show();
 		$('#'+window_inner+' .window-frame').children('div').eq(0).hide();
-		Core.config.createIndexid += 1;
 	}
 };
 
 //任务栏右键菜单
 Core.taskwindowrightmenu = function(obj){
 	_cache.TaskRight = GetTaskRight(obj);
-	_cache.TaskRight.css({left:(obj.index()*(obj.width()+3)+2)+'px'}).show();
+	_cache.TaskRight.css({left:(obj.index()*(obj.width()+3)+2)+'px'}).show(Core.animate.TWRM);
 };
 
 //点击窗口
@@ -296,12 +273,10 @@ Core.container = function(){
 		$('.task-window li b').removeClass('focus');
 		$('.task-window li[window="'+obj.attr('window')+'"] b').addClass('focus');
 		//改变窗口样式
-		$('.window-container').removeClass('window-current');
-		obj.addClass('window-current').css({'z-index':Core.config.createIndexid});
+		Core.currentFocus(obj);
 		//改变窗口遮罩层样式
 		$('.window-frame').children('div').eq(0).show();
 		obj.find('.window-frame').children('div').eq(0).hide();
-		Core.config.createIndexid += 1;
 	});
 };
 
@@ -309,9 +284,7 @@ Core.container = function(){
 Core.handle = function(){
 	var updateStyle = function(obj){
 		//改变窗口样式
-		$('.window-container').removeClass('window-current');
-		obj.addClass('window-current').css({'z-index':Core.config.createIndexid});
-		Core.config.createIndexid += 1;
+		Core.currentFocus(obj);
 	};
 	$(document).delegate('.ha-hide','click',function(e){
 		var obj = $(this).parents(".window-container");
@@ -377,9 +350,7 @@ Core.bindWindowMove = function(){
 	$(document).delegate(".title-bar","mousedown",function(e){
 		var obj = $(this).parents(".window-container");
 		//改变窗口为选中样式
-		$('.window-container').removeClass('window-current');
-		obj.addClass('window-current').css({'z-index':Core.config.createIndexid});
-		Core.config.createIndexid += 1;
+		Core.currentFocus(obj);
 		x = e.screenX;	//鼠标位于屏幕的left
 		y = e.screenY;	//鼠标位于屏幕的top
 		sT = obj.offset().top;
@@ -591,3 +562,72 @@ var ie6iframeheight = function(obj){
 	}
 };
 
+
+Core.bindUserListEvent = function(){
+	var desk = $('#desk');
+	desk.delegate('.window-frame ul li', 'click', function(e) {
+		var me 			= $(this).data('info');
+//		console.log(JSON.stringify(me));
+//		var t	 		= JSON.stringify(me).encodeBase64();
+		var t			= me.friend;
+		var chatFrame 	= {
+			"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
+			"iconUrl" : "head-default.png",
+			"iconName" : "iconName",
+//			"url" : "url",
+			"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
+			"width" : 447,
+			"height" : 322,
+			"resize" : true,
+//			"conf" : {
+//				"frameCont" : "labelContTemp"
+//			}
+		};
+		var isContains = false;
+		for ( var el in jsonsc.data) {
+			if (jsonsc.data[el].id === chatFrame.id)
+				isContains = true;
+		}
+		if (!isContains)
+			jsonsc['data'].push(chatFrame);
+
+		//取消绑定。
+		Core.stopPropagation(e);
+		//创建窗口
+		Core.create(chatFrame);
+		
+//		$('#window_'+chatFrame.id+'_warp').delegate('iframe', 'load', function(){
+//			call javascript function from outside an iframe
+//			var ifrm = $('iframe')[0];
+//			初始化WebSocket连接
+//			ifrm.contentWindow.S.startWebSocket();
+//			console.log(arguments);
+//		});
+		
+		$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
+//			onload="S.startWebSocket()"
+			var ifrm = this.contentWindow.S;
+//			ifrm.wsmsg.sder = me.owner;
+//			ifrm.wsmsg.rcver = me.friend;
+			
+			ifrm.frd[t] = me;
+			ifrm.startWebSocket();
+			console.log(arguments, this);
+		})
+	});
+}
+
+//取消事件扩散 - 点击窗口
+Core.stopPropagation = function(event){
+	event.stopPropagation();
+}
+	
+Core.currentFocus = function(obj){
+	$('.window-container').removeClass('window-current');
+	obj.addClass('window-current').css({'z-index':Core.config.createIndexid});
+	Core.config.createIndexid += 1;
+	return obj;
+}
+	
+	
+	

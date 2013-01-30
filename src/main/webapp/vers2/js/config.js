@@ -39,3 +39,21 @@ Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
 /**********************/
 /** constant list end */
 /**********************/
+
+//全局动态效果配置
+Core.animate = {
+		//TaskWindow 			任务栏左键
+		TW	: 	{duration: 'normal',specialEasing: { width: 'linear', height:'swing'}},
+		//TaskWindowRightMenu 	任务栏右键弹出菜单
+		TWRM: 	{duration : 100},
+		//CreatedWindow 		已创建的窗口
+		CDW	: 	{duration: 'normal'},
+}
+
+//WebSocketMessageFormate 消息格式
+Core.config.wsmsg = {
+		ctn		:	"message content",
+		sder	:	"message sender",
+		rcver	:	"message reciver",
+		token	:	"verify token"
+}

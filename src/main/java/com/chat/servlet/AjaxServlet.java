@@ -56,15 +56,18 @@ public class AjaxServlet {
 			// String regex ="";
 			// String rplmt = "";
 			System.out.println("list.size(): " + list.size());
-			for (UserFriendsTO friend : list) {
-				String fname = friend.getFriendDetailsTO().getAlias();
-				names.append(WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST_NAME, Constant.REGX.LIST_NAME_PATERN,
-						"'" + fname + "'"));
-				names.append(",");
-			}
-			names.deleteCharAt(names.length() - 1);
-			result = WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST, Constant.REGX.LIST_NAME_PATERN,
-					names.toString());
+//			for (UserFriendsTO friend : list) {
+//				String fname = friend.getFriendDetailsTO().getAlias();
+//				names.append(WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST_NAME, Constant.REGX.LIST_NAME_PATERN,
+//						"'" + fname + "'"));
+//				names.append(",");
+//			}
+//			names.deleteCharAt(names.length() - 1);
+//			result = WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST, Constant.REGX.LIST_NAME_PATERN,
+//					names.toString());
+			
+			ObjectMapper mapper = new ObjectMapper();
+			result = mapper.writeValueAsString(list);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_USER_DETAILS)){
 			long uid = parseUID(req);
 			UserDetailsTO list = JDBCService.getUserDetails(uid);

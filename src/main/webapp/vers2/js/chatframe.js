@@ -3,8 +3,14 @@
  * @author luowen
  */
 // <!--------- 留言版------------->
-var S = {};
-S.location = Core.url+'?act=';
+var S 			= {};
+S.ws 			= {};
+//加载父页面的变量
+S.CST			= window.parent.Core.CST;
+S.location 		= window.parent.Core.url+'?act=';
+S.wsmsg 		= window.parent.Core.config.wsmsg;
+S.frd 			= {};
+
 // 消息内容片断
 S.cnt = {
 	p1 : "<div class=message onclick=reply('",
@@ -20,12 +26,11 @@ function parseToBlock(json) {
 			+ S.cnt.p4 + json.date + S.cnt.p5;
 }
 
-S.ws = null;
-function startWebSocket() {
+S.startWebSocket = function() {
 	if(!window.WebSocket)
 		alert("WebSocket not supported by this browser!");
 	// 创建WebSocket
-	S.ws = new WebSocket("ws://"+Core.CST.HOST+"/html5chart/mywebsocket.do");
+	S.ws = new WebSocket("ws://"+S.CST.HOST+"/mychat/ws");
 	// 收到消息时在消息框内显示
 	S.ws.onmessage = function(evt) {
 		appendMsg(evt.data);
@@ -40,18 +45,42 @@ function startWebSocket() {
 	};
 }
 
-// 发送消息
+// 发送消息 - WebSocket Msg
 function sendMsg() {
 	var data = document.getElementById('msg_').value;
-	S.ws.send(data);
+	S.ws.send(handleMsg(data));
 	document.getElementById('msg_').value = '';
 
 }
 
 //添加消息
 function appendMsg(data) {
-	$('#vid_chat_content').append(data + '</br>');
+	var msgBox 			= $('#vid_chat_content');
+	msgBox.append(data + '</br>');
+//	c.append(parseToBlock(j.result[i])).children().last().css({
+//			opacity : 0.2
+//		}).animate({
+//			opacity : 1
+//		},1000,'swing');
+	//滚动条跟随
+	msgBox[0].scrollTop = msgBox[0].scrollHeight;
 }
+
+//处理消息格式
+function handleMsg(data) {
+	var frdinfo		 	= S.frd[getToken()];
+	S.wsmsg.ctn 		= data;
+	S.wsmsg.sder 		= frdinfo.owner;
+	S.wsmsg.rcver 		= frdinfo.friend;
+	S.wsmsg.token 		= new Date().getTime();
+	return JSON.stringify(S.wsmsg);
+}
+
+//解析url token
+function getToken(){
+	return window.location.search.split('?t=')[1];
+}
+
 
 function flush() {
 	// alert("ajax--");
@@ -141,7 +170,8 @@ $(document).ready(function() {
 	$(document).keydown(function(event) {
 		// 回车键
 		if (event.which == 13) {
-			send_msg();
+//			send_msg();
+			sendMsg();
 		}
 	});
 });

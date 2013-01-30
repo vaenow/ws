@@ -8,7 +8,7 @@ GetStoragedUID = function() {
 	var uid = 1;
 	if(localStorage){
 		uid = localStorage.getItem('uid');
-		if(uid!=null && isNaN(uid)){
+		if(uid==null || isNaN(uid)){
 			uid = 1;
 			localStorage.setItem('uid', uid);
 		}

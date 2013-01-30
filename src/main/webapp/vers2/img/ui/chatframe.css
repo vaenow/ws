@@ -59,14 +59,18 @@ input:hover {
 
 .vid_chat_content {
 	border: 1px dashed gray;
-	height: 89%;
-	margin-bottom: 2px;
+	margin: 2px;
 	padding: 2px;
-	width: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 25px;
+	left: 0;
 }
 
 .vid_chat_bottom {
-	
+	bottom: 0;
+	position: absolute;
 }
 
 .message {
