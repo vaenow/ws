@@ -573,7 +573,7 @@ Core.bindUserListEvent = function(){
 		var chatFrame 	= {
 			"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
 			"iconUrl" : "head-default.png",
-			"iconName" : "iconName",
+			"iconName" : "iconName "+me.owner+"-"+me.friend,
 //			"url" : "url",
 			"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
 			"width" : 447,
@@ -605,14 +605,10 @@ Core.bindUserListEvent = function(){
 //		});
 		
 		$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
-//			onload="S.startWebSocket()"
-			var ifrm = this.contentWindow.S;
-//			ifrm.wsmsg.sder = me.owner;
-//			ifrm.wsmsg.rcver = me.friend;
-			
+			var ifrm 	= this.contentWindow.S;
+			var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
 			ifrm.frd[t] = me;
-			ifrm.startWebSocket();
-			console.log(arguments, this);
+			ifrm.startWebSocket(wsinit);
 		})
 	});
 }
@@ -628,6 +624,3 @@ Core.currentFocus = function(obj){
 	Core.config.createIndexid += 1;
 	return obj;
 }
-	
-	
-	

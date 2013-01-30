@@ -115,5 +115,5 @@ body{background:url(../bg2.jpg) no-repeat right bottom transparent;background-si
 #desk .userListBody li{position:relative;background-color: lightBlue;width: auto;height: auto;margin: 3px 3px 0;}
 #desk .userListBody li:hover{background-color:#DB7093;color:#EBE2D3}
 
-#desk .u_banner{height:20%;border:1px;background-image:url(u_banner.png);}
-#desk .u_b_head{left:10px;top:10px;border-radius:7px;position:relative;}
+#desk .u_banner{height:20%;border:1px;background-image:url(u_banner.png);max-height:90px;}
+#desk .u_b_head{left:10px;top:10px;border-radius:7px;position:absolute;height:15%;max-height:70px;width:auto;}

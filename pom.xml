@@ -35,7 +35,7 @@
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8080</port>
-							<maxIdleTime>60000</maxIdleTime>
+							<maxIdleTime>5</maxIdleTime>
 						</connector>
 					</connectors>
 					<webAppConfig>

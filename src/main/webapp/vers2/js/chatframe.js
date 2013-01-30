@@ -26,11 +26,11 @@ function parseToBlock(json) {
 			+ S.cnt.p4 + json.date + S.cnt.p5;
 }
 
-S.startWebSocket = function() {
+S.startWebSocket = function(wsinitial) {
 	if(!window.WebSocket)
 		alert("WebSocket not supported by this browser!");
 	// 创建WebSocket
-	S.ws = new WebSocket("ws://"+S.CST.HOST+"/mychat/ws");
+	S.ws = new WebSocket("ws://"+S.CST.HOST+"/mychat/ws?wsinitial="+wsinitial);
 	// 收到消息时在消息框内显示
 	S.ws.onmessage = function(evt) {
 		appendMsg(evt.data);
