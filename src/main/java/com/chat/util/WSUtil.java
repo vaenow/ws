@@ -10,6 +10,8 @@
 package com.chat.util;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -17,6 +19,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.ApplicationContext;
 
 import com.chat.jdbc.service.IWSService;
+import com.chat.jdbc.to.UserDetailsTO;
+import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 
 /**
@@ -37,16 +41,22 @@ public class WSUtil {
 	 */
 	private static IWSService wsService;
 
+	/**
+	 * Jackson 操作对象
+	 */
+	private static ObjectMapper mapper = new ObjectMapper();
+
+	
+
 	public static IWSService getWsService() {
 		return wsService;
 	}
-
+	
 	public static void setWsService(IWSService wsService) {
 		WSUtil.wsService = wsService;
 	}
-
-	private static ObjectMapper mapper = new ObjectMapper();
-
+	
+	//------------------------------------------------------//
 	/**
 	 * 字符串模版 格式化JSON
 	 * 
@@ -55,7 +65,6 @@ public class WSUtil {
 	 * @param replacement
 	 * @return
 	 */
-
 	public static String formatUtil(String str, String regex, String replacement) {
 
 		StringBuilder sb = new StringBuilder();
@@ -89,4 +98,6 @@ public class WSUtil {
 		}
 		return (T) obj;
 	}
+	
+	
 }

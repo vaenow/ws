@@ -9,6 +9,8 @@
  */
 package com.chat.util;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author vane
  * 
@@ -66,4 +68,21 @@ public class Constant {
 		
 	}
 
+	//caches management 缓存管理
+	public interface CACHE {
+		/**
+		 * 初始化延迟-时间
+		 */
+		long INITIAL_DELAY = 20;
+
+		/**
+		 * 周期-时间
+		 */
+		long PERIOD = 20;
+		
+		/**
+		 * 时间类型
+		 */
+		TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+	}
 }

@@ -617,7 +617,8 @@ Core.bindUserListEvent = function(){
 Core.stopPropagation = function(event){
 	event.stopPropagation();
 }
-	
+
+//改变窗口为选中样式
 Core.currentFocus = function(obj){
 	$('.window-container').removeClass('window-current');
 	obj.addClass('window-current').css({'z-index':Core.config.createIndexid});

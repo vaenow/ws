@@ -1,7 +1,5 @@
 /**
  *
- * Copyright (c) 2012 NCS Corporation.
- *
  * Author: luowen
  * Created Date: Jan 30, 2013
  * Description:  TODO
