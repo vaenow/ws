@@ -9,19 +9,21 @@
  */
 package com.chat.util;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.context.ApplicationContext;
 
 import com.chat.jdbc.service.IWSService;
-import com.chat.jdbc.to.UserDetailsTO;
-import com.chat.jdbc.to.UserInfoTO;
-import com.chat.jdbc.ws.to.WSMessageTO;
 
 /**
  * @author vane
@@ -29,6 +31,8 @@ import com.chat.jdbc.ws.to.WSMessageTO;
  */
 public class WSUtil {
 
+	private static Log log = LogFactory.getLog(WSUtil.class);
+	
 	/**
 	 * <pre>
 	 * 存储IWSService的单例对象。
@@ -48,6 +52,8 @@ public class WSUtil {
 
 	
 
+	//------------------------------------------------------//
+
 	public static IWSService getWsService() {
 		return wsService;
 	}
@@ -56,7 +62,6 @@ public class WSUtil {
 		WSUtil.wsService = wsService;
 	}
 	
-	//------------------------------------------------------//
 	/**
 	 * 字符串模版 格式化JSON
 	 * 
@@ -99,5 +104,50 @@ public class WSUtil {
 		return (T) obj;
 	}
 	
+	/**
+	 * Jackson库 将对象转为JSON字符串
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String stringifyJSON(Object obj){
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "JsonGenerationException; JsonMappingException; IOException;";
+	}
 	
+	/**
+	 * Log Object all 'get' methods.
+	 * 
+	 * @param obj
+	 */
+	public static void logGettingMethods(Object obj, Class clazz) {
+		Method[] methods = clazz.getDeclaredMethods();// 类的方法
+		for (Method method : methods) {
+			String methodName = method.getName();
+			if (methodName.startsWith("get") && !methodName.equals("getClass")) {// 如果方法名以get开头
+				Object value = null;
+				try {
+					value = method.invoke(obj);
+				} catch (IllegalArgumentException e) {
+//					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+//					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+//					e.printStackTrace();
+				}// 调用方法,并打印返回值
+				System.out.println(methodName+": "+value+", ");
+			}
+		}
+	}
 }

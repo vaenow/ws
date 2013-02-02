@@ -26,6 +26,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chat.jdbc.dao.IBaseConnectorDAO;
 import com.chat.util.Constant;
+import com.chat.util.WSCaches;
 
 /**
  * @author vane
@@ -34,7 +35,9 @@ import com.chat.util.Constant;
 @Repository
 public  class BaseConnectorDAOImpl implements IBaseConnectorDAO {
 	Log logger = LogFactory.getLog(BaseConnectorDAOImpl.class);
-
+	
+	WSCaches wscaches = WSCaches.getInstance();
+	
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private JdbcTemplate jdbcTemplate;
 

@@ -50,13 +50,12 @@ public class WebSocketChatServlet extends WebSocketServlet {
 	}
 	
 	@Override
-	public WebSocket doWebSocketConnect(HttpServletRequest arg0, String protocol) {
-		String wsInitial = arg0.getParameter("wsinitial");
-		System.out.println("doWebSocketConnect.. arg0: "+ arg0);
+	public WebSocket doWebSocketConnect(HttpServletRequest req, String protocol) {
+//		String wsInitial = arg0.getParameter("wsinitial");
+		System.out.println("doWebSocketConnect.. req: "+ req);
 		System.out.println("wsService: "+ wsService);
 		System.out.println("WSUtil.getWsService(): "+ WSUtil.getWsService());
-		System.out.println("wsInitial: "+wsInitial);
-		return new ChatWebSocket(users, wsInitial);
+		return new ChatWebSocket(users, req);
 	}
 
 }

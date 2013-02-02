@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.chat.jdbc.dao.IWSDAO;
 import com.chat.jdbc.service.IWSService;
+import com.chat.jdbc.to.MsgInfoTO;
 
 /**
  * @author luowen
@@ -28,9 +29,9 @@ public class WSServiceImpl implements IWSService {
 	
 	
 	@Override
-	public String saveMessage(String msg) {
+	public String saveMessage(MsgInfoTO msginfo) {
 		// TODO Auto-generated method stub
-		return wsDAO.saveMessage(msg);
+		return wsDAO.saveMessage(msginfo);
 	}
 
 }

@@ -36,7 +36,6 @@ import com.chat.util.WSCaches;
 public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDAO {
 	Log logger = LogFactory.getLog(OperatorDAOImpl.class);
 	
-	WSCaches wscaches = WSCaches.getInstance();
 	
 	/**
 	 * 查询建立映射关系

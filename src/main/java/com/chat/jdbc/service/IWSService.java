@@ -10,7 +10,7 @@
  */
 package com.chat.jdbc.service;
 
-import org.springframework.stereotype.Service;
+import com.chat.jdbc.to.MsgInfoTO;
 
 /**
  * @author luowen
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Service;
  */
 public interface IWSService {
 	
-	String saveMessage(String msg);
+	String saveMessage(MsgInfoTO msginfo);
 }

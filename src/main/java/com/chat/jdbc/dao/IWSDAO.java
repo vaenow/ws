@@ -10,11 +10,13 @@
  */
 package com.chat.jdbc.dao;
 
+import com.chat.jdbc.to.MsgInfoTO;
+
 /**
  * @author luowen
  *
  */
 public interface IWSDAO {
 
-	String saveMessage(String msg);
+	String saveMessage(MsgInfoTO msginfo);
 }
