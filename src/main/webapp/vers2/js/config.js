@@ -53,9 +53,20 @@ Core.animate = {
 }
 
 //WebSocketMessageFormate 消息格式
-Core.config.wsmsg = {
-		ctn		:	"message content",
-		sder	:	"message sender",
-		rcver	:	"message receiver",
-		token	:	"verify token"
-}
+//Core.config.wsmsg = {
+//		ctn		:	"message content",
+//		sder	:	"message sender",
+//		rcver	:	"message receiver",
+//		token	:	"verify token"
+//}
+Core.config.wsmsg = (function() {
+	//获取WebSocketMessage对象属性
+	var obj = {}
+	var url = Core.url+"?act=gwsm";
+	$.get(url,function(rs){
+		console.log('rs: '+rs);
+		obj = JSON.parse(rs);
+	});
+	
+	return obj;
+})();

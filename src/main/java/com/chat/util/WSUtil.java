@@ -9,10 +9,7 @@
  */
 package com.chat.util;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -132,6 +129,7 @@ public class WSUtil {
 	 * @param obj
 	 */
 	public static void logGettingMethods(Object obj, Class clazz) {
+		log.info(obj);
 		Method[] methods = clazz.getDeclaredMethods();// 类的方法
 		for (Method method : methods) {
 			String methodName = method.getName();
@@ -146,7 +144,7 @@ public class WSUtil {
 				} catch (InvocationTargetException e) {
 //					e.printStackTrace();
 				}// 调用方法,并打印返回值
-				System.out.println(methodName+": "+value+", ");
+				System.out.println("\t "+methodName+": "+value+", ");
 			}
 		}
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chat.jdbc.service.IJDBCService;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
+import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
 
@@ -74,6 +75,8 @@ public class AjaxServlet {
 			//TODO
 			ObjectMapper mapper = new ObjectMapper();
 			result = mapper.writeValueAsString(list);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_WSMSG)){
+			result = WSUtil.stringifyJSON(new WSMessageTO());
 		}
 
 		System.out.println("action: " + action);

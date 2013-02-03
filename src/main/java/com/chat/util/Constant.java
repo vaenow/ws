@@ -61,6 +61,9 @@ public class Constant {
 		
 		// get user details.
 		String GET_USER_DETAILS 		= "gud";
+		
+		// get websocket message to
+		String GET_WSMSG 				= "gwsm";
 
 	}
 
@@ -74,10 +77,10 @@ public class Constant {
 	//caches management 缓存管理
 	public interface CACHE {
 		// 初始化延迟-时间
-		long INITIAL_DELAY				= 20;
+		long INITIAL_DELAY				= 60;
 
 		// 周期-时间
-		long PERIOD 					= 20;
+		long PERIOD 					= 60;
 		
 		// 时间类型
 		TimeUnit TIME_UNIT 				= TimeUnit.SECONDS;
@@ -97,5 +100,10 @@ public class Constant {
 		byte MSG_INFO_ISDELETE_N		= 0;	//not delete.
 		
 		//Table: 
+	}
+	
+	//websocket connection config
+	public interface WSConn {
+		int MAX_IDLE_TIME 				= (int)TimeUnit.DAYS.toMillis(1);	//maxIdleTime
 	}
 }

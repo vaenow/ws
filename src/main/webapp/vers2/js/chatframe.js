@@ -73,6 +73,8 @@ function handleMsg(data) {
 	S.wsmsg.sder 		= frdinfo.owner;
 	S.wsmsg.rcver 		= frdinfo.friend;
 	S.wsmsg.token 		= new Date().getTime();
+	S.wsmsg.sderalias		= frdinfo.ownerDetailsTO.alias;
+	S.wsmsg.rcveralias		= frdinfo.friendDetailsTO.alias;
 	return JSON.stringify(S.wsmsg);
 }
 

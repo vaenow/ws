@@ -17,8 +17,27 @@ package com.chat.jdbc.ws.to;
 public class WSMessageTO {
 	private String ctn; 	//"message content"
 	private Long sder;		//"message sender"
-	private Long rcver;	 	//"message receiver"
+	private Long rcver;	//"message receiver"
 	private Long token; 	//"verify token"
+	private String sderalias;	// sender alias
+	private String rcveralias;	// reciever alias
+	
+
+	public String getSderalias() {
+		return sderalias;
+	}
+
+	public void setSderalias(String sderalias) {
+		this.sderalias = sderalias;
+	}
+
+	public String getRcveralias() {
+		return rcveralias;
+	}
+
+	public void setRcveralias(String rcveralias) {
+		this.rcveralias = rcveralias;
+	}
 
 	public String getCtn() {
 		return ctn;

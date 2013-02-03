@@ -59,7 +59,7 @@ public class ChatWebSocket implements OnTextMessage {
 	@Override
 	public void onMessage(String data) {
 		WSMessageTO msg = WSUtil.handleJSON(data, WSMessageTO.class);
-		String message = msg.getSder()+ ": "+msg.getCtn();
+		String message = msg.getSderalias()+ ": "+msg.getCtn();
 		for (ChatWebSocket user : users) {
 			//To specific friend(s)
 			if (msg.getSder() == user.getWsInitial().getReciever()
