@@ -2,6 +2,7 @@ package com.chat.ws;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,7 +85,11 @@ public class ChatWebSocket implements OnTextMessage {
 
 	@Override
 	public void onOpen(Connection connection) {
+		//set max idle time
+		connection.setMaxIdleTime(Constant.WSConn.MAX_IDLE_TIME);
+		//log.info(Constant.WSConn.MAX_IDLE_TIME);
 		this.connection = connection;
+		//WSUtil.logGettingMethods(connection, Connection.class);
 		users.add(this);
 	}
 
