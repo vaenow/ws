@@ -98,6 +98,7 @@ input:hover {
 }
 
 #msg_ {
+	top: 0;
 	bottom: 0;
 	position: absolute;
 	right: 0px;

@@ -60,12 +60,16 @@ public class ChatWebSocket implements OnTextMessage {
 	public void onMessage(String data) {
 		WSMessageTO msg = WSUtil.handleJSON(data, WSMessageTO.class);
 		String message = msg.getSderalias()+ ": "+msg.getCtn();
+		boolean isRead = false;
 		for (ChatWebSocket user : users) {
 			//To specific friend(s)
 			if (msg.getSder() == user.getWsInitial().getReciever()
 					&& msg.getRcver() == user.getWsInitial().getSender()) {
 				try {
 					user.connection.sendMessage(message);
+					//TODO set already Read status.
+					isRead = true;
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -79,7 +83,7 @@ public class ChatWebSocket implements OnTextMessage {
 			e.printStackTrace();
 		}
 		
-		saveMessageIntoLog(msg);
+		saveMessageIntoLog(msg, isRead);
 	}
 
 
@@ -112,7 +116,7 @@ public class ChatWebSocket implements OnTextMessage {
 	 * @param wsmsg
 	 * @return
 	 */
-	private MsgInfoTO saveMessageIntoLog(WSMessageTO wsmsg){
+	private MsgInfoTO saveMessageIntoLog(WSMessageTO wsmsg, boolean isRead){
 		MsgInfoTO msginfo  = new MsgInfoTO();
 		msginfo.setMsg_from(wsmsg.getSder());
 		msginfo.setMsg_to(wsmsg.getRcver());
@@ -120,12 +124,16 @@ public class ChatWebSocket implements OnTextMessage {
 		msginfo.setMsg_cnt(wsmsg.getCtn());
 		msginfo.setMsg_crt_dttm(new Date());
 		msginfo.setMsg_crt_ip(request.getRemoteAddr());
-		msginfo.setMsg_unread(Constant.DB.MSG_INFO_UNREAD);
+		msginfo.setMsg_unread(isRead?Constant.DB.MSG_INFO_READ:Constant.DB.MSG_INFO_UNREAD);
 		msginfo.setMsg_isdelete(Constant.DB.MSG_INFO_ISDELETE_N);
 		
 		log.info(wsService.saveMessage(msginfo));
 		
 		return msginfo;
+	}
+	
+	private void setAlreadyRead() {
+		
 	}
 	
 }

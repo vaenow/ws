@@ -28,6 +28,7 @@ public class Constant {
 		
 		String SAVE_MESSAGE 			= "INSERT INTO msg_info (msg_from, msg_to, msg_ty, msg_cnt, msg_crt_dttm, msg_crt_ip, msg_unread, msg_isdelete) VALUES (:msg_from, :msg_to, :msg_ty, :msg_cnt, :msg_crt_dttm, :msg_crt_ip, :msg_unread, :msg_isdelete)";
 
+		String LAST_INSERT_ID			= "SELECT LAST_INSERT_ID()";
 	}
 
 	// Database Base Connection.
