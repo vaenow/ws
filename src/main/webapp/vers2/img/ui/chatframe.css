@@ -64,13 +64,16 @@ input:hover {
 	position: absolute;
 	top: 0;
 	right: 0;
-	bottom: 25px;
+	bottom: 40px;
 	left: 0;
 }
 
 .vid_chat_bottom {
 	bottom: 0;
+	left: 0;
+	right: 0;
 	position: absolute;
+	height: 42px;
 }
 
 .message {
@@ -95,7 +98,10 @@ input:hover {
 }
 
 #msg_ {
-	width: 112px;
+	bottom: 0;
+	position: absolute;
+	right: 0px;
+	left: 62px;
 }
 
 #msg_cnt {
@@ -105,3 +111,20 @@ background-color: papayaWhip;
 //width: 220px;
 float:left
 }
+
+#vid_chat .vid_chat_bottom .btns {
+	top: 1px;
+	bottom: 1px;
+	position: absolute;
+	right: 1px;
+	opacity: 0.3;
+	color: black;
+}
+#vid_chat .vid_chat_bottom .btns:hover {
+	opacity: 0.7;
+	color: black;
+	cursor: pointer;
+}
+	
+	
+	

@@ -153,12 +153,12 @@ function addListener_color() {
 
 $(document).ready(function() {
 	//按钮hover事件 
-	$('.btns').live('mouseenter', function(){
-		$(this).css("opacity", "1");
-		$(this).css("cursor", "pointer");	
-	}).live('mouseout', function(){
-		$(this).css("opacity", "0.3");
-	})
+//	$('.btns').live('mouseenter', function(){
+//		$(this).css("opacity", "1");
+//		$(this).css("cursor", "pointer");	
+//	}).live('mouseout', function(){
+//		$(this).css("opacity", "0.3");
+//	})
 	
 	$("#name_").click(function(){
 		$(this).css("border-bottom", "white");
