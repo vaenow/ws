@@ -12,6 +12,7 @@ package com.chat.jdbc.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chat.jdbc.dao.IWSDAO;
 import com.chat.jdbc.to.MsgInfoTO;
+import com.chat.jdbc.ws.to.WSInitTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
 
@@ -64,6 +66,17 @@ public class WSDAOImpl extends BaseConnectorDAOImpl implements IWSDAO {
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(msginfo);
 		this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
 		return WSUtil.stringifyJSON(msginfo);
+	}
+
+
+	@Override
+	public List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit) {
+		// TODO Auto-generated method stub
+		logger.fatal("getting unread message.");
+		
+		String sql = Constant.JDBCConnection.GET_UNREAD_MSG;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(wsinit);
+		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, wsChatMsgInfoMapper);
 	}
 
 }

@@ -10,7 +10,10 @@
  */
 package com.chat.jdbc.service;
 
+import java.util.List;
+
 import com.chat.jdbc.to.MsgInfoTO;
+import com.chat.jdbc.ws.to.WSInitTO;
 
 /**
  * @author luowen
@@ -18,5 +21,19 @@ import com.chat.jdbc.to.MsgInfoTO;
  */
 public interface IWSService {
 	
+	/**
+	 * Save Message into database
+	 * 
+	 * @param msginfo
+	 * @return
+	 */
 	String saveMessage(MsgInfoTO msginfo);
+
+	/**
+	 * Get Unread Message
+	 *  
+	 * @param wsinit
+	 * @return
+	 */
+	List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit);
 }

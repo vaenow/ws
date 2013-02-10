@@ -1,8 +1,8 @@
 package com.chat.ws;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,7 +52,7 @@ public class ChatWebSocket implements OnTextMessage {
 		this.request 	= request;
 		this.wsInitial 	= WSUtil.handleJSON(request.getParameter("wsinitial"), WSInitTO.class);
 		
-		WSUtil.logGettingMethods(request, request.getClass());	//log request 'get' properties.
+		//WSUtil.logGettingMethods(request, request.getClass());	//log request 'get' properties.
 	}
 	
 	
@@ -60,29 +60,8 @@ public class ChatWebSocket implements OnTextMessage {
 	public void onMessage(String data) {
 		WSMessageTO msg = WSUtil.handleJSON(data, WSMessageTO.class);
 		String message = msg.getSderalias()+ ": "+msg.getCtn();
-		boolean isRead = false;
-		for (ChatWebSocket user : users) {
-			//To specific friend(s)
-			if (msg.getSder() == user.getWsInitial().getReciever()
-					&& msg.getRcver() == user.getWsInitial().getSender()) {
-				try {
-					user.connection.sendMessage(message);
-					//TODO set already Read status.
-					isRead = true;
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 		
-		//To yourself.
-		try {
-			this.connection.sendMessage(message);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		boolean isRead = sendMsg(message);
 		saveMessageIntoLog(msg, isRead);
 	}
 
@@ -95,7 +74,10 @@ public class ChatWebSocket implements OnTextMessage {
 		this.connection = connection;
 		//WSUtil.logGettingMethods(connection, Connection.class);
 		users.add(this);
+		
+		checkUnreadMsg();
 	}
+
 
 	@Override
 	public void onClose(int closeCode, String message) {
@@ -132,8 +114,86 @@ public class ChatWebSocket implements OnTextMessage {
 		return msginfo;
 	}
 	
-	private void setAlreadyRead() {
+	/**
+	 * 得到未读消息。
+	 * 
+	 * @param wsinit
+	 */
+	private List<MsgInfoTO> fetchUnreadMsg(WSInitTO wsinit) {
+		// TODO Auto-generated method stub
+		List<MsgInfoTO> unreadList = wsService.getUnreadMsg(wsinit);
 		
+		log.info("unread list: "+WSUtil.stringifyJSON(unreadList));
+		
+		return unreadList;
 	}
 	
+	/**
+	 * 检查用户未读消息
+	 * 
+	 */
+	private void checkUnreadMsg(){
+		List<MsgInfoTO> list = fetchUnreadMsg(this.wsInitial);
+		int size = list.size();
+		String msgNote = "";
+		if (size > 0) {
+			msgNote = "You have unread message(s): " + size;
+		} else {
+			msgNote = "You have no unread messages";
+		}
+		sendMsg(msgNote, true, false);
+		
+		for(int i = 0; i<size; i++){
+			sendMsg(list.get(i).getMsg_from()+": "+list.get(i).getMsg_cnt(), true, false);
+		}
+	}
+	
+	/**
+	 * 对特定端口发送消息
+	 *  
+	 * @param message		消息内容
+	 * @param isSend2Me		对自己发送
+	 * @param isSend2One	对好友发送
+	 * @return				消息是否已读
+	 */
+	private boolean sendMsg(String message, boolean isSend2Me, boolean isSend2One){
+		// 消息是否已读状态
+		boolean isRead = false;
+		
+		if(isSend2One){
+			for (ChatWebSocket user : users) {
+				//To specific friend(s)
+				if (wsInitial.getSender() == user.getWsInitial().getReciever()
+						&& wsInitial.getReciever() == user.getWsInitial().getSender()) {
+					try {
+						user.connection.sendMessage(message);
+						//消息已读标志
+						isRead = true;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		//To yourself.
+		if (isSend2Me) {
+			try {
+				this.connection.sendMessage(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return isRead;
+	}
+	
+	/**
+	 * 对特定端口发送消息
+	 *  - 默认对自己和好友同时发送消息
+	 * 
+	 * @param message
+	 * @return
+	 */
+	private boolean sendMsg(String message) {
+		return sendMsg(message, true, true);
+	}
 }

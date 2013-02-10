@@ -29,6 +29,8 @@ public class Constant {
 		String SAVE_MESSAGE 			= "INSERT INTO msg_info (msg_from, msg_to, msg_ty, msg_cnt, msg_crt_dttm, msg_crt_ip, msg_unread, msg_isdelete) VALUES (:msg_from, :msg_to, :msg_ty, :msg_cnt, :msg_crt_dttm, :msg_crt_ip, :msg_unread, :msg_isdelete)";
 
 		String LAST_INSERT_ID			= "SELECT LAST_INSERT_ID()";
+		
+		String GET_UNREAD_MSG			= "SELECT * FROM msg_info WHERE msg_unread=1 AND msg_from=:reciever AND msg_to=:sender";
 	}
 
 	// Database Base Connection.
@@ -107,5 +109,9 @@ public class Constant {
 	//websocket connection config
 	public interface WSConn {
 		int MAX_IDLE_TIME 				= (int)TimeUnit.DAYS.toMillis(1);	//maxIdleTime
+	}
+	
+	public interface Strs {
+
 	}
 }

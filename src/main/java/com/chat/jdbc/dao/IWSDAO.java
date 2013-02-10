@@ -10,7 +10,10 @@
  */
 package com.chat.jdbc.dao;
 
+import java.util.List;
+
 import com.chat.jdbc.to.MsgInfoTO;
+import com.chat.jdbc.ws.to.WSInitTO;
 
 /**
  * @author luowen
@@ -19,4 +22,6 @@ import com.chat.jdbc.to.MsgInfoTO;
 public interface IWSDAO {
 
 	String saveMessage(MsgInfoTO msginfo);
+
+	List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit);
 }

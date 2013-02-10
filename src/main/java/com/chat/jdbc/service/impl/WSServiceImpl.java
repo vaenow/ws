@@ -10,12 +10,15 @@
  */
 package com.chat.jdbc.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chat.jdbc.dao.IWSDAO;
 import com.chat.jdbc.service.IWSService;
 import com.chat.jdbc.to.MsgInfoTO;
+import com.chat.jdbc.ws.to.WSInitTO;
 
 /**
  * @author luowen
@@ -34,4 +37,12 @@ public class WSServiceImpl implements IWSService {
 		return wsDAO.saveMessage(msginfo);
 	}
 
+
+	@Override
+	public List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit) {
+		// TODO Auto-generated method stub
+		return wsDAO.getUnreadMsg(wsinit);
+	}
+
+	
 }
