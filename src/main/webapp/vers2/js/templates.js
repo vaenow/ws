@@ -22,11 +22,11 @@ var windowTemp =
 			'<div class="window-mask"></div><div class="window-loading"></div>'+
 			'{frameCont}'+
 		'</div>'+
-		'<div class="set-bar"><div class="fr">'+
-			'<a class="btn setting"><i class="icon ico-setting"></i><span class="btn-con">设置</span></a>'+
-			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
-			'<a class="btn top"><i class="icon ico-top"></i><span class="btn-con">顶部</span></a>'+
-		'</div></div>'+
+//		'<div class="set-bar"><div class="fr">'+
+//			'<a class="btn setting"><i class="icon ico-setting"></i><span class="btn-con">设置</span></a>'+
+//			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
+//			'<a class="btn top"><i class="icon ico-top"></i><span class="btn-con">顶部</span></a>'+
+//		'</div></div>'+
 		'{resize}'+
 		'<div style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block" resize="min_width"></div>'+
 		'<div style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block" resize="min_height"></div>'+
@@ -44,9 +44,9 @@ var windowTemp2 =
 			'<div class="window-mask"></div><div class="window-loading"></div>'+
 			'{frameCont}'+
 		'</div>'+
-		'<div class="set-bar"><div class="fr">'+
-			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
-		'</div></div>'+
+//		'<div class="set-bar"><div class="fr">'+
+//			'<a class="btn refresh"><i class="icon ico-refresh"></i><span class="btn-con">刷新</span></a>'+
+//		'</div></div>'+
 		'{resize}'+
 		'<div style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block" resize="min_width"></div>'+
 		'<div style="position:absolute;overflow:hidden;background:url(img/ui/transparent.gif) repeat;display:block" resize="min_height"></div>'+

@@ -84,7 +84,7 @@ body{background:url(../bg2.jpg) no-repeat right bottom transparent;background-si
 .ha-revert:hover{background-position:-45px -15px}
 .ha-close{background-position:0 0}
 .ha-close:hover{background-position:0 -15px}
-.window-frame{position:absolute;top:30px;right:2px;bottom:32px;*bottom:29px;left:2px;background:#FFF}
+.window-frame{position:absolute;top:30px;right:2px;bottom:1px;*bottom:29px;left:2px;background:#FFF}
 /*for IE6*/
 *html .window-frame{
 	height:expression((function(el){
