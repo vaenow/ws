@@ -262,6 +262,7 @@ Core.taskwindow = function(obj){
 //任务栏右键菜单
 Core.taskwindowrightmenu = function(obj){
 	_cache.TaskRight = GetTaskRight(obj);
+	_cache.TaskRight.hide();
 	_cache.TaskRight.css({left:(obj.index()*(obj.width()+3)+2)+'px'}).show(Core.animate.TWRM);
 };
 
