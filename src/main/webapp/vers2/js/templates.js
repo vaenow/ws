@@ -69,7 +69,7 @@ var listContTemp = '<div class="u_banner"><img class="u_b_head" src="img/avatar/
 var labelContTemp = '<div class="windowLabel">{frameBody}</div>';
 
 //每条 list 元素
-var listEle = '<li>{listDetails}</li>';
+var listEle = '<li class="ListBlock"><div class="f_img" style="background-image:url(img/avatar/{f_head})"></div><div class="f_details"><div class="f_name">{listDetails}</div><div class="f_phrase">{f_phrase}</div></div></li>';
 
 //消息窗口
 var chatWindow = 

@@ -17,7 +17,8 @@
 <div id="vid_chat" style="overflow: hidden;">
 	<div class="vid_chat_content" id="vid_chat_content" style="overflow:auto; "></div>
 	<div class="vid_chat_bottom">
-		<input id="name_" value="snow" maxlength="4">&nbsp;
+		<!-- <input id="name_" value="snow" maxlength="4">&nbsp; -->
+		<div class="divBgImg u_head"></div>
 		<textarea class="input_message" name="msg" id="msg_"></textarea>&nbsp;
 		<input class="btns" type="button" value="发言" onclick="sendMsg()" maxlength="100" >
 	</div>
@@ -25,6 +26,6 @@
 </body>
 <script>
 var user = window.parent.Core.userinfo.getInfo();
-$("#name_").val(user.alias);
+$(".u_head").css({'background-image': 'url(img/avatar/'+user.headImg+')'});
 </script>
 </html>

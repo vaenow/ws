@@ -47,9 +47,15 @@ S.startWebSocket = function(wsinitial) {
 
 // 发送消息 - WebSocket Msg
 function sendMsg() {
-	var data = document.getElementById('msg_').value;
+	var msgContent = $('#msg_');
+	var data = msgContent.val();
+	if(data==null || data.isBlank()){
+		alert("请不要发送空消息。");
+		clearMsgContent();
+		return;
+	}
 	S.ws.send(handleMsg(data));
-	document.getElementById('msg_').value = '';
+	clearMsgContent();
 
 }
 
@@ -175,6 +181,10 @@ $(document).ready(function() {
 //			send_msg();
 			sendMsg();
 		}
+	}).keyup(function(event){
+		if (event.which == 13) {
+			clearMsgContent();
+		}
 	});
 });
 
@@ -275,4 +285,8 @@ function ajax_details() {
 			// $('#vid_chat_content').html(html);
 		}
 	});
+}
+
+function clearMsgContent(){
+	$('#msg_').val('').focus();
 }

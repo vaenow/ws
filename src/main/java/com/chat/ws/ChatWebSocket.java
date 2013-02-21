@@ -28,13 +28,9 @@ public class ChatWebSocket implements OnTextMessage {
 	Log log = LogFactory.getLog(ChatWebSocket.class);
 
 	private Connection connection;			//websocket 连接
-
 	private Set<ChatWebSocket> users;		//存储的所有socket users
-
 	private IWSService wsService;
-	
 	private WSInitTO wsInitial;			//Socket的目标
-	
 	private HttpServletRequest request;	//request
 	
 	public ChatWebSocket() {

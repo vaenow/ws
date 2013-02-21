@@ -25,6 +25,11 @@ Core.init = function(update){
 			$(ul).html("");
 			//把返回的json数组存为全局变量
 			sc = jsonsc = JSON.parse(sc);
+			//更改显示名字
+			var uinfo = Core.userinfo.getInfo();
+			if(uinfo){
+				jsonsc.data[0].iconName = jsonsc.data[0].iconName.replace('%name%', uinfo.alias);
+			}
 			for(i=0; i<sc['data'].length; i++){
 				_cache.shortcutTemp = {"top":_top,"left":_left,"title":sc['data'][i]['iconName'],"shortcut":sc['data'][i]['id'],"imgsrc":sc['data'][i]['iconUrl']};
 				$(ul).append(FormatModel(shortcutTemp,_cache.shortcutTemp));
@@ -209,33 +214,7 @@ Core.create = function(obj,opt){
 		
 		//frame为自定义内容时
 		if (options.conf.frameCont) {
-			if (options.conf.frameCont == "listContTemp") {
-				var uid = GetStoragedUID();
-				var url = Core.url + "?act=gufl&uid="+uid;
-				$.get(url, function(resp) {
-					var result = JSON.parse(resp);
-					var b = $('.userListBody');
-					b.html("");
-					for ( var i = 0; i < result.length; i++) {
-						b.append(FormatModel(listEle, {
-							//friends name
-							listDetails : result[i].friendDetailsTO.alias
-						}));
-						b.children().last().data('info', result[i]);
-					}
-					// 隐藏loading
-					$('#' + window_inner + ' .window-loading').fadeOut();
-				});
-			}else if (options.conf.frameCont == "labelContTemp") {
-				startWebSocket();
-				// 隐藏loading
-				$('#' + window_inner + ' .window-loading').fadeOut();
-			}
-			if (options.resize) {
-				// 绑定窗口缩放事件
-				Core.bindWindowResize($('#' + window_warp));
-			}
-
+			windowConfig(options, window_inner, window_warp);
 		}
 	}
 };
@@ -562,7 +541,37 @@ var ie6iframeheight = function(obj){
 		$(obj).find('.window-frame').css("height",($(obj).find('.window-frame').parent().height()-59)+"px");
 	}
 };
-
+//frame为自定义内容时
+var windowConfig = function(options, window_inner, window_warp){
+	if (options.conf.frameCont == "listContTemp") {
+		var uid = GetStoragedUID();
+		var url = Core.url + "?act=gufl&uid="+uid;
+		$.get(url, function(resp) {
+			var result = JSON.parse(resp);
+			var b = $('.userListBody');
+			b.html("");
+			for ( var i = 0; i < result.length; i++) {
+				b.append(FormatModel(listEle, {
+					//friends name
+					listDetails : result[i].friendDetailsTO.alias,
+					f_head		: result[i].friendDetailsTO.headImg,
+					f_phrase	: result[i].friendDetailsTO.phrase
+				}));
+				b.children().last().data('info', result[i]);
+			}
+			// 隐藏loading
+			$('#' + window_inner + ' .window-loading').fadeOut();
+		});
+	}else if (options.conf.frameCont == "labelContTemp") {
+		startWebSocket();
+		// 隐藏loading
+		$('#' + window_inner + ' .window-loading').fadeOut();
+	}
+	if (options.resize) {
+		// 绑定窗口缩放事件
+		Core.bindWindowResize($('#' + window_warp));
+	}
+}
 
 Core.bindUserListEvent = function(){
 	var desk = $('#desk');

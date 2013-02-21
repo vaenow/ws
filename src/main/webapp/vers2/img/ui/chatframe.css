@@ -102,7 +102,7 @@ input:hover {
 	bottom: 0;
 	position: absolute;
 	right: 0px;
-	left: 62px;
+	left: 43px;
 }
 
 #msg_cnt {
@@ -126,6 +126,8 @@ float:left
 	color: black;
 	cursor: pointer;
 }
-	
+
+.divBgImg {background-image: url(../avatar/hd02.jpg);height: 100%;width: 100%;background-size: 100% 100%;} 
+.vid_chat_bottom .u_head{height:38px;width: 40px;margin: 2px;border-radius: 6px;}
 	
 	
