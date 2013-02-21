@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+
+	<title>Websocket Chat</title>
+
+	<!--- CSS --->
+	<link rel="stylesheet" href="img/ui/welcome/welcome.css" type="text/css">
+
+	<!-- JavaScript -->
+	<script src="js/jquery-1.7.min.js"></script>
+	<script src="js/welcome.js"></script>
+
+	<!--- Javascript libraries (jQuery and Selectivizr) used for the custom checkbox --->
+
+	<!--[if (gte IE 6)&(lte IE 8)]>
+		<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="selectivizr.js"></script>
+		<noscript><link rel="stylesheet" href="fallback.css" /></noscript>
+	<![endif]-->
+
+	<body>
+		<div id="container">
+			<form action="index.html?act=login">
+				<div class="login">LOGIN</div>
+				<div class="username-text">Username:</div>
+				<div class="password-text">Password:</div>
+				<div class="username-field">
+					<input type="text" name="username" value="input here.">
+				</div>
+				<div class="password-field">
+					<input type="password" name="password" value="">
+				</div>
+				<input type="checkbox" name="remember-me" id="remember-me"><label for="remember-me">Remember me</label>
+				<div class="new-usr-pwd">No <a href="javasciprt:void(0);">username</a> or <a href="javasciprt:void(0);">password</a>?</div>
+				<input type="submit" name="submit" value="GO">
+			</form>
+		</div>
+		<div id="footer">
+			Websocket Chat Powered by <a href="http://luowen.com/">Luo Wen</a>
+		</div>
+	
+
+</body></html>

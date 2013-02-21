@@ -15,3 +15,10 @@ GetStoragedUID = function() {
 	}
 	return uid;
 }
+
+/**
+ * 页面重新载入
+ */
+WindowReload = function(){
+	window.location.reload();
+}

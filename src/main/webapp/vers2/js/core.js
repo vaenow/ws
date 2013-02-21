@@ -29,6 +29,9 @@ Core.init = function(update){
 			var uinfo = Core.userinfo.getInfo();
 			if(uinfo){
 				jsonsc.data[0].iconName = jsonsc.data[0].iconName.replace('%name%', uinfo.alias);
+			} else {
+				alert('reload');
+				WindowReload();
 			}
 			for(i=0; i<sc['data'].length; i++){
 				_cache.shortcutTemp = {"top":_top,"left":_left,"title":sc['data'][i]['iconName'],"shortcut":sc['data'][i]['id'],"imgsrc":sc['data'][i]['iconUrl']};
