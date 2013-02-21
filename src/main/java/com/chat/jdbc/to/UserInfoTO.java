@@ -22,6 +22,15 @@ public class UserInfoTO {
 	private String passw;
 	private Date createDateTime;
 	private String createIPAddress;
+	private byte active;
+
+	public byte getActive() {
+		return active;
+	}
+
+	public void setActive(byte active) {
+		this.active = active;
+	}
 
 	public Long getUid() {
 		return uid;

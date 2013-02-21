@@ -47,8 +47,6 @@ public class ChatWebSocket implements OnTextMessage {
 		this.wsService 	= WSUtil.getWsService();
 		this.request 	= request;
 		this.wsInitial 	= WSUtil.handleJSON(request.getParameter("wsinitial"), WSInitTO.class);
-		
-		//WSUtil.logGettingMethods(request, request.getClass());	//log request 'get' properties.
 	}
 	
 	

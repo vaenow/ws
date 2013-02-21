@@ -18,6 +18,7 @@ import com.chat.jdbc.dao.IOperatorDAO;
 import com.chat.jdbc.service.IJDBCService;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
+import com.chat.jdbc.to.UserInfoTO;
 
 /**
  * @author vane
@@ -40,4 +41,12 @@ public class JDBCServiceImpl implements IJDBCService {
 		// TODO Auto-generated method stub
 		return operatorDAOImpl.getUserDetails(uid);
 	}
+
+	@Override
+	public List<UserInfoTO> isAllowToLogin(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.isAllowToLogin(ui);
+	}
+
+	
 }

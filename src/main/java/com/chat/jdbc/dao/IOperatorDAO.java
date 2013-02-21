@@ -36,4 +36,11 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public UserDetailsTO getUserDetails(long uid);
+
+	/**
+	 * 检查是否允许用户登录
+	 * @param ui
+	 * @return
+	 */
+	public List<UserInfoTO> isAllowToLogin(UserInfoTO ui);
 }

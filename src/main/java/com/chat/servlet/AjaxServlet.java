@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chat.jdbc.service.IJDBCService;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
+import com.chat.jdbc.to.UserInfoTO;
+import com.chat.jdbc.ws.to.AllowLoginTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
@@ -22,6 +26,8 @@ import com.chat.util.WSUtil;
 @Controller
 public class AjaxServlet {
 
+	Log log = LogFactory.getLog(AjaxServlet.class); 
+	
 	@Autowired
 	IJDBCService JDBCService;
 
@@ -53,9 +59,6 @@ public class AjaxServlet {
 			List<UserFriendsTO> list = JDBCService.getFriendsListByUID(uid);
 
 			StringBuilder names = new StringBuilder();
-			// String str = "";
-			// String regex ="";
-			// String rplmt = "";
 			System.out.println("list.size(): " + list.size());
 //			for (UserFriendsTO friend : list) {
 //				String fname = friend.getFriendDetailsTO().getAlias();
@@ -77,11 +80,34 @@ public class AjaxServlet {
 			result = mapper.writeValueAsString(list);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_WSMSG)){
 			result = WSUtil.stringifyJSON(new WSMessageTO());
+		}else if(action.equals(Constant.ACTION_TYPE.USER_LOGIN)) {
+			String username = req.getParameter("username");
+			String password = req.getParameter("password");
+			UserInfoTO ui = new UserInfoTO();
+			AllowLoginTO allowTO = new AllowLoginTO();
+			boolean isAllow = false;
+			log.info(username);
+			log.info(password);
+			ui.setName(username);
+			ui.setPassw(password);
+			List<UserInfoTO> list = JDBCService.isAllowToLogin(ui);
+			if(!list.isEmpty()){
+				isAllow = true;
+			}
+			allowTO.setAllow(isAllow);
+			
+			result = WSUtil.stringifyJSON(allowTO);
+		}else if(action.equals(Constant.ACTION_TYPE.USER_REGIST)) {
+			String username = req.getParameter("username");
+			String password = req.getParameter("password");
+			log.info(username);
+			log.info(password);
 		}
 
 		System.out.println("action: " + action);
 		System.out.println("result: " + result.replaceAll("'", "\""));
-
+		WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
+		
 		resp.getWriter().write(result.replaceAll("'", "\""));
 	}
 

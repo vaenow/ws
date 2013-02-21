@@ -26,7 +26,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.util.Constant;
-import com.chat.util.WSCaches;
+import com.chat.util.WSUtil;
 
 /**
  * @author vane
@@ -66,6 +66,7 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 			record.setPassw(rs.getString(3));
 			record.setCreateDateTime(rs.getDate(4));
 			record.setCreateIPAddress(rs.getString(5));
+			record.setActive(rs.getByte(6));
 			return record;
 		}
 	};	
@@ -140,6 +141,17 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		}
 		return wscaches.userDetailsCache.get(uid);
 //			return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper).get(0);
+	}
+
+	@Override
+	public List<UserInfoTO> isAllowToLogin(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		logger.fatal("getting user details by id: " + WSUtil.stringifyJSON(ui));
+
+		String sql = Constant.JDBCConnection.LOGIN_CHECK;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ui);
+		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper);
+		
 	}
 	
 }

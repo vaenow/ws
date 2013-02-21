@@ -10,6 +10,12 @@
 	<!-- JavaScript -->
 	<script src="js/jquery-1.7.min.js"></script>
 	<script src="js/welcome.js"></script>
+	
+	<!-- Preload -->
+	<script src="js/jquery.HooRay/jquery.HooRay.js"></script>
+	<script src="js/sugar/sugar-1.3.9.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 
 	<!--- Javascript libraries (jQuery and Selectivizr) used for the custom checkbox --->
 
@@ -21,7 +27,7 @@
 
 	<body>
 		<div id="container">
-			<form action="index.html?act=login">
+			<form action="" onsubmit="javascript:return formAction();">
 				<div class="login">LOGIN</div>
 				<div class="username-text">Username:</div>
 				<div class="password-text">Password:</div>

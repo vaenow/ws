@@ -31,6 +31,10 @@ public class Constant {
 		String LAST_INSERT_ID			= "SELECT LAST_INSERT_ID()";
 		
 		String GET_UNREAD_MSG			= "SELECT * FROM msg_info WHERE msg_unread=1 AND msg_from=:reciever AND msg_to=:sender";
+		
+		String LOGIN_CHECK				= "SELECT * FROM u_info WHERE u_name=:name AND u_passw=:passw";
+		
+		String USER_REGIST				= "INSERT INTO u_info (u_name, u_passw, u_crt_dttm, u_crt_ip, u_active) VALUES (:name, :passw, :createDateTime, :createIPAddress, :active)";
 	}
 
 	// Database Base Connection.
@@ -68,6 +72,12 @@ public class Constant {
 		
 		// get websocket message to
 		String GET_WSMSG 				= "gwsm";
+		
+		// user login
+		String USER_LOGIN				= "login";
+		
+		// user regist
+		String USER_REGIST				= "regist";
 
 	}
 
