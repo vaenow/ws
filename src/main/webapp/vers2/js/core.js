@@ -541,43 +541,31 @@ var windowConfig = function(options, window_inner, window_warp){
 	if (options.conf.frameCont == "listContTemp") {
 		var uid = GetStoragedUID();
 		var url = Core.url + "?act=gufl&uid="+uid;
-		$.get(url, function(resp) {
-			var result = JSON.parse(resp);
-			var b = $('.userListBody');
-			b.html("");
-			for ( var i = 0; i < result.length; i++) {
-				b.append(FormatModel(listEle, {
-					//friends name
-					listDetails : result[i].friendDetailsTO.alias,
-					f_head		: result[i].friendDetailsTO.headImg,
-					f_phrase	: result[i].friendDetailsTO.phrase
-				}));
-				b.children().last().data('info', result[i]);
-			}
-			hideLoading(window_inner);
-		});
+		var eledata = function(result, i) {
+			return {
+				//friends name
+				listDetails : result[i].friendDetailsTO.alias,
+				f_head		: result[i].friendDetailsTO.headImg,
+				f_phrase	: result[i].friendDetailsTO.phrase
+			};
+		};
+		listUsers(url, window_warp, window_inner, eledata);
 	}else if (options.conf.frameCont == "labelContTemp") {
 		startWebSocket();
 		hideLoading(window_inner);
 	}else if (options.conf.frameCont == "listAllTemp") {
-		var start = 0, len = 10;
+		var start = 0, len = 100;
 		var url = Core.url+"?act=gau&start="+start+"&len="+len+"&uid"+GetStoragedUID();
-		$.get(url, function(res){
-			console.log(res);
-			var result = JSON.parse(res);
-			var b = $('.userListBody');
-			b.html("");
-			for ( var i = 0; i < result.length; i++) {
-				b.append(FormatModel(listEle, {
-					//friends name
-					listDetails : result[i].alias,
-					f_head		: result[i].headImg,
-					f_phrase	: result[i].phrase
-				}));
-				b.children().last().data('info', result[i]);
-			}
-			hideLoading(window_inner);
-		});
+		var eledata = function(result, i) {
+			return {
+				//friends name
+				listDetails : result[i].alias,
+				f_head		: result[i].headImg,
+				f_phrase	: result[i].phrase
+			};
+		};
+		listUsers(url, window_warp, window_inner, eledata);
+		$('#'+window_warp+' .userListBody').addClass('fullHeight');
 	}
 	if (options.resize) {
 		// 绑定窗口缩放事件
@@ -589,15 +577,15 @@ var windowConfig = function(options, window_inner, window_warp){
 var windowConfigFrameCont = function(options, ele){
 	if(options.conf.frameCont=="listContTemp"){
 		//内容为list body
-		ele = FormatModel(ele,{frameCont:listContTemp});
+		ele = FormatModel(ele,{frameCont:listContBannerTemp+listContBodyTemp});
 		//得到头像
 		ele = FormatModel(ele,{headSrc:Core.userinfo.getInfo().headImg})
 	}else if(options.conf.frameCont=="labelContTemp"){
-		ele = FormatModel(ele,{frameCont:labelContTemp});
+		ele = FormatModel(ele,{frameCont:listContBannerTemp+listContBodyTemp});
 		ele = FormatModel(ele,{frameBody:chatWindow});
 	}else if(options.conf.frameCont=="listAllTemp"){
 		//内容为list all usr
-		ele = FormatModel(ele,{frameCont:listContTemp});
+		ele = FormatModel(ele,{frameCont:listContBodyTemp});
 	}
 	return ele;
 }
@@ -608,9 +596,24 @@ var hideLoading = function(window_inner) {
 	$('#' + window_inner + ' .window-loading').fadeOut();
 } 
 
+//罗列用户 
+var listUsers = function(url, window_warp, window_inner, eledata) {
+	$.get(url, function(res){
+		console.log(res);
+		var result = JSON.parse(res);
+		var b = $('#'+window_warp+' .userListBody');
+		b.html("");
+		for ( var i = 0; i < result.length; i++) {
+			b.append(FormatModel(listEle, eledata(result, i)));
+			b.children().last().data('info', result[i]);
+		}
+		hideLoading(window_inner);
+	});
+}
+
 Core.bindUserListEvent = function(){
 	var desk = $('#desk');
-	desk.delegate('.window-frame ul li', 'click', function(e) {
+	desk.delegate('.window-frame:has(.u_banner) ul li', 'click', function(e) {
 		var me 			= $(this).data('info');
 //		console.log(JSON.stringify(me));
 //		var t	 		= JSON.stringify(me).encodeBase64();

@@ -62,14 +62,22 @@ var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; backgr
 //内容为 iframe 
 var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
 
-//内容为 list content
-var listContTemp = '<div class="u_banner"><img class="u_b_head" src="img/avatar/{headSrc}" width="70px" height="70px" /></div><ul class="userListBody">{listEle}</ul>';
+//内容为 list content - frame banner
+var listContBannerTemp = '<div class="u_banner"><img class="u_b_head" src="img/avatar/{headSrc}" width="70px" height="70px" /></div>';
+
+//内容为 list content - frame body
+var listContBodyTemp = '<ul class="userListBody">{listEle}</ul>';
 
 //内容为 label content
 var labelContTemp = '<div class="windowLabel">{frameBody}</div>';
 
 //每条 list 元素
-var listEle = '<li class="ListBlock"><div class="f_img" style="background-image:url(img/avatar/{f_head})"></div><div class="f_details"><div class="f_name">{listDetails}</div><div class="f_phrase">{f_phrase}</div></div></li>';
+var listEle = 
+'<li class="ListBlock">'+
+	'<div class="f_img" style="background-image:url(img/avatar/{f_head})"></div>'+
+	'<div class="f_details"><div class="f_name">{listDetails}</div><div class="f_phrase">{f_phrase}</div></div>'+
+	'<div class="f_right"><div class="f_rtop"></div><div class="f_rbottom"></div></div>'+
+'</li>';
 
 //消息窗口
 var chatWindow = 

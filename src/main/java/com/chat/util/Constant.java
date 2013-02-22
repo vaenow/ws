@@ -43,7 +43,7 @@ public class Constant {
 		//为某用户添加好友
 		String ADD_FRIENDS_TO_USER		= "INSERT INTO u_friends (f_owner, f_friend, f_crt_dttm, f_crt_ip, f_type, f_id_parent, f_rank) VALUES (:owner, :friend, :createDateTime, :createIPAddress, :type, :idParent, :rank)";
 		//得到一定的用户
-		String GET_ACTIVE_USERS			= "SELECT d.* FROM u_details d, u_info i WHERE i.u_active=1 LIMIT :start, :length";
+		String GET_ACTIVE_USERS			= "SELECT d.* FROM u_details d, u_info i WHERE i.u_id=d.u_id AND i.u_active=1 LIMIT :start, :length";
 	}
 
 	// Database Base Connection.

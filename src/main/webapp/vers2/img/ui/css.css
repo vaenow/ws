@@ -111,14 +111,14 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 .popup-menu a:hover,.popup-menu a.focus{background-color:#3B7CE6;background-position:0 -780px;color:#FFFFFF;text-decoration:none}
 
 /* 新增 */
-#desk .userListBody{overflow:auto;}
+#desk .userListBody{overflow:auto; height:80%;}
 #desk .userListBody li{position:relative;/* background-color: lightBlue; */width: auto;height: 50px;margin: 8px 6px 0;border-radius: 8px;}
-#desk .userListBody li:hover{ background-color:#DB7093;/* color:#EBE2D3*/ color: lightBlue; }
+#desk .userListBody li:hover{ background-color:rgba(219, 112, 147, 0.9);/* color:#EBE2D3*/ color: lightBlue; }
 /*渐变效果*/
-#desk .userListBody li{-webkit-transition:color .4s ease-out,background-color .4s ease-out;
-						-moz-transition:color .4s ease-out,background-color .4s ease-out;
-						-o-transition:color .4s ease-out,background-color .4s ease-out;
-						 transition:color .4s ease-out,background-color .4s ease-out;}
+#desk .userListBody li{-webkit-transition:color .5s ease-out,background-color .5s ease-out;
+						-moz-transition:color .5s ease-out,background-color .5s ease-out;
+						-o-transition:color .5s ease-out,background-color .5s ease-out;
+						 transition:color .5s ease-out,background-color .5s ease-out;}
 #desk .userListBody li:hover{-webkit-transition: color .25s ease-in, background-color .25s ease-in;
 							-moz-transition: color .25s ease-in, background-color .25s ease-in;
 							-o-transition: color .25s ease-in, background-color .25s ease-in;
@@ -128,10 +128,14 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 #desk .u_b_head{left:10px;top:10px;border-radius:7px;position:absolute;height:15%;max-height:70px;width:auto;}
 
 #desk .ListBlock{padding:0;}
+#desk .fullHeight {height: 100%}
 .ListBlock .f_img{background-image: url(../shortcut/news.png);background-size: 100% 100%;width: 40px;height: 40px;float: left;border-radius: 8px;margin: 5px}
 .ListBlock .f_details{float: left;height: 100%;width: auto;margin-left: 5px;}
 .ListBlock .f_details .f_name{text-align: left;font-size: 12px;margin-top: 5px}
 .ListBlock .f_details .f_phrase{color: gray;font-size: 12px;}
-
+.ListBlock .f_right{position: absolute;height: 100%;right: 0;width: 50px;}
+.ListBlock .f_right .f_rtop{}
+.ListBlock .f_right .f_rbottom{}
 /* .divBgImg {background-image: url(img/avatar/hd01.jpg);height: 100%;width: 100%;background-size: 100% 100%;} */
+
 	

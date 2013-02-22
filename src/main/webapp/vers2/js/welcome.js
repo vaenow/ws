@@ -3,6 +3,7 @@
  * @author luowen
  */
 $(document).ready(function(){
+	$('form').hide().show('slow');
 	
 	$('.new-usr-pwd').delegate('a', 'click', function(){
 		var note = '<a href="javascript:hideform();">I have username !</a>';
@@ -63,7 +64,7 @@ handleResponse = function(result, action) {
 		var msg = "";
 		var err = false;
 		if(result.success){
-			msg = "恭喜! 注册成功！";
+			msg = "恭喜! 注册成功！<a href='javascript:hideform();'>登陆</a>";
 		} else if(result.duplicated) {
 			msg = "用户名已存在。";
 			err = true;

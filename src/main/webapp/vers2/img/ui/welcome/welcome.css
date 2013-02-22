@@ -227,9 +227,9 @@ input[type="checkbox"]:not(:checked):hover + label, input[type="checkbox"]:not(:
 
 input[type="submit"] {
 	width: 95px;
-	height: 73px;
+	height: 204px;
 	float: left;
-	margin-top: 12px;
+	margin-top: -117px;
 	margin-left: 2px;
 	font-family: Verdana, Arial;
 	font-size: 26px;
@@ -237,7 +237,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover, input[type="submit"]:focus {
-	background: url(images/go-hover.png) top left no-repeat;
+	background: url(images/go-hover.png) top left repeat-y;
 }
 
 .home {
