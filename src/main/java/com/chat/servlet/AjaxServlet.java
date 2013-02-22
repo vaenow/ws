@@ -21,6 +21,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.AllowLoginTO;
+import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.jdbc.ws.to.RegisterUserTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.util.Constant;
@@ -133,6 +134,18 @@ public class AjaxServlet {
 			aLoginTO.setAllow(isAllow);
 			
 			result = WSUtil.stringifyJSON(aLoginTO);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_ACTIVE_USERS)){
+			long uid 	= parseUID(req);
+			int start 	= Integer.parseInt(req.getParameter("start"));
+			int length 	= Integer.parseInt(req.getParameter("len"));
+			QueryUserTO qUserTO = new QueryUserTO();
+			qUserTO.setUid(uid);
+			qUserTO.setStart(start);
+			qUserTO.setLength(length);
+			List<UserDetailsTO> list = JDBCService.getActiveUsers(qUserTO);
+			
+
+			result = WSUtil.stringifyJSON(list);
 		}
 
 		System.out.println("action: " + action);

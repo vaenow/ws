@@ -187,15 +187,7 @@ Core.create = function(obj,opt){
 		}
 		// default frameCont is false
 		if(options.conf.frameCont){
-			if(options.conf.frameCont=="listContTemp"){
-				//内容为list body
-				ele = FormatModel(ele,{frameCont:listContTemp});
-				//得到头像
-				ele = FormatModel(ele,{headSrc:Core.userinfo.getInfo().headImg})
-			}else if(options.conf.frameCont=="labelContTemp"){
-				ele = FormatModel(ele,{frameCont:labelContTemp});
-				ele = FormatModel(ele,{frameBody:chatWindow});
-			}
+			ele = windowConfigFrameCont(options, ele);
 		}else{
 			//默认为 Iframe
 			ele = FormatModel(ele,{frameCont:iframeContTemp});
@@ -562,19 +554,59 @@ var windowConfig = function(options, window_inner, window_warp){
 				}));
 				b.children().last().data('info', result[i]);
 			}
-			// 隐藏loading
-			$('#' + window_inner + ' .window-loading').fadeOut();
+			hideLoading(window_inner);
 		});
 	}else if (options.conf.frameCont == "labelContTemp") {
 		startWebSocket();
-		// 隐藏loading
-		$('#' + window_inner + ' .window-loading').fadeOut();
+		hideLoading(window_inner);
+	}else if (options.conf.frameCont == "listAllTemp") {
+		var start = 0, len = 10;
+		var url = Core.url+"?act=gau&start="+start+"&len="+len+"&uid"+GetStoragedUID();
+		$.get(url, function(res){
+			console.log(res);
+			var result = JSON.parse(res);
+			var b = $('.userListBody');
+			b.html("");
+			for ( var i = 0; i < result.length; i++) {
+				b.append(FormatModel(listEle, {
+					//friends name
+					listDetails : result[i].alias,
+					f_head		: result[i].headImg,
+					f_phrase	: result[i].phrase
+				}));
+				b.children().last().data('info', result[i]);
+			}
+			hideLoading(window_inner);
+		});
 	}
 	if (options.resize) {
 		// 绑定窗口缩放事件
 		Core.bindWindowResize($('#' + window_warp));
 	}
 }
+
+// default frameCont is false
+var windowConfigFrameCont = function(options, ele){
+	if(options.conf.frameCont=="listContTemp"){
+		//内容为list body
+		ele = FormatModel(ele,{frameCont:listContTemp});
+		//得到头像
+		ele = FormatModel(ele,{headSrc:Core.userinfo.getInfo().headImg})
+	}else if(options.conf.frameCont=="labelContTemp"){
+		ele = FormatModel(ele,{frameCont:labelContTemp});
+		ele = FormatModel(ele,{frameBody:chatWindow});
+	}else if(options.conf.frameCont=="listAllTemp"){
+		//内容为list all usr
+		ele = FormatModel(ele,{frameCont:listContTemp});
+	}
+	return ele;
+}
+
+//隐藏loading
+var hideLoading = function(window_inner) {
+	// 隐藏loading
+	$('#' + window_inner + ' .window-loading').fadeOut();
+} 
 
 Core.bindUserListEvent = function(){
 	var desk = $('#desk');

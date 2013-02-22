@@ -14,6 +14,7 @@ import java.util.List;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
+import com.chat.jdbc.ws.to.QueryUserTO;
 
 /**
  * @author vane
@@ -30,5 +31,7 @@ public interface IJDBCService {
 	int insertNewUser(UserInfoTO ui);
 
 	boolean checkUserDuplicated(UserInfoTO ui);
+
+	List<UserDetailsTO> getActiveUsers(QueryUserTO qUserTO);
 
 }

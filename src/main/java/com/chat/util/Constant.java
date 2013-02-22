@@ -42,6 +42,8 @@ public class Constant {
 		String ADD_USER_DETAILS			= "INSERT INTO u_details (u_id, u_alias, u_mobile, u_email, u_updt_ip, u_updt_dttm, u_img_head,u_img_bg, u_phrase, u_gender, u_age, u_real_m, u_remark, u_vipcode, u_extras) VALUES (:uid, :alias, :mobile, :email, :updateIPAddress, :updateDateTime, :headImg, :bgImg, :phrase,:gender, :age, :realName, :remark, :vipcode, :extras)";
 		//为某用户添加好友
 		String ADD_FRIENDS_TO_USER		= "INSERT INTO u_friends (f_owner, f_friend, f_crt_dttm, f_crt_ip, f_type, f_id_parent, f_rank) VALUES (:owner, :friend, :createDateTime, :createIPAddress, :type, :idParent, :rank)";
+		//得到一定的用户
+		String GET_ACTIVE_USERS			= "SELECT d.* FROM u_details d, u_info i WHERE i.u_active=1 LIMIT :start, :length";
 	}
 
 	// Database Base Connection.
@@ -57,7 +59,8 @@ public class Constant {
 
 		// shortcuts in desktop.
 		//String SC_FORMAT 				= "{'data':[{'id':20,'iconName':'自定义窗口','iconUrl':'img/shortcut/news.png','url':'window.html','width':200,'height':300,'resize':true}, {'id':123,'iconName':'[%name%]好友列表','iconUrl':'img/shortcut/news.png','title':'百度','url':'http://www.baidu.com','width':279,'height':600,'resize':true,'conf':{'frameCont':'listContTemp'}}]}";
-		String SC_FORMAT 				= "{'data':[{'id':123,'iconName':'[%name%]好友列表','iconUrl':'img/shortcut/news.png','title':'百度','url':'http://www.baidu.com','width':279,'height':520,'resize':true,'conf':{'frameCont':'listContTemp'}}]}";
+		String SC_FORMAT 				= "{'data':[{'id':123,'iconName':'[%name%]好友列表','iconUrl':'img/shortcut/news.png','title':'[%name%]','url':'','width':279,'height':520,'resize':true,'conf':{'frameCont':'listContTemp'}}," +
+													"{'id':124,'iconName':'查找好友','iconUrl':'img/shortcut/news.png','title':'friends','url':'/vers2/usrlist.html','width':279,'height':520,'resize':true,'conf':{'frameCont':'listAllTemp'}}]}";
 		
 		// friends list name.
 		String FRIENDS_LIST_NAME 		= "{'name':%name%}";
@@ -88,6 +91,9 @@ public class Constant {
 
 		// user is login
 		String CHECK_LOGIN 				= "isLogin";
+
+		// get a amount of users
+		String GET_ACTIVE_USERS 		= "gau";
 
 	}
 

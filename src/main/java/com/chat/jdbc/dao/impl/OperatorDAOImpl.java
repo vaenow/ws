@@ -28,6 +28,7 @@ import com.chat.jdbc.to.DBQueryTO;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
+import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
 
@@ -230,6 +231,15 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		}
 		return isDuplicated;
 		
+	}
+
+	@Override
+	public List<UserDetailsTO> getActiveUsers(QueryUserTO qUserTO) {
+		// TODO Auto-generated method stub
+		logger.fatal("getActiveUsers: " + WSUtil.stringifyJSON(qUserTO));
+		String sql = Constant.JDBCConnection.GET_ACTIVE_USERS;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(qUserTO);
+		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper);
 	}
 	
 }

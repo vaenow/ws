@@ -14,6 +14,7 @@ import java.util.List;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
+import com.chat.jdbc.ws.to.QueryUserTO;
 
 /**
  * @author vane
@@ -57,4 +58,11 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public boolean checkUserDuplicated(UserInfoTO ui);
+
+	/**
+	 * 得到一定数量的新用户
+	 * @param qUserTO
+	 * @return
+	 */
+	public List<UserDetailsTO> getActiveUsers(QueryUserTO qUserTO);
 }
