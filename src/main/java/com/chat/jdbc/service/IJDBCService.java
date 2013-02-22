@@ -34,4 +34,10 @@ public interface IJDBCService {
 
 	List<UserDetailsTO> getActiveUsers(QueryUserTO qUserTO);
 
+	int addUserFriend(UserFriendsTO ufriendsTO);
+
+	int delUserFriend(UserFriendsTO ufriendsTO);
+
+	boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO);
+
 }

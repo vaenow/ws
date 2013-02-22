@@ -23,6 +23,7 @@ import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.AllowLoginTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.jdbc.ws.to.RegisterUserTO;
+import com.chat.jdbc.ws.to.ResponseTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
@@ -143,9 +144,45 @@ public class AjaxServlet {
 			qUserTO.setStart(start);
 			qUserTO.setLength(length);
 			List<UserDetailsTO> list = JDBCService.getActiveUsers(qUserTO);
-			
 
 			result = WSUtil.stringifyJSON(list);
+		}else if(action.equals(Constant.ACTION_TYPE.ADD_USR_FRIEND)){
+			long friendOwner = Long.parseLong(req.getParameter("owner"));
+			long friend = Long.parseLong(req.getParameter("friend"));
+			boolean isSuccess = false;
+			ResponseTO responseTO = new ResponseTO();
+			UserFriendsTO ufriendsTO = new UserFriendsTO();
+			ufriendsTO.setOwner(friendOwner);
+			ufriendsTO.setFriend(friend);
+			ufriendsTO.setCreateDateTime(Calendar.getInstance().getTime());
+			ufriendsTO.setCreateIPAddress(req.getRemoteAddr());
+			ufriendsTO.setType(Constant.DB.UF_TYPE_NORMAL);
+			ufriendsTO.setIdParent(Constant.DB.UF_PARENT_NONE);
+			ufriendsTO.setRank(Constant.DB.UF_RANK_NONE);
+			boolean isDuplicated = JDBCService.checkUserFriendDuplicated(ufriendsTO);
+			if(!isDuplicated){
+				if(JDBCService.addUserFriend(ufriendsTO) == 1){
+					isSuccess = true;
+				}
+			}
+			responseTO.setDuplicated(isDuplicated);
+			responseTO.setSuccess(isSuccess);
+			
+			result = WSUtil.stringifyJSON(responseTO);
+		}else if(action.equals(Constant.ACTION_TYPE.DEL_USR_FRIEND)){
+			long friendOwner = Long.parseLong(req.getParameter("owner"));
+			long friend = Long.parseLong(req.getParameter("friend"));
+			boolean isSuccess = false;
+			ResponseTO responseTO = new ResponseTO();
+			UserFriendsTO ufriendsTO = new UserFriendsTO();
+			ufriendsTO.setOwner(friendOwner);
+			ufriendsTO.setFriend(friend);
+			if(JDBCService.delUserFriend(ufriendsTO) >= 1){
+				isSuccess = true;
+			}
+			responseTO.setSuccess(isSuccess);
+			
+			result = WSUtil.stringifyJSON(responseTO);
 		}
 
 		System.out.println("action: " + action);

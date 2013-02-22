@@ -241,5 +241,38 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(qUserTO);
 		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper);
 	}
+
+	@Override
+	public int addUserFriend(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		logger.fatal("addUserFriend: " + WSUtil.stringifyJSON(ufriendsTO));
+		
+		String sql = Constant.JDBCConnection.ADD_FRIENDS_TO_USER;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ufriendsTO);
+		return this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+	}
+
+	@Override
+	public int delUserFriend(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		logger.fatal("delUserFriend: " + WSUtil.stringifyJSON(ufriendsTO));
+		String sql = Constant.JDBCConnection.DEL_FRIENDS;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ufriendsTO);
+		return this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+	}
+
+	@Override
+	public boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		logger.fatal("checkUserFriendDuplicated: " + WSUtil.stringifyJSON(ufriendsTO));
+		
+		boolean isDuplicated = false;
+		String sql = Constant.JDBCConnection.GET_USER_FRIENDS_BY_OWNER_FRD;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ufriendsTO);
+		if(!this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).isEmpty()){
+			isDuplicated = true;
+		}
+		return isDuplicated;
+	}
 	
 }

@@ -93,7 +93,7 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 }
 .window-frame iframe{position:absolute;border:0;height:100%;width:100%;top:0;bottom:0;left:0;right:0}
 .window-mask{z-index:9000000;background:none;height:100%;position:absolute;width:100%;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;display:none}
-.window-loading{z-index:9000001;position:absolute;width:100%;height:100%;background:#fff url(loading.gif) center center no-repeat}
+.window-loading{z-index:9000001;position:absolute;width:100%;height:100%;background:rgba(255, 255, 255, 0.68) url(loading.gif) center center no-repeat}
 .set-bar{_width:100%;position:absolute;background:#E8E8E8;border-top:1px solid #b9b9b9;bottom:0;height:30px;left:2px;right:2px;bottom:2px}
 .set-bar .btn{margin-top:3px;margin-right:5px;border:1px solid #E8E8E8;border-radius:3px 3px 3px 3px;color:#7D7D7D;cursor:pointer;display:inline-block;height:20px;padding:1px;position:relative}
 .set-bar .btn:hover{border:1px solid #7D7D7D;background:#fff;color:#333;text-decoration:none}
@@ -113,7 +113,7 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 /* 新增 */
 #desk .userListBody{overflow:auto; height:80%;}
 #desk .userListBody li{position:relative;/* background-color: lightBlue; */width: auto;height: 50px;margin: 8px 6px 0;border-radius: 8px;}
-#desk .userListBody li:hover{ background-color:rgba(219, 112, 147, 0.9);/* color:#EBE2D3*/ color: lightBlue; }
+#desk .userListBody li:hover{ background-color:rgba(245, 197, 212, 0.9);/* color:#EBE2D3*/ color: #222222; }
 /*渐变效果*/
 #desk .userListBody li{-webkit-transition:color .5s ease-out,background-color .5s ease-out;
 						-moz-transition:color .5s ease-out,background-color .5s ease-out;
@@ -133,9 +133,11 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 .ListBlock .f_details{float: left;height: 100%;width: auto;margin-left: 5px;}
 .ListBlock .f_details .f_name{text-align: left;font-size: 12px;margin-top: 5px}
 .ListBlock .f_details .f_phrase{color: gray;font-size: 12px;}
-.ListBlock .f_right{position: absolute;height: 100%;right: 0;width: 50px;}
-.ListBlock .f_right .f_rtop{}
-.ListBlock .f_right .f_rbottom{}
+.ListBlock .f_right{position: absolute;height: 100%;right: 0;width: 62px;}
+.ListBlock .f_right .f_rtop{margin: 5px 5px 0 0;}
+.ListBlock .f_right .f_rbottom{margin: 0 5px 0 0;}
+.ListBlock .f_right .f_rtop:hover{background-color: lightgray;}
+.ListBlock .f_right .f_rbottom:hover{background-color: lightgray;}
 /* .divBgImg {background-image: url(img/avatar/hd01.jpg);height: 100%;width: 100%;background-size: 100% 100%;} */
 
 	

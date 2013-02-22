@@ -65,4 +65,25 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public List<UserDetailsTO> getActiveUsers(QueryUserTO qUserTO);
+
+	/**
+	 * 为用户添加好友
+	 * @param ufriendsTO
+	 * @return
+	 */
+	public int addUserFriend(UserFriendsTO ufriendsTO);
+
+	/**
+	 * 删除用户的某位好友
+	 * @param ufriendsTO
+	 * @return
+	 */
+	public int delUserFriend(UserFriendsTO ufriendsTO);
+
+	/**
+	 * 检查用户是否已经拥有此好友
+	 * @param ufriendsTO
+	 * @return
+	 */
+	public boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO);
 }

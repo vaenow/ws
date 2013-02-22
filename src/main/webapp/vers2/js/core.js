@@ -539,18 +539,10 @@ var ie6iframeheight = function(obj){
 //frame为自定义内容时
 var windowConfig = function(options, window_inner, window_warp){
 	if (options.conf.frameCont == "listContTemp") {
-		var uid = GetStoragedUID();
-		var url = Core.url + "?act=gufl&uid="+uid;
-		var eledata = function(result, i) {
-			return {
-				//friends name
-				listDetails : result[i].friendDetailsTO.alias,
-				f_head		: result[i].friendDetailsTO.headImg,
-				f_phrase	: result[i].friendDetailsTO.phrase
-			};
-		};
-		listUsers(url, window_warp, window_inner, eledata);
+		//刷新用户好友列表
+		refreshFriendsList(window_warp, window_inner);
 	}else if (options.conf.frameCont == "labelContTemp") {
+		//打开Socket连接
 		startWebSocket();
 		hideLoading(window_inner);
 	}else if (options.conf.frameCont == "listAllTemp") {
@@ -596,10 +588,16 @@ var hideLoading = function(window_inner) {
 	$('#' + window_inner + ' .window-loading').fadeOut();
 } 
 
+//显示loading
+var showLoading = function(window_inner) {
+	// 显示loading
+	$('#' + window_inner + ' .window-loading').fadeIn();
+} 
+
 //罗列用户 
 var listUsers = function(url, window_warp, window_inner, eledata) {
 	$.get(url, function(res){
-		console.log(res);
+//		console.log(res);
 		var result = JSON.parse(res);
 		var b = $('#'+window_warp+' .userListBody');
 		b.html("");
@@ -613,10 +611,9 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 
 Core.bindUserListEvent = function(){
 	var desk = $('#desk');
+	//好友列表的监听器
 	desk.delegate('.window-frame:has(.u_banner) ul li', 'click', function(e) {
 		var me 			= $(this).data('info');
-//		console.log(JSON.stringify(me));
-//		var t	 		= JSON.stringify(me).encodeBase64();
 		var t			= me.friend;
 		var chatFrame 	= {
 			"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
@@ -659,6 +656,66 @@ Core.bindUserListEvent = function(){
 			ifrm.startWebSocket(wsinit);
 		})
 	});
+	
+	//新用户列表添加监听器
+	desk.delegate('#window_flist_warp ul li', 'mouseover mouseout click', function(event){
+		var childs = $(this).find('.f_right').children();
+		if (event.type == "mouseover") {
+			childs.eq(0).html("添加好友");
+			childs.eq(1).html("删除");
+		} else if (event.type == "mouseout") {
+			childs.eq(0).html("");
+			childs.eq(1).html("");
+		} else if (event.type == "click") {
+			var name = event.target.className;
+			var act  = "";
+			if (name == "f_rtop") {
+				act  = "addu"; 
+			} else if (name == "f_rbottom") {
+				act  = "delu";
+			} else {
+				return;
+			}
+			
+			var uinfo = $(this).data('info');
+			var data  = {owner: GetStoragedUID(), friend: uinfo.uid};
+			$(this).append($('.window-loading').eq(0).fadeIn());
+			handleUser(act, data, $(this));
+		}
+	});
+}
+
+//对用户进行操作
+var handleUser = function(action, data, me) {
+	var window_flist_warp = 'window_flist_warp';
+	//showLoading(window_flist_warp);
+	var url = Core.url + "?act=" + action;
+	$.post(url, data, function(res){
+		console.log(res);
+		var res = JSON.parse(res);
+		if(res.success){
+			var window_warp  = 'window_main_warp';
+			var window_inner = 'window_main_inner';
+			refreshFriendsList(window_warp, window_inner);
+		}
+		//hideLoading(window_flist_warp);
+		me.find('.window-loading').eq(0).fadeOut();
+	})
+}
+
+//刷新用户好友列表
+var refreshFriendsList = function(window_warp, window_inner) {
+	var uid = GetStoragedUID();
+	var url = Core.url + "?act=gufl&uid="+uid;
+	var eledata = function(result, i) {
+		return {
+			//friends name
+			listDetails : result[i].friendDetailsTO.alias,
+			f_head		: result[i].friendDetailsTO.headImg,
+			f_phrase	: result[i].friendDetailsTO.phrase
+		};
+	};
+	listUsers(url, window_warp, window_inner, eledata);
 }
 
 //取消事件扩散 - 点击窗口

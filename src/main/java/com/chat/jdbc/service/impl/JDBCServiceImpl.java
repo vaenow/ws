@@ -67,5 +67,22 @@ public class JDBCServiceImpl implements IJDBCService {
 		return operatorDAOImpl.getActiveUsers(qUserTO);
 	}
 
+	@Override
+	public int addUserFriend(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.addUserFriend(ufriendsTO);
+	}
+
+	@Override
+	public int delUserFriend(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.delUserFriend(ufriendsTO);
+	}
+
+	@Override
+	public boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.checkUserFriendDuplicated(ufriendsTO);
+	}
 	
 }
