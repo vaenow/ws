@@ -43,4 +43,18 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public List<UserInfoTO> isAllowToLogin(UserInfoTO ui);
+
+	/**
+	 * 添加新用户
+	 * @param ui
+	 * @return
+	 */
+	public int insertNewUser(UserInfoTO ui);
+
+	/**
+	 * 检查用户是否重复
+	 * @param ui
+	 * @return
+	 */
+	public boolean checkUserDuplicated(UserInfoTO ui);
 }

@@ -9,9 +9,11 @@
  */
 package com.chat.jdbc.dao.impl;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -85,6 +87,12 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 			record.setHeadImg(rs.getString(7));
 			record.setBgImg(rs.getString(8));
 			record.setPhrase(rs.getString(9));
+			record.setGender(rs.getByte(10));
+			record.setAge(rs.getByte(11));
+			record.setRealName(rs.getString(12));
+			record.setRemark(rs.getString(13));
+			record.setVipcode(rs.getInt(14));
+			record.setExtras(rs.getInt(15));
 			record.setUserInfoTO(getUserInfo(record.getUid()));
 			return record;
 		}
@@ -146,11 +154,66 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 	@Override
 	public List<UserInfoTO> isAllowToLogin(UserInfoTO ui) {
 		// TODO Auto-generated method stub
-		logger.fatal("getting user details by id: " + WSUtil.stringifyJSON(ui));
+		logger.fatal("isAllowToLogin: " + WSUtil.stringifyJSON(ui));
 
 		String sql = Constant.JDBCConnection.LOGIN_CHECK;
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ui);
 		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper);
+		
+	}
+
+	@Override
+	public int insertNewUser(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		logger.fatal("insertNewUser: " + WSUtil.stringifyJSON(ui));
+
+		String sql = Constant.JDBCConnection.USER_REGIST;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ui);
+		int effectedRows = this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+		
+		// get LAST_INSERT_ID
+		sql = Constant.JDBCConnection.GET_USER_INFO_BY_NAME;
+		namedParameters = new BeanPropertySqlParameterSource(ui);
+		UserInfoTO uinfoTO = this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).get(0);
+		
+		// add extra details.
+		sql = Constant.JDBCConnection.ADD_USER_DETAILS;
+		UserDetailsTO udetailsTO = new UserDetailsTO();
+		int rd = new Random().nextInt(20)+1;
+		String random = rd < 10 ? "0" + rd : "" + rd;
+		udetailsTO.setUid(uinfoTO.getUid());
+		udetailsTO.setAlias(ui.getName()+"-"+random);
+		udetailsTO.setMobile("mobile-"+random);
+		udetailsTO.setEmail("email-"+random);
+		udetailsTO.setUpdateIPAddress(ui.getCreateIPAddress());
+		udetailsTO.setUpdateDateTime(new Date(System.currentTimeMillis()));
+		udetailsTO.setHeadImg("hd"+random+".jpg");
+		udetailsTO.setBgImg("bg"+random+".jpg");
+		udetailsTO.setPhrase("phrase-"+random);
+		udetailsTO.setGender(Constant.DB.UD_GENDER_MALE);
+		udetailsTO.setAge(Byte.parseByte(""+20));
+		udetailsTO.setRealName("real-name-"+random);
+		udetailsTO.setRemark("remark-"+random);
+		udetailsTO.setVipcode(Constant.DB.UD_VIP_NONE);
+		udetailsTO.setExtras(Constant.DB.UD_EXTRAS_NONE);
+		namedParameters = new BeanPropertySqlParameterSource(udetailsTO);
+		this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+		
+		return effectedRows;
+	}
+
+	@Override
+	public boolean checkUserDuplicated(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		logger.fatal("checkUserDuplicated: " + WSUtil.stringifyJSON(ui));
+		
+		boolean isDuplicated = false;
+		String sql = Constant.JDBCConnection.GET_USER_INFO_BY_NAME;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ui);
+		if(!this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).isEmpty()){
+			isDuplicated = true;
+		}
+		return isDuplicated;
 		
 	}
 	

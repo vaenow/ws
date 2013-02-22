@@ -10,6 +10,8 @@
  */
 package com.chat.jdbc.ws.to;
 
+import com.chat.jdbc.to.UserInfoTO;
+
 /**
  * @author luowen
  *
@@ -17,6 +19,15 @@ package com.chat.jdbc.ws.to;
 public class AllowLoginTO {
 
 	private boolean isAllow;
+	private UserInfoTO userinfo;
+
+	public UserInfoTO getUserinfo() {
+		return userinfo;
+	}
+
+	public void setUserinfo(UserInfoTO userinfo) {
+		this.userinfo = userinfo;
+	}
 
 	public boolean isAllow() {
 		return isAllow;

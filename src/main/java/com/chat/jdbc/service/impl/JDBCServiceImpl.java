@@ -48,5 +48,17 @@ public class JDBCServiceImpl implements IJDBCService {
 		return operatorDAOImpl.isAllowToLogin(ui);
 	}
 
+	@Override
+	public 	int insertNewUser(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.insertNewUser(ui);
+	}
+
+	@Override
+	public boolean checkUserDuplicated(UserInfoTO ui) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.checkUserDuplicated(ui);
+	}
+
 	
 }

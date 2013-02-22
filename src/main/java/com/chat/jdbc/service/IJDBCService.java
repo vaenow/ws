@@ -14,7 +14,6 @@ import java.util.List;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
-import com.chat.jdbc.ws.to.AllowLoginTO;
 
 /**
  * @author vane
@@ -27,5 +26,9 @@ public interface IJDBCService {
 	UserDetailsTO getUserDetails(long i);
 
 	List<UserInfoTO> isAllowToLogin(UserInfoTO ui);
+
+	int insertNewUser(UserInfoTO ui);
+
+	boolean checkUserDuplicated(UserInfoTO ui);
 
 }

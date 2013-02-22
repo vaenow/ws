@@ -26,8 +26,62 @@ public class UserDetailsTO {
 	private String headImg;
 	private String bgImg;
 	private String phrase;
+	private byte gender;
+	private byte age;
+	private String realName;
+	private String remark;
+	private int vipcode;
+	private int extras;
 
 	private UserInfoTO userInfoTO;
+
+	public byte getGender() {
+		return gender;
+	}
+
+	public void setGender(byte gender) {
+		this.gender = gender;
+	}
+
+	public byte getAge() {
+		return age;
+	}
+
+	public void setAge(byte age) {
+		this.age = age;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public int getVipcode() {
+		return vipcode;
+	}
+
+	public void setVipcode(int vipcode) {
+		this.vipcode = vipcode;
+	}
+
+	public int getExtras() {
+		return extras;
+	}
+
+	public void setExtras(int extras) {
+		this.extras = extras;
+	}
 
 	public UserInfoTO getUserInfoTO() {
 		return userInfoTO;

@@ -35,6 +35,10 @@ public class Constant {
 		String LOGIN_CHECK				= "SELECT * FROM u_info WHERE u_name=:name AND u_passw=:passw";
 		
 		String USER_REGIST				= "INSERT INTO u_info (u_name, u_passw, u_crt_dttm, u_crt_ip, u_active) VALUES (:name, :passw, :createDateTime, :createIPAddress, :active)";
+		
+		String GET_USER_INFO_BY_NAME	= "SELECT * FROM u_info WHERE u_name = :name";
+		
+		String ADD_USER_DETAILS			= "INSERT INTO u_details (u_id, u_alias, u_mobile, u_email, u_updt_ip, u_updt_dttm, u_img_head,u_img_bg, u_phrase, u_gender, u_age, u_real_m, u_remark, u_vipcode, u_extras) VALUES (:uid, :alias, :mobile, :email, :updateIPAddress, :updateDateTime, :headImg, :bgImg, :phrase,:gender, :age, :realName, :remark, :vipcode, :extras)";
 	}
 
 	// Database Base Connection.
@@ -112,6 +116,22 @@ public class Constant {
 		
 		byte MSG_INFO_ISDELETE_Y		= 1;	//already delete
 		byte MSG_INFO_ISDELETE_N		= 0;	//not delete.
+		
+		//Table: u_info
+		byte USR_ACTIVE					= 1;	//user active
+		byte USR_INACTIVE				= 0;	//user not active
+		
+		//Table: u_details
+		byte UD_GENDER_MALE				= 1;	//user details male
+		byte UD_GENDER_FEMALE			= 2;	//user details female
+		byte UD_GENDER_OTHERS			= 3;	//user details other
+		
+		int UD_VIP_NONE					= 0;	//none vip
+		int UD_VIP_1					= 1;	//vip class 1
+		int UD_VIP_2					= 2;	//vip class 2
+		int UD_VIP_3					= 3;	//vip class 3
+		
+		int UD_EXTRAS_NONE				= 0;	//none extras
 		
 		//Table: 
 	}

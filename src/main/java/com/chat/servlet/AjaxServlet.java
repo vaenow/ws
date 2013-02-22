@@ -1,6 +1,7 @@
 package com.chat.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.AllowLoginTO;
+import com.chat.jdbc.ws.to.RegisterUserTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
@@ -93,6 +95,7 @@ public class AjaxServlet {
 			List<UserInfoTO> list = JDBCService.isAllowToLogin(ui);
 			if(!list.isEmpty()){
 				isAllow = true;
+				allowTO.setUserinfo(list.get(0));
 			}
 			allowTO.setAllow(isAllow);
 			
@@ -100,13 +103,31 @@ public class AjaxServlet {
 		}else if(action.equals(Constant.ACTION_TYPE.USER_REGIST)) {
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
+			UserInfoTO ui = new UserInfoTO();
+			RegisterUserTO regstTO = new RegisterUserTO();
+			boolean isSuccess = false;
 			log.info(username);
 			log.info(password);
+			ui.setName(username);
+			ui.setPassw(password);
+			ui.setCreateIPAddress(req.getRemoteAddr());
+			ui.setCreateDateTime(new Date(System.currentTimeMillis()));
+			ui.setActive(Constant.DB.USR_ACTIVE);
+			boolean isDuplicated = JDBCService.checkUserDuplicated(ui);
+			if(!isDuplicated){
+				if(JDBCService.insertNewUser(ui) == 1){
+					isSuccess = true;
+				}
+			}
+			regstTO.setSuccess(isSuccess);
+			regstTO.setDuplicated(isDuplicated);
+			
+			result = WSUtil.stringifyJSON(regstTO);
 		}
 
 		System.out.println("action: " + action);
 		System.out.println("result: " + result.replaceAll("'", "\""));
-		WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
+		//WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
 		
 		resp.getWriter().write(result.replaceAll("'", "\""));
 	}

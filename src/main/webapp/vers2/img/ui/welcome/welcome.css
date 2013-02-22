@@ -217,6 +217,8 @@ input[type="checkbox"]:not(:checked):hover + label, input[type="checkbox"]:not(:
 	color: #cccccc;
 	text-decoration: none;
 	font-style: italic;
+	margin-left: 32px;
+	font-weight: bolder;
 }
 
 .new-usr-pwd a:hover, .new-usr-pwd a:focus {
@@ -280,3 +282,5 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 	color: #2d2d2d;
 }
 
+.login-error-msg {position: absolute;margin: 170px;font-weight: bolder;color: #cccccc;text-shadow: 1px 2px 17px;display:none;}
+.bgloader {background-image: url(images/loader.gif);position: absolute;background-size: 100% 100%;width: 40px;height: 20px;margin-left: 319px;margin-top: 133px;display:none; }
