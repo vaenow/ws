@@ -5,7 +5,6 @@
 $(document).ready(function(){
 	
 	$('.new-usr-pwd').delegate('a', 'click', function(){
-		console.log(this);
 		var note = '<a href="javascript:hideform();">I have username !</a>';
 		var animate = 'normal';
 		$('.login').hide(animate).html('NEW ONE!').show(animate);
@@ -33,16 +32,21 @@ formAction = function() {
 		action='login':action='regist';
 	var url = Core.url+"?act="+action;
 	var formdata = {
-			username: $('form input[name=username]').val(),
-			password: $('form input[name=password]').val()
+			username: $('form input[name=username]').val().trim(),
+			password: $('form input[name=password]').val().trim()
 	}
-	$.post(url, formdata, function(sc){
-		var result = JSON.parse(sc);
-		console.log(result);
-		handleResponse(result, action);
-	});
-	
-	$('form .bgloader').show();
+	if(isLegal(formdata)){
+		$.post(url, formdata, function(sc){
+			var result = JSON.parse(sc);
+			console.log(result);
+			handleResponse(result, action);
+		}).error(function(){
+			showInfoMessage("操作失败。", true);
+		});
+		$('form .bgloader').show();
+	}else{
+		showInfoMessage("输入格式出错。", true);
+	}
 	//阻止表单自动提交
 	return false;
 }
@@ -53,18 +57,21 @@ handleResponse = function(result, action) {
 			localStorage.setItem('uid', result.userinfo.uid);
 			window.location.href = '/vers2/index.html';
 		} else {
-			showInfoMessage('用户名或密码错误。');
+			showInfoMessage('用户名或密码错误。', true);
 		}
 	} else if(action == 'regist') {
 		var msg = "";
+		var err = false;
 		if(result.success){
 			msg = "恭喜! 注册成功！";
 		} else if(result.duplicated) {
 			msg = "用户名已存在。";
+			err = true;
 		} else {
 			msg = "注册失败。";
+			err = true;
 		}
-		showInfoMessage(msg);
+		showInfoMessage(msg, err);
 	}
 }
 
@@ -74,7 +81,22 @@ hideform = function() {
 	})
 }
 
-showInfoMessage = function(msg) {
+showInfoMessage = function(msg, error) {
+	var color = "rgb(82, 173, 54)";
 	$('form .bgloader').hide();
-	$('.login-error-msg').html(msg).hide().show('slow');
+	if(error){
+		color = "rgb(216, 77, 77)";
+	}
+	$('.login-error-msg').css({
+		"color" : color
+	}).html(msg).hide().show('slow');
+}
+
+isLegal = function(data) {
+	var u = data.username, p = data.password;
+	var isLegal = false;
+	if (u && p && u!='' && p!='' && u != 'input here.') {
+		isLegal = true;
+	}
+	return isLegal;
 }

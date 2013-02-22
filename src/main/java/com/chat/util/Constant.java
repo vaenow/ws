@@ -20,25 +20,28 @@ public class Constant {
 	// Database Connection.
 	public interface JDBCConnection {
 
+		//得到用户好友列表 - by uid
 		String GET_USER_FRIENDS_BY_UID 	= "SELECT * FROM u_friends f WHERE f.f_owner = :uid ORDER BY f.f_owner ASC";
-
+		//用户基本信息
 		String GET_USER_INFO 			= "SELECT * FROM u_info i WHERE i.u_id = :uid";
-		
+		//用户详细信息
 		String GET_USER_DETAILS 		= "SELECT * FROM u_details d WHERE d.u_id = :uid";
-		
+		//保存消息
 		String SAVE_MESSAGE 			= "INSERT INTO msg_info (msg_from, msg_to, msg_ty, msg_cnt, msg_crt_dttm, msg_crt_ip, msg_unread, msg_isdelete) VALUES (:msg_from, :msg_to, :msg_ty, :msg_cnt, :msg_crt_dttm, :msg_crt_ip, :msg_unread, :msg_isdelete)";
-
+		//最近插入的ID值
 		String LAST_INSERT_ID			= "SELECT LAST_INSERT_ID()";
-		
+		//未读消息
 		String GET_UNREAD_MSG			= "SELECT * FROM msg_info WHERE msg_unread=1 AND msg_from=:reciever AND msg_to=:sender";
-		
+		//登录检查
 		String LOGIN_CHECK				= "SELECT * FROM u_info WHERE u_name=:name AND u_passw=:passw";
-		
+		//新用户注册
 		String USER_REGIST				= "INSERT INTO u_info (u_name, u_passw, u_crt_dttm, u_crt_ip, u_active) VALUES (:name, :passw, :createDateTime, :createIPAddress, :active)";
-		
+		//用户基本信息 - by uid
 		String GET_USER_INFO_BY_NAME	= "SELECT * FROM u_info WHERE u_name = :name";
-		
+		//添加用户详细信息
 		String ADD_USER_DETAILS			= "INSERT INTO u_details (u_id, u_alias, u_mobile, u_email, u_updt_ip, u_updt_dttm, u_img_head,u_img_bg, u_phrase, u_gender, u_age, u_real_m, u_remark, u_vipcode, u_extras) VALUES (:uid, :alias, :mobile, :email, :updateIPAddress, :updateDateTime, :headImg, :bgImg, :phrase,:gender, :age, :realName, :remark, :vipcode, :extras)";
+		//为某用户添加好友
+		String ADD_FRIENDS_TO_USER		= "INSERT INTO u_friends (f_owner, f_friend, f_crt_dttm, f_crt_ip, f_type, f_id_parent, f_rank) VALUES (:owner, :friend, :createDateTime, :createIPAddress, :type, :idParent, :rank)";
 	}
 
 	// Database Base Connection.
@@ -82,6 +85,9 @@ public class Constant {
 		
 		// user regist
 		String USER_REGIST				= "regist";
+
+		// user is login
+		String CHECK_LOGIN 				= "isLogin";
 
 	}
 
@@ -143,5 +149,10 @@ public class Constant {
 	
 	public interface Strs {
 
+	}
+	
+	public interface Common {
+		int LOGIN_SUCCESS				= 1;	//login success;
+		int LOGIN_FAILURE				= 0;	//login fail;
 	}
 }

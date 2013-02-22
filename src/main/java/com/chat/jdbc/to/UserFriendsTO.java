@@ -9,11 +9,7 @@
  */
 package com.chat.jdbc.to;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import java.util.Date;
 
 /**
  * @author vane
@@ -26,9 +22,37 @@ public class UserFriendsTO {
 	private Long friend; // 好友列表
 	private String createIPAddress;
 	private Date createDateTime;
+	private int type;			//列表类型: 用户;分组
+	private int idParent;		//父节点
+	private int rank;			//用户列表排序
 
 	private UserDetailsTO ownerDetailsTO;
 	private UserDetailsTO friendDetailsTO;
+
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getIdParent() {
+		return idParent;
+	}
+
+	public void setIdParent(int idParent) {
+		this.idParent = idParent;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
 
 	public UserDetailsTO getOwnerDetailsTO() {
 		return ownerDetailsTO;

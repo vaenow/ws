@@ -12,6 +12,7 @@ package com.chat.jdbc.dao.impl;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -167,6 +168,7 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		// TODO Auto-generated method stub
 		logger.fatal("insertNewUser: " + WSUtil.stringifyJSON(ui));
 
+		// insert new user
 		String sql = Constant.JDBCConnection.USER_REGIST;
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(ui);
 		int effectedRows = this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
@@ -186,7 +188,7 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		udetailsTO.setMobile("mobile-"+random);
 		udetailsTO.setEmail("email-"+random);
 		udetailsTO.setUpdateIPAddress(ui.getCreateIPAddress());
-		udetailsTO.setUpdateDateTime(new Date(System.currentTimeMillis()));
+		udetailsTO.setUpdateDateTime(Calendar.getInstance().getTime());
 		udetailsTO.setHeadImg("hd"+random+".jpg");
 		udetailsTO.setBgImg("bg"+random+".jpg");
 		udetailsTO.setPhrase("phrase-"+random);
@@ -197,6 +199,19 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		udetailsTO.setVipcode(Constant.DB.UD_VIP_NONE);
 		udetailsTO.setExtras(Constant.DB.UD_EXTRAS_NONE);
 		namedParameters = new BeanPropertySqlParameterSource(udetailsTO);
+		this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+		
+		// add default friends
+		sql = Constant.JDBCConnection.ADD_FRIENDS_TO_USER;
+		UserFriendsTO ufriendsTO = new UserFriendsTO();
+		ufriendsTO.setOwner(uinfoTO.getUid());
+		ufriendsTO.setFriend(Long.parseLong(1+""));
+		ufriendsTO.setCreateDateTime(Calendar.getInstance().getTime());
+		ufriendsTO.setCreateIPAddress(ui.getCreateIPAddress());
+		ufriendsTO.setType(0);
+		ufriendsTO.setIdParent(0);
+		ufriendsTO.setRank(0);
+		namedParameters = new BeanPropertySqlParameterSource(ufriendsTO);
 		this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
 		
 		return effectedRows;

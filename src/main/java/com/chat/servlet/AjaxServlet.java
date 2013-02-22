@@ -1,11 +1,12 @@
 package com.chat.servlet;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,21 +47,17 @@ public class AjaxServlet {
 		// 处理编码问题
 		// req.setCharacterEncoding("UTF-8");
 		// resp.setContentType("text/html;charset=UTF-8");
-
-		req.getSession();
-
 		String action = req.getParameter("act");
 		String result = "";
 		
 		if (action.equals(Constant.ACTION_TYPE.GET_SHORTCUTS)) {
-
 			result = Constant.AJAX_FORMATS.SC_FORMAT;
 
 		} else if (action.equals(Constant.ACTION_TYPE.GET_USER_FRIENDS_LIST)) {
 			long uid = parseUID(req);
 			List<UserFriendsTO> list = JDBCService.getFriendsListByUID(uid);
 
-			StringBuilder names = new StringBuilder();
+//			StringBuilder names = new StringBuilder();
 			System.out.println("list.size(): " + list.size());
 //			for (UserFriendsTO friend : list) {
 //				String fname = friend.getFriendDetailsTO().getAlias();
@@ -96,6 +93,8 @@ public class AjaxServlet {
 			if(!list.isEmpty()){
 				isAllow = true;
 				allowTO.setUserinfo(list.get(0));
+				HttpSession session = req.getSession();
+				session.setAttribute(list.get(0).getUid()+"", Constant.Common.LOGIN_SUCCESS);
 			}
 			allowTO.setAllow(isAllow);
 			
@@ -111,7 +110,7 @@ public class AjaxServlet {
 			ui.setName(username);
 			ui.setPassw(password);
 			ui.setCreateIPAddress(req.getRemoteAddr());
-			ui.setCreateDateTime(new Date(System.currentTimeMillis()));
+			ui.setCreateDateTime(Calendar.getInstance().getTime());
 			ui.setActive(Constant.DB.USR_ACTIVE);
 			boolean isDuplicated = JDBCService.checkUserDuplicated(ui);
 			if(!isDuplicated){
@@ -123,6 +122,17 @@ public class AjaxServlet {
 			regstTO.setDuplicated(isDuplicated);
 			
 			result = WSUtil.stringifyJSON(regstTO);
+		}else if(action.equals(Constant.ACTION_TYPE.CHECK_LOGIN)){
+			String uid = req.getParameter("uid");
+			Integer isLogin = (Integer)req.getSession().getAttribute(uid);
+			AllowLoginTO aLoginTO = new AllowLoginTO();
+			boolean isAllow = false;
+			if (isLogin != null && isLogin == Constant.Common.LOGIN_SUCCESS) {
+				isAllow = true;
+			}
+			aLoginTO.setAllow(isAllow);
+			
+			result = WSUtil.stringifyJSON(aLoginTO);
 		}
 
 		System.out.println("action: " + action);

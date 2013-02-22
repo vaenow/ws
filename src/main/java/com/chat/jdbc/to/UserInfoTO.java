@@ -9,7 +9,8 @@
  */
 package com.chat.jdbc.to;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * @author vane

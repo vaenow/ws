@@ -19,6 +19,21 @@ GetStoragedUID = function() {
 /**
  * 页面重新载入
  */
-WindowReload = function(){
-	window.location.reload();
+WindowReload = function(destination){
+	window.location.href = destination||window.location.href;
+}
+
+/**
+ * 检查用户是否已经登录
+ */
+CheckIsLogin = function(){
+	var url = Core.url + "?act=isLogin&uid="+GetStoragedUID();
+	$.get(url, function(res){
+		console.log("res: "+res);
+		res = JSON.parse(res);
+		if(!res.allow){
+			WindowReload('/vers2/welcome.html');
+		}
+	})
+	
 }
