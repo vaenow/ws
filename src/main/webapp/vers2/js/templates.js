@@ -87,6 +87,30 @@ var chatWindow =
 		'<input id="name_" value="snow" maxlength="4">&nbsp;'+
 		'<input class="input_message" name="msg" id="msg_">&nbsp;<input class="btns" type="button" value="发言" onclick="send_msg()" maxlength="100" style="opacity: 0.3; color: black;">&nbsp;<input id="autoFresh" class="btns" type="button" value="刷新 5" onclick="ajax_2();" style="opacity: 0.3; color: black;">&nbsp;<input id="stopFresh" class="btns" type="button" value="停止" onclick="ajax_3();" style="opacity: 0.3; color: black;">'+
 	'</div>'+
-'</div>'
+'</div>';
 
 
+//websocket chat message template
+var wstemp = {};
+
+wstemp.msg = "<div class='msg_body'><div class='msg_sender'>{sderalias}</div><div class='msg_date'>{token}</div><div class='msg_ctn'>{ctn}</div></div>";
+
+wstemp.msg_bubble = function(type){
+	var position = '';
+	var msg 	 = '';
+	if(type == 1) {
+		position = 'left';
+	}else if(type == 2) {
+		position = 'right';
+	}
+	msg = '<div class="wraper{ty}">'+
+		'<div class="{pos}">'+
+			'<div class="bubble">'+
+				'<div class="content">{ctn}</div>'+
+			'</div>'+
+		'</div>'+
+	'</div>';
+	return FormatModel(msg, {ty: type, pos:position});
+}
+		
+	

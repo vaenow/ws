@@ -9,7 +9,11 @@ S.ws 			= {};
 S.CST			= window.parent.Core.CST;
 S.location 		= window.parent.Core.url+'?act=';
 S.wsmsg 		= window.parent.Core.config.wsmsg;
+S.temp			= window.parent.wstemp;
+S.FormatModel	= window.parent.FormatModel;
+S.GetStoragedUID= window.parent.GetStoragedUID;
 S.frd 			= {};
+
 
 // 消息内容片断
 S.cnt = {
@@ -37,11 +41,13 @@ S.startWebSocket = function(wsinitial) {
 	};
 	// 断开时会走这个方法
 	S.ws.onclose = function() {
-		appendMsg('websocket closed');
+		S.wsmsg.ctn 	= 'websocket closed';
+		appendMsg(JSON.stringify(S.wsmsg));
 	};
 	// 连接上时走这个方法
 	S.ws.onopen = function() {
-		appendMsg('websocket opened');
+		S.wsmsg.ctn 	= 'websocket opened';
+		appendMsg(JSON.stringify(S.wsmsg));
 	};
 }
 
@@ -54,7 +60,7 @@ function sendMsg() {
 		clearMsgContent();
 		return;
 	}
-	S.ws.send(handleMsg(data));
+	S.ws.send(handleSendingMsg(data));
 	clearMsgContent();
 
 }
@@ -62,7 +68,15 @@ function sendMsg() {
 //添加消息
 function appendMsg(data) {
 	var msgBox 			= $('#vid_chat_content');
-	msgBox.append(data + '</br>');
+	var type			= 1;
+	data 				= handleRecievedMsg(JSON.parse(data));
+
+	if(!data.sder){								//sder为false时，即系统消息。
+		console.log('system msg: '+data.ctn);
+	}else if(data.sder == S.GetStoragedUID()){	//自己发送的消息
+		type = 2;
+	}
+	msgBox.append(S.FormatModel(S.temp.msg_bubble(type), data));
 //	c.append(parseToBlock(j.result[i])).children().last().css({
 //			opacity : 0.2
 //		}).animate({
@@ -72,8 +86,8 @@ function appendMsg(data) {
 	msgBox[0].scrollTop = msgBox[0].scrollHeight;
 }
 
-//处理消息格式
-function handleMsg(data) {
+//处理发出的消息格式
+function handleSendingMsg(data) {
 	var frdinfo		 	= S.frd[getToken()];
 	S.wsmsg.ctn 		= data;
 	S.wsmsg.sder 		= frdinfo.owner;
@@ -84,7 +98,21 @@ function handleMsg(data) {
 	return JSON.stringify(S.wsmsg);
 }
 
-//解析url token
+//处理接收的消息格式
+function handleRecievedMsg(data) {
+	//sder为false时，即系统消息。
+//	if(!data.sder){
+//		data.sderalias 	= "Admin";
+//	}else{
+//		var frdinfo		= S.frd[data.sder];	
+//		data.sderalias 	= frdinfo.ownerDetailsTO.alias;
+//	}
+	
+	return data;
+}
+
+//解析url token 
+//get UID
 function getToken(){
 	return window.location.search.split('?t=')[1];
 }

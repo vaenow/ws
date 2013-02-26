@@ -21,7 +21,7 @@ public class WSMessageTO {
 	private Long token; 	//"verify token"
 	private String sderalias;	// sender alias
 	private String rcveralias;	// reciever alias
-	
+//	private byte msgType;		//1 -> normal message; 2 -> system message
 
 	public String getSderalias() {
 		return sderalias;

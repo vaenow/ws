@@ -60,13 +60,16 @@ Core.animate = {
 //		token	:	"verify token"
 //}
 Core.config.wsmsg = (function() {
-	//获取WebSocketMessage对象属性
+	//获取WebSocketMessage对象属性 WSMessageTO
 	var obj = {}
 	var url = Core.url+"?act=gwsm";
 	$.get(url,function(rs){
-		console.log('rs: '+rs);
+		console.log('wsmto: '+rs);
 		obj = JSON.parse(rs);
 	});
 	
 	return obj;
 })();
+
+//为ChatFrames存储备用信息
+Core.config.frd = [];

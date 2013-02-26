@@ -178,5 +178,8 @@ public class Constant {
 	public interface Common {
 		int LOGIN_SUCCESS				= 1;	//login success;
 		int LOGIN_FAILURE				= 0;	//login fail;
+		
+		byte WSMSG_TYPE_SYSTEM			= 1;	//system websocket message type
+		byte WSMSG_TYPE_NORMAL			= 0;	//normal websocket message type
 	}
 }

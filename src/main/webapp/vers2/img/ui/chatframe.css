@@ -60,12 +60,13 @@ input:hover {
 .vid_chat_content {
 	border: 1px dashed gray;
 	margin: 2px;
-	padding: 2px;
+	padding: 6px;
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 40px;
 	left: 0;
+	background-color: #dbe2ed;
 }
 
 .vid_chat_bottom {
@@ -129,5 +130,10 @@ float:left
 
 .divBgImg {background-image: url(../avatar/hd02.jpg);height: 100%;width: 100%;background-size: 100% 100%;} 
 .vid_chat_bottom .u_head{height:38px;width: 40px;margin: 2px;border-radius: 6px;}
+.msg_body{}
+.msg_sender{}
+.msg_date{}
+.msg_ctn{}
+	
 	
 	

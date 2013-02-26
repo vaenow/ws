@@ -596,6 +596,7 @@ var showLoading = function(window_inner) {
 
 //罗列用户 
 var listUsers = function(url, window_warp, window_inner, eledata) {
+	var me = this;
 	$.get(url, function(res){
 //		console.log(res);
 		var result = JSON.parse(res);
@@ -604,6 +605,10 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 		for ( var i = 0; i < result.length; i++) {
 			b.append(FormatModel(listEle, eledata(result, i)));
 			b.children().last().data('info', result[i]);
+			//为ChatFrames存储备用信息
+			if(result[i]['friendDetailsTO']){
+				Core.config.frd[result[i]['friendDetailsTO']['uid']] = result[i];
+			}
 		}
 		hideLoading(window_inner);
 	});
@@ -652,8 +657,11 @@ Core.bindUserListEvent = function(){
 		$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
 			var ifrm 	= this.contentWindow.S;
 			var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
-			ifrm.frd[t] = me;
+			//启用 WebSocket
 			ifrm.startWebSocket(wsinit);
+			
+			//update friends info
+			ifrm.frd = Core.config.frd;
 		})
 	});
 	

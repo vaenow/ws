@@ -1,5 +1,6 @@
 package com.chat.ws;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -53,9 +54,9 @@ public class ChatWebSocket implements OnTextMessage {
 	@Override
 	public void onMessage(String data) {
 		WSMessageTO msg = WSUtil.handleJSON(data, WSMessageTO.class);
-		String message = msg.getSderalias()+ ": "+msg.getCtn();
+		//String message = msg.getSderalias()+ ": "+msg.getCtn();
 		
-		boolean isRead = sendMsg(message);
+		boolean isRead = sendMsg(msg);
 		saveMessageIntoLog(msg, isRead);
 	}
 
@@ -130,15 +131,19 @@ public class ChatWebSocket implements OnTextMessage {
 		List<MsgInfoTO> list = fetchUnreadMsg(this.wsInitial);
 		int size = list.size();
 		String msgNote = "";
+		WSMessageTO wsmto = new WSMessageTO();
 		if (size > 0) {
 			msgNote = "You have unread message(s): " + size;
 		} else {
 			msgNote = "You have no unread messages";
 		}
-		sendMsg(msgNote, true, false);
+		wsmto.setCtn(msgNote);
+//		wsmto.setSderalias(""+wsmto.getSder());
+		sendMsg(wsmto, true, false);
 		
 		for(int i = 0; i<size; i++){
-			sendMsg(list.get(i).getMsg_from()+": "+list.get(i).getMsg_cnt(), true, false);
+			wsmto.setCtn(list.get(i).getMsg_cnt());
+			sendMsg(wsmto, true, false);
 		}
 	}
 	
@@ -150,7 +155,7 @@ public class ChatWebSocket implements OnTextMessage {
 	 * @param isSend2One	对好友发送
 	 * @return				消息是否已读
 	 */
-	private boolean sendMsg(String message, boolean isSend2Me, boolean isSend2One){
+	private boolean sendMsg(WSMessageTO message, boolean isSend2Me, boolean isSend2One){
 		// 消息是否已读状态
 		boolean isRead = false;
 		
@@ -159,23 +164,17 @@ public class ChatWebSocket implements OnTextMessage {
 				//To specific friend(s)
 				if (wsInitial.getSender() == user.getWsInitial().getReciever()
 						&& wsInitial.getReciever() == user.getWsInitial().getSender()) {
-					try {
-						user.connection.sendMessage(message);
-						//消息已读标志
-						isRead = true;
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					message.setSder(user.getWsInitial().getReciever());
+					sendWSMessage(user.connection, message);
+					//消息已读标志
+					isRead = true;
 				}
 			}
 		}
 		//To yourself.
 		if (isSend2Me) {
-			try {
-				this.connection.sendMessage(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			message.setSder(this.wsInitial.getSender());
+			sendWSMessage(this.connection, message);
 		}
 		return isRead;
 	}
@@ -187,7 +186,24 @@ public class ChatWebSocket implements OnTextMessage {
 	 * @param message
 	 * @return
 	 */
-	private boolean sendMsg(String message) {
+	private boolean sendMsg(WSMessageTO message) {
 		return sendMsg(message, true, true);
+	}
+	
+	/**
+	 * WebSocket最终出口方法 
+	 * 
+	 * @param connection
+	 * @param wsmsg
+	 */
+	private void sendWSMessage(Connection connection, WSMessageTO wsmsg){
+		try {
+			wsmsg.setToken(Calendar.getInstance().getTimeInMillis());
+			//send message out 
+			connection.sendMessage(WSUtil.stringifyJSON(wsmsg));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
