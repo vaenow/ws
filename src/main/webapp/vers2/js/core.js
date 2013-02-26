@@ -701,13 +701,21 @@ var handleUser = function(action, data, me) {
 	$.post(url, data, function(res){
 		console.log(res);
 		var res = JSON.parse(res);
+		var msgboxinfo 	= '';
+		var msgboxtype 	= 1;
 		if(res.success){
 			var window_warp  = 'window_main_warp';
 			var window_inner = 'window_main_inner';
 			refreshFriendsList(window_warp, window_inner);
+			msgboxinfo 		 = '操作成功！';
+			msgboxtype		 = 4;
+		}else{
+			msgboxinfo 		 = '操作失败！';
+			msgboxtype		 = 5;
 		}
-		//hideLoading(window_flist_warp);
-		me.find('.window-loading').eq(0).fadeOut();
+			//hideLoading(window_flist_warp);
+			me.find('.window-loading').eq(0).fadeOut();
+			ZENG.msgbox.show(msgboxinfo, msgboxtype, 2000);
 	})
 }
 
