@@ -181,5 +181,7 @@ public class Constant {
 		
 		byte WSMSG_TYPE_SYSTEM			= 1;	//system websocket message type
 		byte WSMSG_TYPE_NORMAL			= 0;	//normal websocket message type
+		
+		long WSMSG_SENDER_SYSTEM		= 0;	//system is the sender of message;
 	}
 }

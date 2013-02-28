@@ -98,10 +98,12 @@ wstemp.msg = "<div class='msg_body'><div class='msg_sender'>{sderalias}</div><di
 wstemp.msg_bubble = function(type){
 	var position = '';
 	var msg 	 = '';
-	if(type == 1) {
+	if(type == 1) {			// friend msg
 		position = 'left';
-	}else if(type == 2) {
+	}else if(type == 2) {	// self msg
 		position = 'right';
+	}else if(type == 3) {	// system msg
+		position = 'left';
 	}
 	msg = '<div class="wraper{ty}">'+
 		'<div class="{pos}">'+

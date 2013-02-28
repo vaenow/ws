@@ -138,7 +138,7 @@ public class ChatWebSocket implements OnTextMessage {
 			msgNote = "You have no unread messages";
 		}
 		wsmto.setCtn(msgNote);
-//		wsmto.setSderalias(""+wsmto.getSder());
+		wsmto.setSder(Constant.Common.WSMSG_SENDER_SYSTEM);
 		sendMsg(wsmto, true, false);
 		
 		for(int i = 0; i<size; i++){
@@ -173,7 +173,6 @@ public class ChatWebSocket implements OnTextMessage {
 		}
 		//To yourself.
 		if (isSend2Me) {
-			message.setSder(this.wsInitial.getSender());
 			sendWSMessage(this.connection, message);
 		}
 		return isRead;

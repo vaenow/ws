@@ -73,6 +73,7 @@ function appendMsg(data) {
 
 	if(!data.sder){								//sder为false时，即系统消息。
 		console.log('system msg: '+data.ctn);
+		type = 3;
 	}else if(data.sder == S.GetStoragedUID()){	//自己发送的消息
 		type = 2;
 	}
