@@ -19,6 +19,9 @@ http://localhost:8080
 
 [Top](#Top)
 
+##Features
+`new user` `get all users` `Add&RM users`  `iphone message ui` `face emotions`
+
 
 ##History
 ######2012-12-24
