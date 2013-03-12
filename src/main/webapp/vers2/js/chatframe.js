@@ -88,6 +88,8 @@ function appendMsg(data) {
 	
 	//转化表情图片
 	parseToImgEmo();
+	//桌面通知
+	deskNotify(data);
 }
 
 //处理发出的消息格式
@@ -338,4 +340,22 @@ function ajax_details() {
 
 function clearMsgContent(){
 	$('#msg_').val('').focus();
+}
+
+function deskNotify(data) {
+	var AUTO_CLOSE_DELAY_SECONDS  = 3;
+	if (window.webkitNotifications) {  
+			if (window.webkitNotifications.checkPermission() == 0) {  
+				var pop =  window.webkitNotifications.createNotification('icon', data.sderalias||'System', data.ctn);
+				pop.ondisplay = function(event) {  
+					setTimeout(function() {  
+						event.currentTarget.cancel();  
+					}, AUTO_CLOSE_DELAY_SECONDS * 1000);  
+				} 
+				pop.show(); 
+			} else {  
+				window.webkitNotifications.requestPermission();  
+				return;  
+			}  
+	  }  
 }
