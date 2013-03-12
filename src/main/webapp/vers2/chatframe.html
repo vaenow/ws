@@ -2,11 +2,19 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>Chat Room</title>
+<!-- Base chat style -->
 <link rel="stylesheet" href="img/ui/chatframe.css">
+<!-- Chatting bubble like IPhone -->
 <link rel="stylesheet" href="img/ui/chatframe-bubble.css">
+<!-- Animation face quick images -->
+<link rel="stylesheet" href="img/ui/emotions/emotions.css">
+<!-- For customized scroll bar -->
+<link rel="stylesheet" href="img/ui/scrollbar/jquery.mCustomScrollbar.css" />
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/sugar/sugar-1.3.9.min.js"></script>
+<script src="js/emotions/ws.emotions.js"></script>
+<script src="js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- <script>
 	var s = document.createElement('script');
 	s.setAttribute('src', 'js/chatframe.js?token='+new Date().getTime());
@@ -17,6 +25,9 @@
 <body>
 <div id="vid_chat" style="overflow: hidden;">
 	<div class="vid_chat_content" id="vid_chat_content" style="overflow:auto; "></div>
+	<ul class="vid_chat_fn">
+		<li class="fn_block emotion" id="message_face"></li><li class="fn_block"></li><li class="fn_block"></li><li class="fn_block"></li><li class="fn_block"></li>
+	</ul>
 	<div class="vid_chat_bottom">
 		<!-- <input id="name_" value="snow" maxlength="4">&nbsp; -->
 		<div class="divBgImg u_head"></div>
@@ -26,7 +37,19 @@
 </div>
 </body>
 <script>
+//放新浪微博表情
+$("#message_face").jqfaceedit({txtAreaObj:$("#msg_"),containerObj:$('#vid_chat'),top:-228,left:5,textareaid:'msg_'});
+</script>
+<script>
 var user = window.parent.Core.userinfo.getInfo();
 $(".u_head").css({'background-image': 'url(img/avatar/'+user.headImg+')'});
+</script>
+<script>
+//自定义滚动条
+(function($){
+    $(window).load(function(){
+       // $(".vid_chat_content").mCustomScrollbar();
+    });
+})(jQuery);
 </script>
 </html>

@@ -64,7 +64,7 @@ input:hover {
 	position: absolute;
 	top: 0;
 	right: 0;
-	bottom: 40px;
+	bottom: 65px;
 	left: 0;
 	background-color: #dbe2ed;
 }
@@ -134,6 +134,11 @@ float:left
 .msg_sender{}
 .msg_date{}
 .msg_ctn{}
-	
+
+.vid_chat_fn{position: absolute;bottom: 40px;height: 22px;right: 0px;left: 0;margin: 2px;}
+.vid_chat_fn .fn_block{width: 22px;height: 100%;/* background-color: blue ;*/margin-left: 1px;margin-right: 5px;list-style-type: none;float: left; -webkit-transition: all .5s ease-out;}
+.vid_chat_fn .fn_block:hover{/* background-color:lightblue; */-webkit-transition: all .25s ease;}	
+.vid_chat_fn .emotion{ background-image: url(icenter.png);background-position: -113px -48px;}
+.vid_chat_fn .emotion:hover{background-image: url(icenter.png);background-position: -177px 0px;}
 	
 	

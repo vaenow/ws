@@ -10,6 +10,7 @@ body {font-family: "微软雅黑";}
 	position: relative;
 	width: 100%;
 	background: #dbe2ed;
+	font-size: 13px;
 }
 .bubble {
 	position: relative;
@@ -64,7 +65,7 @@ body {font-family: "微软雅黑";}
 	top: -5px;
 	left: 0;
 	width: 100%;
-	height: 12px;
+	height: 6px;
 	background-image: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.2) 90%, rgba(255,255,255,0) 90% );
 	background-image: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.2) 90%, rgba(255,255,255,0) 90% );
 	border-radius: 10px

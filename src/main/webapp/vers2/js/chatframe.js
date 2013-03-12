@@ -85,6 +85,9 @@ function appendMsg(data) {
 //		},1000,'swing');
 	//滚动条跟随
 	msgBox[0].scrollTop = msgBox[0].scrollHeight;
+	
+	//转化表情图片
+	parseToImgEmo();
 }
 
 //处理发出的消息格式
@@ -118,6 +121,23 @@ function getToken(){
 	return window.location.search.split('?t=')[1];
 }
 
+//显示表情
+//show_faceshow_faceshow_faceshow_face
+//message_facemessage_facemessage_facemessage_face
+// $("#show_face").click(function(){
+//	$('.show_e').html($('#msg').val());
+//	$('.show_e').emotionsToHtml();
+// });
+ 
+function parseToImgEmo(){
+	var content	= $('.bubble .content');
+//	var msg 	= $('#msg_');
+//	content.html(msg.val());
+	content.emotionsToHtml();
+}
+ 
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 function flush() {
 	// alert("ajax--");
