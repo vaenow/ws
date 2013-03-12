@@ -1,9 +1,15 @@
-ws
+##ws
 ==
 
 Just a test for web IM
 
-------------------------------------------------
+##Note
+This is a clean project 
+which is made up of `Maven` `Jetty` `WebSocket` `SpringMVC`
+
+
+##History
+
 2013-01-19
 
 Very Simple Jetty WebSocket Chat Demo.
