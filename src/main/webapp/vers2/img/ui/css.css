@@ -13,7 +13,7 @@
 微软雅黑       \5FAE\8F6F\96C5\9ED1
 */
 
-*{margin:0;padding:0;-moz-user-select:none;-khtml-user-select:none;user-select:none}
+*{margin:0;padding:0;/* -moz-user-select:none;-khtml-user-select:none;user-select:none */}
 form,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,p{list-style:none outside none}
 a{text-decoration:none;color:#ccc;outline:none}
 a:hover{text-decoration:underline;color:#1298F4}
@@ -59,7 +59,7 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 /*禁止选中,IE下不兼容*/
 #desk ul li,
 #desk ul li span,
-.title-bar{-moz-user-select:none;-khtml-user-select:none;user-select:none}
+.title-bar{/* -moz-user-select:none;-khtml-user-select:none;user-select:none */}
 #desk ul{width:100%;height:100%;overflow:hidden;position:absolute}
 #desk ul li{width:80px;height:57px;padding:10px 0;text-align:center;position:absolute;cursor:pointer}
 #desk ul li img{border-radius:3px 3px 3px 3px;display:block;height:32px;width:32px;margin:auto}
@@ -124,8 +124,13 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 							-o-transition: color .25s ease-in, background-color .25s ease-in;
 						 	transition: color .25s ease-in, background-color .25s ease-in;}
 
-#desk .u_banner{height:20%;border:1px;background-image:url(u_banner.png);max-height:90px;box-shadow: indigo 0 -8px 15px 9px;}
-#desk .u_b_head{left:10px;top:10px;border-radius:7px;position:absolute;height:15%;max-height:70px;width:auto;}
+#desk .u_banner{height:20%;border:1px;background-image:url(u_banner1.png);max-height:90px;box-shadow: rgb(120, 147, 141) -5px 4px 10px -3px;}
+#desk .ub_head{left:10px;top:10px;border-radius:7px;position:absolute;height:15%;max-height:70px;width: 26%;max-width: 70px;}
+#desk .ub_head .ubh_file{}
+#desk .u_banner .ub_details {width: auto;top: 10px;position: absolute;left: 90px;right: 10px;max-height: 70px;height: 15%;}
+#desk .u_banner .ub_details .ubd_name{height: 40%;margin-top: 4px;}
+#desk .u_banner .ub_details .ubd_phrase{height: 40%;margin-top: 4px;}
+.ubd_name:hover,.ubd_phrase:hover{background-color:#dbe2ed; border-radius: 4px;}
 
 #desk .ListBlock{padding:0;}
 #desk .fullHeight {height: 100%}
@@ -139,5 +144,7 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 .ListBlock .f_right .f_rtop:hover{background-color: lightgray;}
 .ListBlock .f_right .f_rbottom:hover{background-color: lightgray;}
 /* .divBgImg {background-image: url(img/avatar/hd01.jpg);height: 100%;width: 100%;background-size: 100% 100%;} */
-
+.bgfullsize {background-image: url(../shortcut/news.png);background-size: 100% 100%;}
+.debug {border: 1px solid red;}
+.inputtransparent{background-color: transparent;border: transparent;}
 	

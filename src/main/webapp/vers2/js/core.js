@@ -13,7 +13,7 @@ Core.init = function(update){
 	var windowHeight = $("#desk").height();
 	var ul = $("#desk").find('ul');
 	//屏蔽右键列表
-	$(document).bind('contextmenu',function(){
+	$(document).bind('contextmenu',function(event){
 		$(".popup-menu").hide();
 		return false;
 	});
@@ -266,7 +266,7 @@ Core.handle = function(){
 		updateStyle(obj);
 		//最小化
 		//阻止冒泡
-		e.stopPropagation();
+		Core.stopPropagation(e);//e.stopPropagation();
 		obj.hide();
 		//改变任务栏样式
 		$('.task-window li[window="'+obj.attr('window')+'"] b').removeClass('focus');
@@ -571,7 +571,10 @@ var windowConfigFrameCont = function(options, ele){
 		//内容为list body
 		ele = FormatModel(ele,{frameCont:listContBannerTemp+listContBodyTemp});
 		//得到头像
-		ele = FormatModel(ele,{headSrc:Core.userinfo.getInfo().headImg})
+		ele = FormatModel(ele,{headSrc:Core.userinfo.getInfo().headImg});
+		//得到alias,phrase
+		ele = FormatModel(ele,{ubdName:Core.userinfo.getInfo().alias});
+		ele = FormatModel(ele,{ubdPhrase:Core.userinfo.getInfo().phrase});
 	}else if(options.conf.frameCont=="labelContTemp"){
 		ele = FormatModel(ele,{frameCont:listContBannerTemp+listContBodyTemp});
 		ele = FormatModel(ele,{frameBody:chatWindow});
@@ -622,16 +625,15 @@ Core.bindUserListEvent = function(){
 		var t			= me.friend;
 		var chatFrame 	= {
 			"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
-			"iconUrl" : "head-default.png",
-			"iconName" : "iconName "+me.owner+"-"+me.friend,
-//			"url" : "url",
+			"iconUrl" : "img/avatar/"+me.friendDetailsTO.headImg,
+			"iconName" : "与【"+me.friendDetailsTO.alias+"】交流",
 			"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
 			"width" : 447,
 			"height" : 322,
 			"resize" : true,
-//			"conf" : {
-//				"frameCont" : "labelContTemp"
-//			}
+			//"conf" : {
+			//"frameCont" : "labelContTemp"
+			//}
 		};
 		var isContains = false;
 		for ( var el in jsonsc.data) {
@@ -659,10 +661,26 @@ Core.bindUserListEvent = function(){
 			var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
 			//启用 WebSocket
 			ifrm.startWebSocket(wsinit);
-			
 			//update friends info
 			ifrm.frd = Core.config.frd;
 		})
+	});
+	
+	//监听-用户资料修改
+	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click', function(event){
+		console.log(this);
+		var me = this;
+		var cn = me.className;
+		var IMG = 'ub_head',NAME='ubd_name',PHRASE='ubd_phrase'; 
+		if(cn.indexOf(IMG)!=-1){			// head img
+			console.log(IMG);
+		}else if(cn.indexOf(NAME)!=-1){		// alias name
+			console.log(NAME);
+		}else if(cn.indexOf(PHRASE)!=-1){	// phrase
+			console.log(PHRASE);
+		}
+			
+		
 	});
 	
 	//新用户列表添加监听器

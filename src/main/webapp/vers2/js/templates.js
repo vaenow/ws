@@ -63,7 +63,7 @@ var windowLabel = '<div style="left: 3px; right: 3px; position: absolute; backgr
 var iframeContTemp = '<iframe frameborder="0" id="window_{num}_frame" name="window_{num}_frame" src="{url}"></iframe>';
 
 //内容为 list content - frame banner
-var listContBannerTemp = '<div class="u_banner"><img class="u_b_head" src="img/avatar/{headSrc}" width="70px" height="70px" /></div>';
+var listContBannerTemp = '<div class="u_banner"><div class="ub_head bgfullsize" style="background-image:url(img/avatar/{headSrc});" ><input class="ubh_file" type="file" defaultvalue="xxx"/></div><div class="ub_details"><input class="ubd_name inputtransparent" value="{ubdName}"/><input class="ubd_phrase inputtransparent" value="{ubdPhrase}"/></div></div>';
 
 //内容为 list content - frame body
 var listContBodyTemp = '<ul class="userListBody">{listEle}</ul>';
