@@ -27,10 +27,10 @@ Core.init = function(update){
 			sc = jsonsc = JSON.parse(sc);
 			//更改显示名字
 			var uinfo = Core.userinfo.getInfo();
-			if(uinfo){
+			if(uinfo.alias){
 				jsonsc.data[0].iconName = jsonsc.data[0].iconName.replace('%name%', uinfo.alias);
 			} else {
-				alert('reload');
+				console.log('Loading strange. try reload.');
 				WindowReload();
 			}
 			for(i=0; i<sc['data'].length; i++){
