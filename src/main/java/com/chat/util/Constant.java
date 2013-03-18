@@ -47,7 +47,7 @@ public class Constant {
 		//得到一定的用户
 		String GET_ACTIVE_USERS			= "SELECT d.* FROM u_details d, u_info i WHERE i.u_id=d.u_id AND i.u_active=1 LIMIT :start, :length";
 		//根据owner&friend查询好友
-		String GET_USER_FRIENDS_BY_OWNER_FRD = "SELECT * FROM ws.u_friends WHERE f_owner=:owner AND f_friend=:friend";
+		String GET_USER_FRIENDS_BY_OWNER_FRD = "SELECT * FROM u_friends WHERE f_owner=:owner AND f_friend=:friend";
 	}
 
 	// Database Base Connection.
