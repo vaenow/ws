@@ -8,3 +8,4 @@
 # Customize #
 *.bak
 target/
+*.ini
