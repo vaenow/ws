@@ -22,7 +22,7 @@ a img{border:none}
 .fl{float:left}
 
 html{height:100%;overflow:hidden}
-body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-size:100% 100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;}
+body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-size:100% 100%;font:12px/1.8 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53; background-color: #2B2B2B;font-family: Verdana, Arial;}
 
 /*noscript*/
 .ie-noscript-warning{position:absolute;left:50%;top:50%}
