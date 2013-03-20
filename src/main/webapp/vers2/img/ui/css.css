@@ -12,7 +12,7 @@
 微软正黑体     \5FAE\x8F6F\6B63\9ED1\4F53
 微软雅黑       \5FAE\8F6F\96C5\9ED1
 */
-
+@import url(scrollbar/scrollbar.css);
 *{margin:0;padding:0;/* -moz-user-select:none;-khtml-user-select:none;user-select:none */}
 form,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,p{list-style:none outside none}
 a{text-decoration:none;color:#ccc;outline:none}
@@ -124,12 +124,11 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 							-o-transition: color .25s ease-in, background-color .25s ease-in;
 						 	transition: color .25s ease-in, background-color .25s ease-in;}
 
-#desk .u_banner{height:20%;border:1px;background-image:url(u_banner1.png);max-height:90px;box-shadow: rgb(120, 147, 141) -5px 4px 10px -3px;}
+#desk .u_banner{height:20%;border:1px;background-image:url(u_banner1.png);max-height:90px;box-shadow: rgb(120, 147, 141) 0px 2px 6px -1px;}
 #desk .ub_head{left:10px;top:10px;border-radius:7px;position:absolute;height:15%;max-height:70px;width: 26%;max-width: 70px;}
-#desk .ub_head .ubh_file{}
+#desk .ub_head .ubh_file{display:none;}
 #desk .u_banner .ub_details {width: auto;top: 10px;position: absolute;left: 90px;right: 10px;max-height: 70px;height: 15%;}
-#desk .u_banner .ub_details .ubd_name{height: 40%;margin-top: 4px;}
-#desk .u_banner .ub_details .ubd_phrase{height: 40%;margin-top: 4px;}
+#desk .u_banner .ub_details .ubd_name,#desk .u_banner .ub_details .ubd_phrase{height: 40%;margin-top: 4px;padding-left: 4px;}
 .ubd_name:hover,.ubd_phrase:hover{background-color:#dbe2ed; border-radius: 4px;}
 
 #desk .ListBlock{padding:0;}
@@ -147,4 +146,3 @@ body{background:url(../bg3.jpg) no-repeat right bottom transparent;background-si
 .bgfullsize {background-image: url(../shortcut/news.png);background-size: 100% 100%;}
 .debug {border: 1px solid red;}
 .inputtransparent{background-color: transparent;border: transparent;}
-	

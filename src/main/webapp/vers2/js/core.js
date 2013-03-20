@@ -667,8 +667,8 @@ Core.bindUserListEvent = function(){
 	});
 	
 	//监听-用户资料修改
-	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click', function(event){
-		console.log(this);
+	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click', function(evt){
+		console.log("evt.type: "+evt.type, "evt.eventPhase: "+evt.eventPhase);
 		var me = this;
 		var cn = me.className;
 		var IMG = 'ub_head',NAME='ubd_name',PHRASE='ubd_phrase'; 
@@ -676,6 +676,7 @@ Core.bindUserListEvent = function(){
 			console.log(IMG);
 		}else if(cn.indexOf(NAME)!=-1){		// alias name
 			console.log(NAME);
+//			if(evt);
 		}else if(cn.indexOf(PHRASE)!=-1){	// phrase
 			console.log(PHRASE);
 		}
