@@ -20,6 +20,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
  * @author vane
@@ -83,6 +84,12 @@ public class JDBCServiceImpl implements IJDBCService {
 	public boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO) {
 		// TODO Auto-generated method stub
 		return operatorDAOImpl.checkUserFriendDuplicated(ufriendsTO);
+	}
+
+	@Override
+	public int updateUserInfo(WSUpdateInfoTO updinfo) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.updateUserInfo(updinfo);
 	}
 	
 }

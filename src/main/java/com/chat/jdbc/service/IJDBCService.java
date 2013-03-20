@@ -15,6 +15,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
  * @author vane
@@ -39,5 +40,7 @@ public interface IJDBCService {
 	int delUserFriend(UserFriendsTO ufriendsTO);
 
 	boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO);
+
+	int updateUserInfo(WSUpdateInfoTO updinfo);
 
 }

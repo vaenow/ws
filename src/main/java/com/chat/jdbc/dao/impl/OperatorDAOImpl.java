@@ -29,6 +29,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
 
@@ -274,5 +275,16 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		}
 		return isDuplicated;
 	}
+
+	@Override
+	public int updateUserInfo(WSUpdateInfoTO updinfoTO) {
+		// TODO Auto-generated method stub
+		logger.fatal("updateUserInfo: " + WSUtil.stringifyJSON(updinfoTO));
+		
+		String sql = Constant.JDBCConnection.UPD_USR_INFO;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(updinfoTO);
+		return this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+	}
+	
 	
 }

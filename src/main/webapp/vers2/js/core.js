@@ -539,6 +539,8 @@ var ie6iframeheight = function(obj){
 //frame为自定义内容时
 var windowConfig = function(options, window_inner, window_warp){
 	if (options.conf.frameCont == "listContTemp") {
+		//限定窗口大小
+		$('#'+window_warp).addClass('mainListSize')
 		//刷新用户好友列表
 		refreshFriendsList(window_warp, window_inner);
 	}else if (options.conf.frameCont == "labelContTemp") {
@@ -667,18 +669,28 @@ Core.bindUserListEvent = function(){
 	});
 	
 	//监听-用户资料修改
-	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click', function(evt){
-		console.log("evt.type: "+evt.type, "evt.eventPhase: "+evt.eventPhase);
+	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click change focus', function(evt){
+		//console.log("target: "+evt.currentTarget+"evt.type: "+evt.type, "evt.eventPhase: "+evt.eventPhase);
 		var me = this;
+		var val = "", status=me.classList[0];
 		var cn = me.className;
-		var IMG = 'ub_head',NAME='ubd_name',PHRASE='ubd_phrase'; 
+		var IMG= 'ub_head',NAME='ubd_name',PHRASE='ubd_phrase',CHANGE='change',CLICK='click';
 		if(cn.indexOf(IMG)!=-1){			// head img
 			console.log(IMG);
 		}else if(cn.indexOf(NAME)!=-1){		// alias name
 			console.log(NAME);
-//			if(evt);
+			if(evt.type == CHANGE){
+				$("#"+status).fadeIn();
+				me.disabled = true;
+				Core.updateDetails('alias', me.value, status);
+			}
 		}else if(cn.indexOf(PHRASE)!=-1){	// phrase
 			console.log(PHRASE);
+			if(evt.type == CHANGE){
+				$("#"+status).fadeIn();
+				me.disabled = true;
+				Core.updateDetails('phrase', me.value, status);
+			}
 		}
 			
 		
@@ -764,4 +776,27 @@ Core.currentFocus = function(obj){
 	obj.addClass('window-current').css({'z-index':Core.config.createIndexid});
 	Core.config.createIndexid += 1;
 	return obj;
+}
+
+//用户手动更新资料
+Core.updateDetails = function(key,val,status){
+	if(!key) return ;
+	var url 		= Core.url+"?act=updinfo";
+	var ui			= Core.userinfo.getInfo();
+	var updinfo 	= Core.config.infostruct.updinfo();
+	for( var i in updinfo){
+		updinfo[i]=ui[i];
+	}
+	updinfo[key] = val;
+	$.post(url, updinfo, function(res){
+		var result = JSON.parse(res);
+		console.log(result);
+		
+		//刷新本地用户信息
+		Core.userinfo.refresh(status,function(selector){
+			$("#"+selector).fadeOut()
+			$("."+selector).removeAttr("disabled");
+		});
+		
+	});
 }

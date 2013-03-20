@@ -64,20 +64,20 @@ public class WSCaches {
 	/**
 	 * 用戶信息緩存
 	 */
-	public Map<Long, UserInfoTO> userInfoCache = new ConcurrentHashMap<Long, UserInfoTO>();
+	public static Map<Long, UserInfoTO> userInfoCache = new ConcurrentHashMap<Long, UserInfoTO>();
 	
 	/**
 	 * 用戶详细信息緩存
 	 */
-	public Map<Long, UserDetailsTO> userDetailsCache = new ConcurrentHashMap<Long, UserDetailsTO>();
+	public static Map<Long, UserDetailsTO> userDetailsCache = new ConcurrentHashMap<Long, UserDetailsTO>();
 
 	/**
 	 * 清理缓存
 	 */
-	void cleanCaches() {
-		this.userDetailsCache.clear();
-		this.userInfoCache.clear();
-
+	public void cleanCaches() {
+		userDetailsCache.clear();
+		userInfoCache.clear();
+		
 		logger.info("Method: cleanCaches() done.");
 	}
 }

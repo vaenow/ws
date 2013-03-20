@@ -17,21 +17,21 @@ import java.util.Date;
  */
 public class UserDetailsTO {
 
-	private Long uid;
-	private String alias;
-	private String mobile;
-	private String email;
-	private String updateIPAddress;
-	private Date updateDateTime;
-	private String headImg;
-	private String bgImg;
-	private String phrase;
-	private byte gender;
-	private byte age;
-	private String realName;
-	private String remark;
-	private int vipcode;
-	private int extras;
+	private Long uid;					//ID
+	private String alias;				//妮称
+	private String mobile;				//手机
+	private String email;				//邮箱
+	private String updateIPAddress;	//更新信息的IP	
+	private Date updateDateTime;		//更新信息的Date
+	private String headImg;			//头像
+	private String bgImg;				//背景
+	private String phrase;				//说说
+	private byte gender;				//性别
+	private byte age;					//年龄
+	private String realName;			//真实姓名
+	private String remark;				//备注
+	private int vipcode;				//VIP代码
+	private int extras;				//扩展内容
 
 	private UserInfoTO userInfoTO;
 

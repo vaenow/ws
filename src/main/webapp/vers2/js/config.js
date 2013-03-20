@@ -52,6 +52,27 @@ Core.animate = {
 		CDW	: 	{duration: 'normal'},
 }
 
+Core.config.infostruct = (function(){
+	var wsmsg 	={};
+	var updinfo	={};
+	var url = Core.url+"?act=infostruct";
+	$.get(url,function(rs){
+		console.log('infostruct: '+rs);
+		rs = JSON.parse(rs);
+		wsmsg	= rs[0];
+		updinfo = rs[1];
+	});
+	
+	return {
+		wsmsg:function(){
+			return wsmsg;
+		},
+		updinfo:function(){
+			return updinfo;
+		}
+	}
+})();
+
 //WebSocketMessageFormate 消息格式
 //Core.config.wsmsg = {
 //		ctn		:	"message content",
@@ -59,7 +80,8 @@ Core.animate = {
 //		rcver	:	"message receiver",
 //		token	:	"verify token"
 //}
-Core.config.wsmsg = (function() {
+Core.config.wsmsg = Core.config.infostruct.wsmsg();
+/*Core.config.wsmsg = (function() {
 	//获取WebSocketMessage对象属性 WSMessageTO
 	var obj = {}
 	var url = Core.url+"?act=gwsm";
@@ -69,7 +91,7 @@ Core.config.wsmsg = (function() {
 	});
 	
 	return obj;
-})();
+})();*/
 
 //为ChatFrames存储备用信息
 Core.config.frd = [];

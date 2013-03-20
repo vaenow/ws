@@ -48,6 +48,8 @@ public class Constant {
 		String GET_ACTIVE_USERS			= "SELECT d.* FROM u_details d, u_info i WHERE i.u_id=d.u_id AND i.u_active=1 LIMIT :start, :length";
 		//根据owner&friend查询好友
 		String GET_USER_FRIENDS_BY_OWNER_FRD = "SELECT * FROM u_friends WHERE f_owner=:owner AND f_friend=:friend";
+		//根据uid更新用户详细信息
+		String UPD_USR_INFO				= "UPDATE u_details SET  u_alias=:alias, u_img_head=:headImg, u_phrase=:phrase WHERE u_id=:uid";
 	}
 
 	// Database Base Connection.
@@ -87,6 +89,12 @@ public class Constant {
 		// get websocket message to
 		String GET_WSMSG 				= "gwsm";
 		
+		// get info structure
+		String GET_INFO_STRUCTURE		= "infostruct";
+		
+		// get a amount of users
+		String GET_ACTIVE_USERS 		= "gau";
+		
 		// user login
 		String USER_LOGIN				= "login";
 		
@@ -96,14 +104,14 @@ public class Constant {
 		// user is login
 		String CHECK_LOGIN 				= "isLogin";
 
-		// get a amount of users
-		String GET_ACTIVE_USERS 		= "gau";
-
 		// add user friends
 		String ADD_USR_FRIEND			= "addu";
 
 		// delete user friends
 		String DEL_USR_FRIEND			= "delu";
+		
+		// update user details info
+		String UPD_USR_INFO				= "updinfo";
 		
 	}
 

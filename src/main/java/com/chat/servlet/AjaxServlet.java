@@ -1,8 +1,12 @@
 package com.chat.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +29,9 @@ import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.jdbc.ws.to.RegisterUserTO;
 import com.chat.jdbc.ws.to.ResponseTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
+import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
+import com.chat.util.WSCaches;
 import com.chat.util.WSUtil;
 
 @Controller
@@ -183,6 +189,34 @@ public class AjaxServlet {
 			responseTO.setSuccess(isSuccess);
 			
 			result = WSUtil.stringifyJSON(responseTO);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_INFO_STRUCTURE)){
+			List<Object> list = new ArrayList<Object>();
+			list.add(new WSMessageTO());
+			list.add(new WSUpdateInfoTO());
+			
+			result = WSUtil.stringifyJSON(list);
+		}else if(action.equals(Constant.ACTION_TYPE.UPD_USR_INFO)){
+			Map<String, String> map = new HashMap<String, String>();
+			Enumeration<String> en = req.getParameterNames();
+			while(en.hasMoreElements()){
+				String key = en.nextElement();
+				map.put(key, req.getParameter(key));
+			}
+			map.remove("act");
+			
+			WSUpdateInfoTO updinfo = WSUtil.convert2JSON(map, WSUpdateInfoTO.class);
+			String json = WSUtil.stringifyJSON(map);
+			WSUpdateInfoTO upd  = WSUtil.handleJSON(json, WSUpdateInfoTO.class);
+			JDBCService.updateUserInfo(updinfo);
+			ResponseTO respTO = new ResponseTO();
+			respTO.setSuccess(true);
+			//clean caches
+			WSUtil.getWSCaches().cleanCaches();
+//			WSCaches.getInstance().cleanCaches();
+			
+			
+			
+			result = WSUtil.stringifyJSON(respTO); 
 		}
 
 		System.out.println("action: " + action);

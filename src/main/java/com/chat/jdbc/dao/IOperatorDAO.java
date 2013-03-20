@@ -15,6 +15,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
  * @author vane
@@ -86,4 +87,11 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO);
+
+	/**
+	 * 更新用户详细信息 
+	 * @param updinfo
+	 * @return
+	 */
+	public int updateUserInfo(WSUpdateInfoTO updinfo);
 }

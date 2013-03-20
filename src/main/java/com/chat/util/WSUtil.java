@@ -21,6 +21,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chat.jdbc.service.IWSService;
+import com.chat.util.test.WSCachesTest;
 
 /**
  * @author vane
@@ -124,6 +125,17 @@ public class WSUtil {
 	}
 	
 	/**
+	 * Jackson库  格式化JSON
+	 * 
+	 * @param json
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> T convert2JSON(Object obj, Class<T> clazz){
+		return mapper.convertValue(obj, clazz);
+	}
+	
+	/**
 	 * Log Object all 'get' methods.
 	 * 
 	 * @param obj
@@ -147,5 +159,14 @@ public class WSUtil {
 				System.out.println("\t "+methodName+": "+value+", ");
 			}
 		}
+	}
+	
+	/**
+	 * 得到缓存类
+	 * 
+	 * @return
+	 */
+	public static WSCaches getWSCaches(){
+		return WSCaches.getInstance();
 	}
 }
