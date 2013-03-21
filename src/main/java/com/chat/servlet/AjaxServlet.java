@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ import com.chat.jdbc.ws.to.ResponseTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
-import com.chat.util.WSCaches;
 import com.chat.util.WSUtil;
 
 @Controller
@@ -43,7 +41,8 @@ public class AjaxServlet {
 	IJDBCService JDBCService;
 
 	/**
-	 * Get Shortcuts.
+	 * Ajax requests dispatcher
+	 * 请求分发器
 	 * 
 	 * @param req
 	 * @param resp
@@ -59,164 +58,27 @@ public class AjaxServlet {
 		String result = "";
 		
 		if (action.equals(Constant.ACTION_TYPE.GET_SHORTCUTS)) {
-			result = Constant.AJAX_FORMATS.SC_FORMAT;
-
-		} else if (action.equals(Constant.ACTION_TYPE.GET_USER_FRIENDS_LIST)) {
-			long uid = parseUID(req);
-			List<UserFriendsTO> list = JDBCService.getFriendsListByUID(uid);
-
-//			StringBuilder names = new StringBuilder();
-			System.out.println("list.size(): " + list.size());
-//			for (UserFriendsTO friend : list) {
-//				String fname = friend.getFriendDetailsTO().getAlias();
-//				names.append(WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST_NAME, Constant.REGX.LIST_NAME_PATERN,
-//						"'" + fname + "'"));
-//				names.append(",");
-//			}
-//			names.deleteCharAt(names.length() - 1);
-//			result = WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST, Constant.REGX.LIST_NAME_PATERN,
-//					names.toString());
-			
-			ObjectMapper mapper = new ObjectMapper();
-			result = mapper.writeValueAsString(list);
+			result = getShortcuts(req);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_USER_FRIENDS_LIST)) {
+			result = getUserFriendsList(req);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_USER_DETAILS)){
-			long uid = parseUID(req);
-			UserDetailsTO list = JDBCService.getUserDetails(uid);
-			//TODO
-			ObjectMapper mapper = new ObjectMapper();
-			result = mapper.writeValueAsString(list);
-		}else if(action.equals(Constant.ACTION_TYPE.GET_WSMSG)){
-			result = WSUtil.stringifyJSON(new WSMessageTO());
+			result = getUserDetails(req);
 		}else if(action.equals(Constant.ACTION_TYPE.USER_LOGIN)) {
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
-			UserInfoTO ui = new UserInfoTO();
-			AllowLoginTO allowTO = new AllowLoginTO();
-			boolean isAllow = false;
-			log.info(username);
-			log.info(password);
-			ui.setName(username);
-			ui.setPassw(password);
-			List<UserInfoTO> list = JDBCService.isAllowToLogin(ui);
-			if(!list.isEmpty()){
-				isAllow = true;
-				allowTO.setUserinfo(list.get(0));
-				HttpSession session = req.getSession();
-				session.setAttribute(list.get(0).getUid()+"", Constant.Common.LOGIN_SUCCESS);
-			}
-			allowTO.setAllow(isAllow);
-			
-			result = WSUtil.stringifyJSON(allowTO);
+			result = userLogin(req);
 		}else if(action.equals(Constant.ACTION_TYPE.USER_REGIST)) {
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
-			UserInfoTO ui = new UserInfoTO();
-			RegisterUserTO regstTO = new RegisterUserTO();
-			boolean isSuccess = false;
-			log.info(username);
-			log.info(password);
-			ui.setName(username);
-			ui.setPassw(password);
-			ui.setCreateIPAddress(req.getRemoteAddr());
-			ui.setCreateDateTime(Calendar.getInstance().getTime());
-			ui.setActive(Constant.DB.USR_ACTIVE);
-			boolean isDuplicated = JDBCService.checkUserDuplicated(ui);
-			if(!isDuplicated){
-				if(JDBCService.insertNewUser(ui) == 1){
-					isSuccess = true;
-				}
-			}
-			regstTO.setSuccess(isSuccess);
-			regstTO.setDuplicated(isDuplicated);
-			
-			result = WSUtil.stringifyJSON(regstTO);
+			result = userRegist(req);
 		}else if(action.equals(Constant.ACTION_TYPE.CHECK_LOGIN)){
-			String uid = req.getParameter("uid");
-			Integer isLogin = (Integer)req.getSession().getAttribute(uid);
-			AllowLoginTO aLoginTO = new AllowLoginTO();
-			boolean isAllow = false;
-			if (isLogin != null && isLogin == Constant.Common.LOGIN_SUCCESS) {
-				isAllow = true;
-			}
-			aLoginTO.setAllow(isAllow);
-			
-			result = WSUtil.stringifyJSON(aLoginTO);
+			result = checkLogin(req);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_ACTIVE_USERS)){
-			long uid 	= parseUID(req);
-			int start 	= Integer.parseInt(req.getParameter("start"));
-			int length 	= Integer.parseInt(req.getParameter("len"));
-			QueryUserTO qUserTO = new QueryUserTO();
-			qUserTO.setUid(uid);
-			qUserTO.setStart(start);
-			qUserTO.setLength(length);
-			List<UserDetailsTO> list = JDBCService.getActiveUsers(qUserTO);
-
-			result = WSUtil.stringifyJSON(list);
+			result = getActiveUsers(req);
 		}else if(action.equals(Constant.ACTION_TYPE.ADD_USR_FRIEND)){
-			long friendOwner = Long.parseLong(req.getParameter("owner"));
-			long friend = Long.parseLong(req.getParameter("friend"));
-			boolean isSuccess = false;
-			ResponseTO responseTO = new ResponseTO();
-			UserFriendsTO ufriendsTO = new UserFriendsTO();
-			ufriendsTO.setOwner(friendOwner);
-			ufriendsTO.setFriend(friend);
-			ufriendsTO.setCreateDateTime(Calendar.getInstance().getTime());
-			ufriendsTO.setCreateIPAddress(req.getRemoteAddr());
-			ufriendsTO.setType(Constant.DB.UF_TYPE_NORMAL);
-			ufriendsTO.setIdParent(Constant.DB.UF_PARENT_NONE);
-			ufriendsTO.setRank(Constant.DB.UF_RANK_NONE);
-			boolean isDuplicated = JDBCService.checkUserFriendDuplicated(ufriendsTO);
-			if(!isDuplicated){
-				if(JDBCService.addUserFriend(ufriendsTO) == 1){
-					isSuccess = true;
-				}
-			}
-			responseTO.setDuplicated(isDuplicated);
-			responseTO.setSuccess(isSuccess);
-			
-			result = WSUtil.stringifyJSON(responseTO);
+			result = addUserFriend(req);
 		}else if(action.equals(Constant.ACTION_TYPE.DEL_USR_FRIEND)){
-			long friendOwner = Long.parseLong(req.getParameter("owner"));
-			long friend = Long.parseLong(req.getParameter("friend"));
-			boolean isSuccess = false;
-			ResponseTO responseTO = new ResponseTO();
-			UserFriendsTO ufriendsTO = new UserFriendsTO();
-			ufriendsTO.setOwner(friendOwner);
-			ufriendsTO.setFriend(friend);
-			if(JDBCService.delUserFriend(ufriendsTO) >= 1){
-				isSuccess = true;
-			}
-			responseTO.setSuccess(isSuccess);
-			
-			result = WSUtil.stringifyJSON(responseTO);
+			result = deleteUserFriend(req);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_INFO_STRUCTURE)){
-			List<Object> list = new ArrayList<Object>();
-			list.add(new WSMessageTO());
-			list.add(new WSUpdateInfoTO());
-			
-			result = WSUtil.stringifyJSON(list);
+			result = getInfoStructure(req);
 		}else if(action.equals(Constant.ACTION_TYPE.UPD_USR_INFO)){
-			Map<String, String> map = new HashMap<String, String>();
-			Enumeration<String> en = req.getParameterNames();
-			while(en.hasMoreElements()){
-				String key = en.nextElement();
-				map.put(key, req.getParameter(key));
-			}
-			map.remove("act");
-			
-			WSUpdateInfoTO updinfo = WSUtil.convert2JSON(map, WSUpdateInfoTO.class);
-			String json = WSUtil.stringifyJSON(map);
-			WSUpdateInfoTO upd  = WSUtil.handleJSON(json, WSUpdateInfoTO.class);
-			JDBCService.updateUserInfo(updinfo);
-			ResponseTO respTO = new ResponseTO();
-			respTO.setSuccess(true);
-			//clean caches
-			WSUtil.getWSCaches().cleanCaches();
-//			WSCaches.getInstance().cleanCaches();
-			
-			
-			
-			result = WSUtil.stringifyJSON(respTO); 
+			result = updateUserInfo(req);
 		}
 
 		System.out.println("action: " + action);
@@ -224,6 +86,176 @@ public class AjaxServlet {
 		//WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
 		
 		resp.getWriter().write(result.replaceAll("'", "\""));
+	}
+
+	private String getShortcuts(HttpServletRequest req) {
+		return Constant.AJAX_FORMATS.SC_FORMAT;
+	}
+
+	private String updateUserInfo(HttpServletRequest req) {
+		Map<String, String> map = new HashMap<String, String>();
+		Enumeration<String> en = req.getParameterNames();
+		while(en.hasMoreElements()){
+			String key = en.nextElement();
+			map.put(key, req.getParameter(key));
+		}
+		map.remove("act");
+		WSUpdateInfoTO updinfo = WSUtil.convert2JSON(map, WSUpdateInfoTO.class);
+		//String json = WSUtil.stringifyJSON(map);
+		//WSUpdateInfoTO upd  = WSUtil.handleJSON(json, WSUpdateInfoTO.class);
+		JDBCService.updateUserInfo(updinfo);
+		ResponseTO respTO = new ResponseTO();
+		respTO.setSuccess(true);
+		WSUtil.getWSCaches().cleanCaches();//clean caches
+		
+		return WSUtil.stringifyJSON(respTO); 
+	}
+
+	private String getInfoStructure(HttpServletRequest req) {
+		List<Object> list = new ArrayList<Object>();
+		list.add(new WSMessageTO());
+		list.add(new WSUpdateInfoTO());
+		
+		return WSUtil.stringifyJSON(list);
+	}
+
+	private String deleteUserFriend(HttpServletRequest req) {
+		long friendOwner = Long.parseLong(req.getParameter("owner"));
+		long friend = Long.parseLong(req.getParameter("friend"));
+		boolean isSuccess = false;
+		ResponseTO responseTO = new ResponseTO();
+		UserFriendsTO ufriendsTO = new UserFriendsTO();
+		ufriendsTO.setOwner(friendOwner);
+		ufriendsTO.setFriend(friend);
+		if(JDBCService.delUserFriend(ufriendsTO) >= 1){
+			isSuccess = true;
+		}
+		responseTO.setSuccess(isSuccess);
+		
+		return WSUtil.stringifyJSON(responseTO);
+	}
+
+	private String addUserFriend(HttpServletRequest req) {
+		long friendOwner = Long.parseLong(req.getParameter("owner"));
+		long friend = Long.parseLong(req.getParameter("friend"));
+		boolean isSuccess = false;
+		ResponseTO responseTO = new ResponseTO();
+		UserFriendsTO ufriendsTO = new UserFriendsTO();
+		ufriendsTO.setOwner(friendOwner);
+		ufriendsTO.setFriend(friend);
+		ufriendsTO.setCreateDateTime(Calendar.getInstance().getTime());
+		ufriendsTO.setCreateIPAddress(req.getRemoteAddr());
+		ufriendsTO.setType(Constant.DB.UF_TYPE_NORMAL);
+		ufriendsTO.setIdParent(Constant.DB.UF_PARENT_NONE);
+		ufriendsTO.setRank(Constant.DB.UF_RANK_NONE);
+		boolean isDuplicated = JDBCService.checkUserFriendDuplicated(ufriendsTO);
+		if(!isDuplicated){
+			if(JDBCService.addUserFriend(ufriendsTO) == 1){
+				isSuccess = true;
+			}
+		}
+		responseTO.setDuplicated(isDuplicated);
+		responseTO.setSuccess(isSuccess);
+		
+		return WSUtil.stringifyJSON(responseTO);
+	}
+
+	private String getActiveUsers(HttpServletRequest req) {
+		long uid 	= parseUID(req);
+		int start 	= Integer.parseInt(req.getParameter("start"));
+		int length 	= Integer.parseInt(req.getParameter("len"));
+		QueryUserTO qUserTO = new QueryUserTO();
+		qUserTO.setUid(uid);
+		qUserTO.setStart(start);
+		qUserTO.setLength(length);
+		List<UserDetailsTO> list = JDBCService.getActiveUsers(qUserTO);
+
+		return WSUtil.stringifyJSON(list);
+	}
+
+	private String checkLogin(HttpServletRequest req) {
+		String uid = req.getParameter("uid");
+		Integer isLogin = (Integer)req.getSession().getAttribute(uid);
+		AllowLoginTO aLoginTO = new AllowLoginTO();
+		boolean isAllow = false;
+		if (isLogin != null && isLogin == Constant.Common.LOGIN_SUCCESS) {
+			isAllow = true;
+		}
+		aLoginTO.setAllow(isAllow);
+		
+		return WSUtil.stringifyJSON(aLoginTO);
+	}
+
+	private String userRegist(HttpServletRequest req) {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		UserInfoTO ui = new UserInfoTO();
+		RegisterUserTO regstTO = new RegisterUserTO();
+		boolean isSuccess = false;
+		log.info(username);
+		log.info(password);
+		ui.setName(username);
+		ui.setPassw(password);
+		ui.setCreateIPAddress(req.getRemoteAddr());
+		ui.setCreateDateTime(Calendar.getInstance().getTime());
+		ui.setActive(Constant.DB.USR_ACTIVE);
+		boolean isDuplicated = JDBCService.checkUserDuplicated(ui);
+		if(!isDuplicated){
+			if(JDBCService.insertNewUser(ui) == 1){
+				isSuccess = true;
+			}
+		}
+		regstTO.setSuccess(isSuccess);
+		regstTO.setDuplicated(isDuplicated);
+		
+		return WSUtil.stringifyJSON(regstTO);
+	}
+
+	private String userLogin(HttpServletRequest req) {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		UserInfoTO ui = new UserInfoTO();
+		AllowLoginTO allowTO = new AllowLoginTO();
+		boolean isAllow = false;
+		log.info(username);
+		log.info(password);
+		ui.setName(username);
+		ui.setPassw(password);
+		List<UserInfoTO> list = JDBCService.isAllowToLogin(ui);
+		if(!list.isEmpty()){
+			isAllow = true;
+			allowTO.setUserinfo(list.get(0));
+			HttpSession session = req.getSession();
+			session.setAttribute(list.get(0).getUid()+"", Constant.Common.LOGIN_SUCCESS);
+		}
+		allowTO.setAllow(isAllow);
+		
+		return WSUtil.stringifyJSON(allowTO);
+	}
+
+	private String getUserDetails(HttpServletRequest req) {
+		long uid = parseUID(req);
+		UserDetailsTO list = JDBCService.getUserDetails(uid);
+		//TODO
+		return WSUtil.stringifyJSON(list);
+	}
+
+	private String getUserFriendsList(HttpServletRequest req) {
+		long uid = parseUID(req);
+		List<UserFriendsTO> list = JDBCService.getFriendsListByUID(uid);
+		System.out.println("list.size(): " + list.size());
+//		StringBuilder names = new StringBuilder();
+//		for (UserFriendsTO friend : list) {
+//			String fname = friend.getFriendDetailsTO().getAlias();
+//			names.append(WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST_NAME, Constant.REGX.LIST_NAME_PATERN,
+//					"'" + fname + "'"));
+//			names.append(",");
+//		}
+//		names.deleteCharAt(names.length() - 1);
+//		result = WSUtil.formatUtil(Constant.AJAX_FORMATS.FRIENDS_LIST, Constant.REGX.LIST_NAME_PATERN,
+//				names.toString());
+		
+		return WSUtil.stringifyJSON(list);
 	}
 
 	public static void main(String[] args) {
