@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.chat.jdbc.service.IWSService;
 import com.chat.util.WSUtil;
 
 
 
-@Controller("webSocketChatServlet")
+@Service("webSocketChatServlet")
 public class WebSocketChatServlet extends WebSocketServlet {
 
 	@Autowired
@@ -28,6 +27,7 @@ public class WebSocketChatServlet extends WebSocketServlet {
 	public void setWsService(IWSService wsService) {
 		System.out.println("setWsService: "+wsService);
 		WSUtil.setWsService(wsService);
+		WSUtil.setWebSocketChatServlet(this);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class WebSocketChatServlet extends WebSocketServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// default Deispatcher 
+		// default Dispatcher 
 		getServletContext().getNamedDispatcher("default").forward(request,
 				response);
 	}
@@ -55,7 +55,8 @@ public class WebSocketChatServlet extends WebSocketServlet {
 		System.out.println("doWebSocketConnect.. req: "+ req);
 		System.out.println("wsService: "+ wsService);
 		System.out.println("WSUtil.getWsService(): "+ WSUtil.getWsService());
-		return new ChatWebSocket(users, req);
+		
+		return new ChatWebSocket(WSUtil.getWebSocketChatServlet().users, req);
 	}
 
 }

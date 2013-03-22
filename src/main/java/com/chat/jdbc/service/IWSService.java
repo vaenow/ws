@@ -36,4 +36,6 @@ public interface IWSService {
 	 * @return
 	 */
 	List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit);
+	
+	
 }

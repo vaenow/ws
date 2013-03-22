@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,15 +32,16 @@ import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
+import com.chat.ws.WebSocketChatServlet;
 
 @Controller
-public class AjaxServlet {
+public class AjaxServlet extends ApplicationObjectSupport{
 
 	Log log = LogFactory.getLog(AjaxServlet.class); 
 	
 	@Autowired
 	IJDBCService JDBCService;
-
+	
 	/**
 	 * Ajax requests dispatcher
 	 * 请求分发器
@@ -79,6 +81,8 @@ public class AjaxServlet {
 			result = getInfoStructure(req);
 		}else if(action.equals(Constant.ACTION_TYPE.UPD_USR_INFO)){
 			result = updateUserInfo(req);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_USR_STATUS)){
+			result = getUserStatus(req);
 		}
 
 		System.out.println("action: " + action);
@@ -86,6 +90,18 @@ public class AjaxServlet {
 		//WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
 		
 		resp.getWriter().write(result.replaceAll("'", "\""));
+	}
+
+	private String getUserStatus(HttpServletRequest req) {
+//		ServletContext sc  = getServletContext();
+//		ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(sc);
+//		WebSocketChatServlet wscs = (WebSocketChatServlet)ac1.getBean("webSocketChatServlet");
+//		log.info(wscs.users);
+		
+		WebSocketChatServlet wscs = WSUtil.getWebSocketChatServlet();
+		log.info(wscs);
+		log.info(wscs.users);
+		return WSUtil.stringifyJSON(wscs.users);
 	}
 
 	private String getShortcuts(HttpServletRequest req) {
@@ -277,4 +293,15 @@ public class AjaxServlet {
 		} 
 		return uid;
 	}
+
+//	public WebSocketChatServlet getWebSocketChatServlet() {
+//		return webSocketChatServlet;
+//	}
+//
+//	public void setWebSocketChatServlet(WebSocketChatServlet webSocketChatServlet) {
+//		this.webSocketChatServlet = webSocketChatServlet;
+//
+//	}
+//	
+	
 }

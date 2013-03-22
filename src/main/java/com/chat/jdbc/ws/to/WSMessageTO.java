@@ -23,6 +23,17 @@ public class WSMessageTO {
 	private String rcveralias;	// reciever alias
 //	private byte msgType;		//1 -> normal message; 2 -> system message
 
+	private byte msgType;		//0-normal; 1-status; 2-shake;
+	
+	
+	public byte getMsgType() {
+		return msgType;
+	}
+
+	public void setMsgType(byte msgType) {
+		this.msgType = msgType;
+	}
+
 	public String getSderalias() {
 		return sderalias;
 	}

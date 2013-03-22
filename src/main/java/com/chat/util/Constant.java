@@ -112,6 +112,9 @@ public class Constant {
 		
 		// update user details info
 		String UPD_USR_INFO				= "updinfo";
+
+		// get user status - online,offLine etc.
+		String GET_USR_STATUS 			= "gus";
 		
 	}
 
@@ -191,5 +194,12 @@ public class Constant {
 		byte WSMSG_TYPE_NORMAL			= 0;	//normal websocket message type
 		
 		long WSMSG_SENDER_SYSTEM		= 0;	//system is the sender of message;
+		
+		byte USR_OFFLINE				= 0;	//user status offLine
+		byte USR_ONLINE					= 1;	//user status online
+		byte USR_LEAVE					= 2;	//user status leave
+		byte USR_INVISIBLE				= 1;	//user status invisible
+		
+		
 	}
 }

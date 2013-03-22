@@ -21,7 +21,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chat.jdbc.service.IWSService;
-import com.chat.util.test.WSCachesTest;
+import com.chat.ws.WebSocketChatServlet;
 
 /**
  * @author vane
@@ -42,6 +42,18 @@ public class WSUtil {
 	 * </pre>
 	 */
 	private static IWSService wsService;
+
+	/**
+	 * <pre>
+	 * 存储WebSocketChatServlet的单例对象。
+	 * 
+	 * 备注：
+	 *     因为SpringMVC3目前版本暂时不支持WebSocket
+	 *     所以用此方法绕过Spring的管理。
+	 *     此问题留做日后处理。
+	 * </pre>
+	 */
+	private static WebSocketChatServlet webSocketChatServlet;
 
 	/**
 	 * Jackson 操作对象
@@ -169,4 +181,13 @@ public class WSUtil {
 	public static WSCaches getWSCaches(){
 		return WSCaches.getInstance();
 	}
+
+	public static void setWebSocketChatServlet(WebSocketChatServlet webSocketChatServlet) {
+		WSUtil.webSocketChatServlet =webSocketChatServlet; 
+	}
+
+	public static WebSocketChatServlet getWebSocketChatServlet() {
+		return webSocketChatServlet; 
+	}
+	
 }

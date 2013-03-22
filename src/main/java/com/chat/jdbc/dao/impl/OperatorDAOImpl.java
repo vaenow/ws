@@ -9,7 +9,6 @@
  */
 package com.chat.jdbc.dao.impl;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -31,6 +30,7 @@ import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
+import com.chat.util.WSCaches;
 import com.chat.util.WSUtil;
 
 /**
@@ -122,16 +122,16 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 	@Override
 //	@Cacheable(value = "userInfo")
 	public UserInfoTO getUserInfo(final long uid) {
-		if (!wscaches.userInfoCache.containsKey(uid)) {
+		if (!WSCaches.userInfoCache.containsKey(uid)) {
 			logger.fatal("getting user id: " + uid);
 
 			String sql = Constant.JDBCConnection.GET_USER_INFO;
 			DBQueryTO bean = new DBQueryTO();
 			bean.setUid(uid);
 			SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(bean);
-			wscaches.userInfoCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).get(0));
+			WSCaches.userInfoCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).get(0));
 		}
-		return wscaches.userInfoCache.get(uid);
+		return WSCaches.userInfoCache.get(uid);
 //			return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userInfoMapper).get(0);
 	}
 
@@ -141,16 +141,16 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 	@Override
 //	@Cacheable(value = "userDetails")
 	public UserDetailsTO getUserDetails(final long uid) {
-		if (!wscaches.userDetailsCache.containsKey(uid)) {
+		if (!WSCaches.userDetailsCache.containsKey(uid)) {
 			logger.fatal("getting user details by id: " + uid);
 
 			String sql = Constant.JDBCConnection.GET_USER_DETAILS;
 			DBQueryTO bean = new DBQueryTO();
 			bean.setUid(uid);
 			SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(bean);
-			wscaches.userDetailsCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper).get(0));
+			WSCaches.userDetailsCache.put(uid, this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper).get(0));
 		}
-		return wscaches.userDetailsCache.get(uid);
+		return WSCaches.userDetailsCache.get(uid);
 //			return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, userDetailsMapper).get(0);
 	}
 
