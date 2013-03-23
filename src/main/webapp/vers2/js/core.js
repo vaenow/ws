@@ -675,10 +675,10 @@ Core.bindUserListEvent = function(){
 			var ifrm 	= this.contentWindow.S;
 			//var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
 			var wsinit	= Core.config.infostruct.wsinit();
-			wsinitial.sender	= me.owner;
-			wsinitial.reciever	= me.friend;
+			wsinit.sender	= me.owner;
+			wsinit.reciever	= me.friend;
 			//启用 WebSocket
-			ifrm.startWebSocket(wsinit);
+			ifrm.startWebSocket(JSON.stringify(wsinit));
 			//update friends info
 			ifrm.frd = Core.config.frd;
 		});

@@ -8,7 +8,7 @@ S.ws 			= {};
 //加载父页面的变量
 S.CST			= window.parent.Core.CST;
 S.location 		= window.parent.Core.url+'?act=';
-S.wsmsg 		= window.parent.Core.config.wsmsg;
+S.wsmsg 		= window.parent.Core.config.infostruct.wsmsg();
 S.temp			= window.parent.wstemp;
 S.FormatModel	= window.parent.FormatModel;
 S.GetStoragedUID= window.parent.GetStoragedUID;
@@ -77,15 +77,11 @@ function appendMsg(data) {
 	}else if(data.sder == S.GetStoragedUID()){	//自己发送的消息
 		type = 2;
 	}
+	//添加消息
 	msgBox.append(S.FormatModel(S.temp.msg_bubble(type), data));
-//	c.append(parseToBlock(j.result[i])).children().last().css({
-//			opacity : 0.2
-//		}).animate({
-//			opacity : 1
-//		},1000,'swing');
-	//滚动条跟随
-	msgBox[0].scrollTop = msgBox[0].scrollHeight;
-	
+	//滚动条动态跟随
+	msgBox.children().last().hide().slideDown(500);
+	msgBox.animate({scrollTop: msgBox.get(0).scrollHeight}, 500);
 	//转化表情图片
 	parseToImgEmo();
 	//桌面通知

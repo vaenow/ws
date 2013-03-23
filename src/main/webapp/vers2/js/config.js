@@ -89,7 +89,7 @@ Core.config.infostruct = (function(){
 //		rcver	:	"message receiver",
 //		token	:	"verify token"
 //}
-Core.config.wsmsg = Core.config.infostruct.wsmsg();
+//Core.config.wsmsg = Core.config.infostruct.wsmsg;
 /*Core.config.wsmsg = (function() {
 	//获取WebSocketMessage对象属性 WSMessageTO
 	var obj = {}
