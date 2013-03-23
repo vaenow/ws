@@ -74,7 +74,7 @@ var labelContTemp = '<div class="windowLabel">{frameBody}</div>';
 //每条 list 元素
 var listEle = 
 '<li class="ListBlock">'+
-	'<div class="f_img" style="background-image:url(img/avatar/{f_head})"></div>'+
+	'<div class="f_img f_img_hide" style="background-image:url(img/avatar/{f_head})"></div>'+
 	'<div class="f_details"><div class="f_name">{listDetails}</div><div class="f_phrase">{f_phrase}</div></div>'+
 	'<div class="f_right"><div class="f_rtop"></div><div class="f_rbottom"></div></div>'+
 '</li>';

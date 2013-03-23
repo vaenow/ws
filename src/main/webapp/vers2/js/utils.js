@@ -35,5 +35,6 @@ CheckIsLogin = function(){
 			WindowReload('/vers2/welcome.html');
 		}
 	})
-	
 }
+
+

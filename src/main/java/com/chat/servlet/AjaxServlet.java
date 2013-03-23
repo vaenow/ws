@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,10 +29,13 @@ import com.chat.jdbc.ws.to.AllowLoginTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
 import com.chat.jdbc.ws.to.RegisterUserTO;
 import com.chat.jdbc.ws.to.ResponseTO;
+import com.chat.jdbc.ws.to.UserStatusTO;
+import com.chat.jdbc.ws.to.WSInitTO;
 import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
 import com.chat.util.WSUtil;
+import com.chat.ws.ChatWebSocket;
 import com.chat.ws.WebSocketChatServlet;
 
 @Controller
@@ -93,15 +97,20 @@ public class AjaxServlet extends ApplicationObjectSupport{
 	}
 
 	private String getUserStatus(HttpServletRequest req) {
-//		ServletContext sc  = getServletContext();
-//		ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(sc);
-//		WebSocketChatServlet wscs = (WebSocketChatServlet)ac1.getBean("webSocketChatServlet");
-//		log.info(wscs.users);
-		
 		WebSocketChatServlet wscs = WSUtil.getWebSocketChatServlet();
-		log.info(wscs);
 		log.info(wscs.users);
-		return WSUtil.stringifyJSON(wscs.users);
+		Set<ChatWebSocket> users = wscs.users;
+		Map<Long, UserStatusTO> map = new HashMap<Long, UserStatusTO>();
+		UserStatusTO us = null;
+		for(ChatWebSocket user:users){
+			long uid = user.getWsInitial().getSender();
+			us = new UserStatusTO();
+			us.setUid(uid);
+			us.setStatus(Constant.Common.USR_ONLINE);
+			map.put(uid, us);
+		}
+		
+		return WSUtil.stringifyJSON(map);
 	}
 
 	private String getShortcuts(HttpServletRequest req) {
@@ -131,6 +140,7 @@ public class AjaxServlet extends ApplicationObjectSupport{
 		List<Object> list = new ArrayList<Object>();
 		list.add(new WSMessageTO());
 		list.add(new WSUpdateInfoTO());
+		list.add(new WSInitTO());
 		
 		return WSUtil.stringifyJSON(list);
 	}
@@ -293,15 +303,5 @@ public class AjaxServlet extends ApplicationObjectSupport{
 		} 
 		return uid;
 	}
-
-//	public WebSocketChatServlet getWebSocketChatServlet() {
-//		return webSocketChatServlet;
-//	}
-//
-//	public void setWebSocketChatServlet(WebSocketChatServlet webSocketChatServlet) {
-//		this.webSocketChatServlet = webSocketChatServlet;
-//
-//	}
-//	
 	
 }

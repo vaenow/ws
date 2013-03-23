@@ -53,22 +53,31 @@ Core.animate = {
 }
 
 Core.config.infostruct = (function(){
-	var wsmsg 	={};
-	var updinfo	={};
+	var wsmsg,updinfo,wsinit;
 	var url = Core.url+"?act=infostruct";
 	$.get(url,function(rs){
 		console.log('infostruct: '+rs);
 		rs = JSON.parse(rs);
 		wsmsg	= rs[0];
 		updinfo = rs[1];
+		wsinit  = rs[2];
+		//初始化websocket
+		Core.initws();
 	});
 	
 	return {
+		clean:function(o){
+			for(var e in o) o[e] = undefined;
+			return o;
+		},
 		wsmsg:function(){
-			return wsmsg;
+			return Core.config.infostruct.clean(wsmsg);
 		},
 		updinfo:function(){
-			return updinfo;
+			return Core.config.infostruct.clean(updinfo);
+		},
+		wsinit:function(e){
+			return Core.config.infostruct.clean(wsinit);
 		}
 	}
 })();
@@ -95,3 +104,34 @@ Core.config.wsmsg = Core.config.infostruct.wsmsg();
 
 //为ChatFrames存储备用信息
 Core.config.frd = [];
+
+// issue: 'e'  undefined
+Core.ajax = function(url,fun,data){
+	if(data) $.post(url,data,fun(e));
+	else $.get(url, fun(e));
+}
+
+//初始化websocket
+Core.initws = function(){
+	if(!window.WebSocket)
+		alert("WebSocket not supported by this browser!");
+	var wsinitial 		= Core.config.infostruct.wsinit();
+	wsinitial.sender	= GetStoragedUID();
+	wsinitial.reciever	= 0;
+	// 创建WebSocket
+	ws = new WebSocket("ws://"+Core.CST.HOST+"/mychat/ws?wsinitial="+JSON.stringify(wsinitial));
+	// 收到消息时在消息框内显示
+	ws.onmessage = function(evt) {
+		//appendMsg(evt.data);
+	};
+	// 断开时会走这个方法
+	ws.onclose = function() {
+//		S.wsmsg.ctn 	= 'websocket closed';
+//		appendMsg(JSON.stringify(S.wsmsg));
+	};
+	// 连接上时走这个方法
+	ws.onopen = function() {
+//		S.wsmsg.ctn 	= 'websocket opened';
+//		appendMsg(JSON.stringify(S.wsmsg));
+	};
+};

@@ -98,7 +98,6 @@ Core.init = function(update){
 			//屏蔽浏览器自带右键菜单
 			return false;
 		});
-		
 		//绑定用户列表点击事件
 		Core.bindUserListEvent();
 	}
@@ -616,6 +615,20 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 			}
 		}
 		hideLoading(window_inner);
+		
+		$.get(Core.url+"?act=gus",function(res){
+			res = JSON.parse(res);
+			console.log(res);
+			var b = $('#'+window_warp+' .userListBody');
+			b.children().each(function(){
+				var el  = $(this);
+				var uid = el.data('info').friend; 
+				var OFFLINE=0, ONLINE=1, LEAVE=2, INVISIBLE=3;
+				if(res[uid] && res[uid]['status']===ONLINE){
+					el.find('.f_img').removeClass('f_img_hide');
+				}
+			});
+		})
 	});
 }
 
@@ -660,12 +673,16 @@ Core.bindUserListEvent = function(){
 		
 		$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
 			var ifrm 	= this.contentWindow.S;
-			var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
+			//var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
+			var wsinit	= Core.config.infostruct.wsinit();
+			wsinitial.sender	= me.owner;
+			wsinitial.reciever	= me.friend;
 			//启用 WebSocket
 			ifrm.startWebSocket(wsinit);
 			//update friends info
 			ifrm.frd = Core.config.frd;
-		})
+		});
+		
 	});
 	
 	//监听-用户资料修改
