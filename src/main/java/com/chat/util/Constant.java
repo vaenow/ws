@@ -192,13 +192,16 @@ public class Constant {
 		
 		byte WSMSG_TYPE_SYSTEM			= 1;	//system websocket message type
 		byte WSMSG_TYPE_NORMAL			= 0;	//normal websocket message type
+		byte WSMSG_TYPE_USR_SHAKE		= 2;	//user send a shake action
 		
 		long WSMSG_SENDER_SYSTEM		= 0;	//system is the sender of message;
 		
-		byte USR_OFFLINE				= 0;	//user status offLine
-		byte USR_ONLINE					= 1;	//user status online
-		byte USR_LEAVE					= 2;	//user status leave
-		byte USR_INVISIBLE				= 1;	//user status invisible
+		byte USR_OFFLINE				= 10;	//user status offLine
+		byte USR_ONLINE					= 11;	//user status online
+		byte USR_LEAVE					= 12;	//user status leave
+		byte USR_INVISIBLE				= 13;	//user status invisible
+		
+		byte USR_STATUS_CHG				= 20;	//user status changed
 		
 		
 	}

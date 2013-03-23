@@ -38,6 +38,14 @@ Core.CST = {
 	}
 }
 Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
+
+Core.status ={
+		OFFLINE	  :10, 
+		ONLINE	  :11, 
+		LEAVE	  :12, 
+		INVISIBLE :13,
+		STATUS_CHG:20
+};
 /**********************/
 /** constant list end */
 /**********************/
@@ -111,27 +119,18 @@ Core.ajax = function(url,fun,data){
 	else $.get(url, fun(e));
 }
 
-//初始化websocket
-Core.initws = function(){
-	if(!window.WebSocket)
-		alert("WebSocket not supported by this browser!");
-	var wsinitial 		= Core.config.infostruct.wsinit();
-	wsinitial.sender	= GetStoragedUID();
-	wsinitial.reciever	= 0;
-	// 创建WebSocket
-	ws = new WebSocket("ws://"+Core.CST.HOST+"/mychat/ws?wsinitial="+JSON.stringify(wsinitial));
-	// 收到消息时在消息框内显示
-	ws.onmessage = function(evt) {
-		//appendMsg(evt.data);
-	};
-	// 断开时会走这个方法
-	ws.onclose = function() {
-//		S.wsmsg.ctn 	= 'websocket closed';
-//		appendMsg(JSON.stringify(S.wsmsg));
-	};
-	// 连接上时走这个方法
-	ws.onopen = function() {
-//		S.wsmsg.ctn 	= 'websocket opened';
-//		appendMsg(JSON.stringify(S.wsmsg));
-	};
-};
+/*
+ *
+ * $('.simple li').click(function() {
+    var $this = $(this);
+    $this.insertAfter($this.siblings(':eq(0)'));
+});
+
+$('.animated li').click(function() {
+    var $this = $(this),
+        callback = function() {
+            $this.insertBefore($this.siblings(':eq(0)'));
+        };
+    $this.slideUp(500, callback).slideDown(500);
+});
+*/

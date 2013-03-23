@@ -614,21 +614,8 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 				Core.config.frd[result[i]['friendDetailsTO']['uid']] = result[i];
 			}
 		}
-		hideLoading(window_inner);
-		
-		$.get(Core.url+"?act=gus",function(res){
-			res = JSON.parse(res);
-			console.log(res);
-			var b = $('#'+window_warp+' .userListBody');
-			b.children().each(function(){
-				var el  = $(this);
-				var uid = el.data('info').friend; 
-				var OFFLINE=0, ONLINE=1, LEAVE=2, INVISIBLE=3;
-				if(res[uid] && res[uid]['status']===ONLINE){
-					el.find('.f_img').removeClass('f_img_hide');
-				}
-			});
-		})
+		hideLoading(window_inner);				//隐藏背景遮罩
+		Core.updateUserStatus(window_inner);	//更新用户在线状态
 	});
 }
 

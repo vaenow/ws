@@ -69,14 +69,19 @@ public class ChatWebSocket implements OnTextMessage {
 		this.connection = connection;
 		//WSUtil.logGettingMethods(connection, Connection.class);
 		users.add(this);
-		
-		checkUnreadMsg();
+		if(isUserLogin(this)){
+			boardcastMsg(getWsInitial().getSender(), Constant.Common.USR_STATUS_CHG);
+		}else{
+			checkUnreadMsg();
+		}
 	}
-
 
 	@Override
 	public void onClose(int closeCode, String message) {
 		users.remove(this);
+		if(isUserLogin(this)){
+			boardcastMsg(getWsInitial().getSender(), Constant.Common.USR_STATUS_CHG);
+		}
 	}
 
 	public WSInitTO getWsInitial() {
@@ -203,6 +208,33 @@ public class ChatWebSocket implements OnTextMessage {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 检查是否用户登录
+	 * @param chatWebSocket 
+	 * @return
+	 */
+	private boolean isUserLogin(ChatWebSocket chatWebSocket){
+		return chatWebSocket.getWsInitial().getReciever()==-1;
+	}
+	
+	/**
+	 * 广播消息
+	 * 
+	 * @param sder
+	 * @param msgType
+	 */
+	private void boardcastMsg(long sder, byte msgType) {
+		// TODO Auto-generated method stub
+		WSMessageTO wsmsgto = new WSMessageTO();
+		wsmsgto.setSder(sder);
+		wsmsgto.setMsgType(msgType);
+		for(ChatWebSocket cws : this.users){
+			if(isUserLogin(cws)){
+				sendWSMessage(cws.connection, wsmsgto);
+			}
 		}
 	}
 }
