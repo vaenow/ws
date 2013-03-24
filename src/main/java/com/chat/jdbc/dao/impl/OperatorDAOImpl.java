@@ -186,7 +186,7 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		int rd = new Random().nextInt(20)+1;
 		String random = rd < 10 ? "0" + rd : "" + rd;
 		udetailsTO.setUid(uinfoTO.getUid());
-		udetailsTO.setAlias(ui.getName()+"-"+random);
+		udetailsTO.setAlias(ui.getName());
 		udetailsTO.setMobile("mobile-"+random);
 		udetailsTO.setEmail("email-"+random);
 		udetailsTO.setUpdateIPAddress(ui.getCreateIPAddress());

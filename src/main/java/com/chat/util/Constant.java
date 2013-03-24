@@ -21,7 +21,7 @@ public class Constant {
 	public interface JDBCConnection {
 
 		//得到用户好友列表 - by uid
-		String GET_USER_FRIENDS_BY_UID 	= "SELECT * FROM u_friends f WHERE f.f_owner = :uid ORDER BY f.f_owner ASC";
+		String GET_USER_FRIENDS_BY_UID 	= "SELECT * FROM u_friends f WHERE f.f_owner = :uid ORDER BY f.f_rank DESC, f.f_friend ASC";
 		//用户基本信息
 		String GET_USER_INFO 			= "SELECT * FROM u_info i WHERE i.u_id = :uid";
 		//用户详细信息

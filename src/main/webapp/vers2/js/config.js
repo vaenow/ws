@@ -39,12 +39,14 @@ Core.CST = {
 }
 Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
 
-Core.status ={
+Core.CST.STATUS ={
 		OFFLINE	  :10, 
 		ONLINE	  :11, 
 		LEAVE	  :12, 
 		INVISIBLE :13,
-		STATUS_CHG:20
+		STATUS_CHG:20,
+		// '-1' is an user login token.
+		LOGIN_TOKEN:-1
 };
 /**********************/
 /** constant list end */
@@ -70,7 +72,7 @@ Core.config.infostruct = (function(){
 		updinfo = rs[1];
 		wsinit  = rs[2];
 		//初始化websocket
-		Core.initws();
+		if(Core.initws)Core.initws();
 	});
 	
 	return {
@@ -119,18 +121,3 @@ Core.ajax = function(url,fun,data){
 	else $.get(url, fun(e));
 }
 
-/*
- *
- * $('.simple li').click(function() {
-    var $this = $(this);
-    $this.insertAfter($this.siblings(':eq(0)'));
-});
-
-$('.animated li').click(function() {
-    var $this = $(this),
-        callback = function() {
-            $this.insertBefore($this.siblings(':eq(0)'));
-        };
-    $this.slideUp(500, callback).slideDown(500);
-});
-*/
