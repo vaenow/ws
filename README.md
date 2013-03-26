@@ -30,7 +30,7 @@ Run the command:
 mvn jetty:run
 ```
 ###### step 3: 
-Open `Google Chrome`, type 
+Open [`Google Chrome`](https://www.google.com/intl/en/chrome/browser/) and type
 ```xml
 http://localhost:8080
 ```
