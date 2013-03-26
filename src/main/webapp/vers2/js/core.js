@@ -27,8 +27,9 @@ Core.init = function(update){
 			sc = jsonsc = JSON.parse(sc);
 			//更改显示名字
 			var uinfo = Core.userinfo.getInfo();
-			if(uinfo.alias){
+			if(uinfo.alias){//img/shortcut/news.png
 				jsonsc.data[0].iconName = jsonsc.data[0].iconName.replace('%name%', uinfo.alias);
+				jsonsc.data[0].iconUrl = jsonsc.data[0].iconUrl.replace('%iconUrl%', 'img/avatar/'+uinfo.headImg);
 			} else {
 				console.log('Loading strange. try reload.');
 				WindowReload();
@@ -632,7 +633,7 @@ Core.bindUserListEvent = function(){
 			"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
 			"width" : 447,
 			"height" : 322,
-			"resize" : true,
+			"resize" : true
 			//"conf" : {
 			//"frameCont" : "labelContTemp"
 			//}

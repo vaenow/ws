@@ -122,6 +122,7 @@ float:left
 	right: 1px;
 	opacity: 0.3;
 	color: black;
+	width: 40px;
 }
 #vid_chat .vid_chat_bottom .btns:hover {
 	opacity: 0.7;

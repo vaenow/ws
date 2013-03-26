@@ -81,6 +81,8 @@ function appendMsg(data) {
 	msgBox.append(S.FormatModel(S.temp.msg_bubble(type), data));
 	//滚动条动态跟随
 	msgBox.children().last().hide().slideDown(500);
+//	var msg = msgBox.children().last();
+//	msg.animate({width:msg.width(), height:msg.height()},500);
 	msgBox.animate({scrollTop: msgBox.get(0).scrollHeight}, 500);
 	//转化表情图片
 	parseToImgEmo();

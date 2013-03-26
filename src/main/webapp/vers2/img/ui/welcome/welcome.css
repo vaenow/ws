@@ -278,11 +278,14 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 #footer a {
 	text-decoration: none;
 	color: #8d8d8d;
+	font-family: ubuntu;
+	font-weight: bold;
 }
 
 #footer a:hover, #footer a:focus {
-	text-decoration: none;
-	color: #2d2d2d;
+	text-decoration: underline;
+	color: rgb(44, 144, 184);
+	//#2d2d2d;
 }
 
 .login-error-msg {position: absolute;margin: 170px;font-weight: bolder;color: #cccccc;text-shadow: 1px 2px 17px;display:none;}

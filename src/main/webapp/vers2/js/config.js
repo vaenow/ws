@@ -34,7 +34,7 @@ Core.CST = {
 		//本地数据
 		LOCAL:"/js/shortcut.js",
 		//服务器数据
-		REMOTE:"/ajax/handle",
+		REMOTE:"/ajax/handle"
 	}
 }
 Core.url = Core.CST.ORIGIN + Core.CST.AJAX_URL.REMOTE;
@@ -59,7 +59,7 @@ Core.animate = {
 		//TaskWindowRightMenu 	任务栏右键弹出菜单
 		TWRM: 	{duration : 100},
 		//CreatedWindow 		已创建的窗口
-		CDW	: 	{duration: 'normal'},
+		CDW	: 	{duration: 'normal'}
 }
 
 Core.config.infostruct = (function(){
