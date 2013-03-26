@@ -39,16 +39,18 @@ http://localhost:8080
 
 ##Features
 * non-blocking communications
-*customized scrollbar
+* customized scrollbar
 * get all users
 * add & rm users
-* sina.com face emotions
+* weibo.com face emotions
 * iphone style message ui
 
 
 [Top](#Top)
 
 ##History
+######2012-04-13
+Joined in Git.
 ######2012-12-24
 Explore how to use Git.
 ######2012-12-29
