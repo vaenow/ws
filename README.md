@@ -7,15 +7,15 @@ Just a test for web IM
 
 ##Screen shots
 
-* ws demo 1: login
+- **ws demo 1: [login](https://raw.github.com/vaenow/ws/master/src/main/webapp/vers2/img/screenshots/login.png)**
 ![1 columns](https://github.com/vaenow/ws/blob/master/src/main/webapp/vers2/img/screenshots/login.png?raw=true)
 
 
-* ws demo 2: add user
+- **ws demo 2: [add user](https://raw.github.com/vaenow/ws/master/src/main/webapp/vers2/img/screenshots/add_friends.png)**
 ![1 columns](https://github.com/vaenow/ws/blob/master/src/main/webapp/vers2/img/screenshots/add_friends.png?raw=true)
 
 
-* ws demo 3: chatting
+- **ws demo 3: [chatting](https://raw.github.com/vaenow/ws/master/src/main/webapp/vers2/img/screenshots/chatting.png)**
 ![1 columns](https://github.com/vaenow/ws/blob/master/src/main/webapp/vers2/img/screenshots/chatting.png?raw=true)
 
 
@@ -38,12 +38,12 @@ http://localhost:8080
 [Top](#Top)
 
 ##Features
-* non-blocking communications
-* customized scrollbar
-* get all users
-* add & rm users
-* weibo.com face emotions
-* iphone style message ui
+- non-blocking communications
+- customized scrollbar
+- get all users
+- add & rm users
+- weibo.com face emotions
+- iphone style message ui
 
 
 [Top](#Top)
