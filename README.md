@@ -23,7 +23,7 @@ Just a test for web IM
 
 ##How to use
 ###### step 1: 
-Deploy the [ws.mwb](https://github.com/vaenow/ws/tree/master/res/sql)(~/ws/res/sql/ws.mwb)
+Deploy the database file: [wsdb.sql](https://github.com/vaenow/ws/tree/master/res/sql)(~/ws/res/sql/wsdb.sql)
 ###### step 2: 
 Run the command: 
 ```java
