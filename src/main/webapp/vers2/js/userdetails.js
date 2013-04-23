@@ -64,7 +64,7 @@ Core.updateUserStatus = function(window_warp){
 		var b = $(selector+' .userListBody');
 		b.children().each(function(){
 			var el  = $(this);
-			var uid = el.data('info').friend; 
+			var uid = el.data('info').friend||el.data('info').uid; 
 			if(res[uid] && res[uid]['status']===Core.CST.STATUS.ONLINE){
 				if(Core.isoffline(el)){
 					Core.sortList.sort2Top(el);//Core.sort2Top(el);

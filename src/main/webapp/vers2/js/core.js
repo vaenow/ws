@@ -549,7 +549,7 @@ var windowConfig = function(options, window_inner, window_warp){
 		hideLoading(window_inner);
 	}else if (options.conf.frameCont == "listAllTemp") {
 		var start = 0, len = 100;
-		var url = Core.url+"?act=gau&start="+start+"&len="+len+"&uid"+GetStoragedUID();
+		var url = Core.url+"?act=gau&start="+start+"&len="+len+"&uid="+GetStoragedUID();
 		var eledata = function(result, i) {
 			return {
 				//friends name
