@@ -120,12 +120,18 @@ public class ChatWebSocket implements OnTextMessage {
 	 * @param wsinit
 	 */
 	private List<MsgInfoTO> fetchUnreadMsg(WSInitTO wsinit) {
-		// TODO Auto-generated method stub
 		List<MsgInfoTO> unreadList = wsService.getUnreadMsg(wsinit);
-		
 		log.info("unread list: "+WSUtil.stringifyJSON(unreadList));
-		
 		return unreadList;
+	}
+
+	/**
+	 * 未读消息更新为已读
+	 * 
+	 * @param wsInitial
+	 */
+	private void updUnreadMsg(WSInitTO wsinit) {
+		wsService.updUnreadMsg(wsinit);
 	}
 	
 	/**
@@ -150,8 +156,12 @@ public class ChatWebSocket implements OnTextMessage {
 			wsmto.setCtn(list.get(i).getMsg_cnt());
 			sendMsg(wsmto, true, false);
 		}
+		if(size>0){
+			updUnreadMsg(this.wsInitial);
+		}
 	}
 	
+
 	/**
 	 * 对特定端口发送消息
 	 *  

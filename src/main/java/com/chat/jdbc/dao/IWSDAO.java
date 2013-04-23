@@ -24,4 +24,6 @@ public interface IWSDAO {
 	String saveMessage(MsgInfoTO msginfo);
 
 	List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit);
+
+	int updUnreadMsg(WSInitTO wsinit);
 }

@@ -79,4 +79,15 @@ public class WSDAOImpl extends BaseConnectorDAOImpl implements IWSDAO {
 		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, wsChatMsgInfoMapper);
 	}
 
+
+	@Override
+	public int updUnreadMsg(WSInitTO wsinit) {
+		// TODO Auto-generated method stub
+		logger.fatal("updating unread status into READ.");
+
+		String sql = Constant.JDBCConnection.UPD_UNREAD_MSG;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(wsinit);
+		return this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+	}
+
 }

@@ -36,6 +36,14 @@ public interface IWSService {
 	 * @return
 	 */
 	List<MsgInfoTO> getUnreadMsg(WSInitTO wsinit);
+
+	/**
+	 * Update unread status into READ 
+	 * 
+	 * @param wsinit
+	 * @return 
+	 */
+	int updUnreadMsg(WSInitTO wsinit);
 	
 	
 }

@@ -50,6 +50,8 @@ public class Constant {
 		String GET_USER_FRIENDS_BY_OWNER_FRD = "SELECT * FROM u_friends WHERE f_owner=:owner AND f_friend=:friend";
 		//根据uid更新用户详细信息
 		String UPD_USR_INFO				= "UPDATE u_details SET  u_alias=:alias, u_img_head=:headImg, u_phrase=:phrase WHERE u_id=:uid";
+		//未读消息更新为已读
+		String UPD_UNREAD_MSG 			= "UPDATE msg_info SET msg_unread=0 WHERE msg_unread=1 AND msg_from=:reciever AND msg_to=:sender";
 	}
 
 	// Database Base Connection.

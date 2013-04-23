@@ -78,6 +78,6 @@ public class WSCaches {
 		userDetailsCache.clear();
 		userInfoCache.clear();
 		
-		logger.info("Method: cleanCaches() done.");
+		//logger.info("Method: cleanCaches() done.");
 	}
 }

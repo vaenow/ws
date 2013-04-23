@@ -44,5 +44,12 @@ public class WSServiceImpl implements IWSService {
 		return wsDAO.getUnreadMsg(wsinit);
 	}
 
+
+	@Override
+	public int updUnreadMsg(WSInitTO wsinit) {
+		// TODO Auto-generated method stub
+		return wsDAO.updUnreadMsg(wsinit);
+	}
+
 	
 }
