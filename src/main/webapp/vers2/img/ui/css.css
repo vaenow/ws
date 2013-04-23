@@ -133,6 +133,9 @@ body{background:url(../bg3-2.jpg) no-repeat right bottom transparent;background-
 .ubd_send{position: absolute;right: 0;background: url(welcome/images/loader.gif);background-position: -11px 0px;width: 19px;height: 23px;display:none;}
 .ubds_nm{bottom: 41px;} 
 .ubds_ph{bottom: 8px;}
+.unreadmsg{position: absolute;right: 25%;top: 30%;border-radius: 10px;box-shadow: 3px 3px 10px;padding: 5px;width: 150px;}
+.unreadmsg ul{position: relative;}
+.unreadmsg ul li{position: relative;width: auto;height: 20px;}
 
 #desk .ListBlock{padding:0;}
 #desk .fullHeight {height: 100%}

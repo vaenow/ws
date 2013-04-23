@@ -522,14 +522,6 @@ var GetTaskRight = function(obj){
 	});
 	return _cache.TaskRight;
 };
-//模板格式化（正则替换）
-var FormatModel = function(str,model){
-	for(var k in model){
-		var re = new RegExp("{"+k+"}","g");
-		str = str.replace(re,model[k]);
-	}
-	return str;
-};
 //IE6下实时更新iframe高度
 var ie6iframeheight = function(obj){
 	if($.browser.msie && $.browser.version==="6.0"){

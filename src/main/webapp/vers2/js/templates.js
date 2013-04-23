@@ -89,12 +89,9 @@ var chatWindow =
 	'</div>'+
 '</div>';
 
-
 //websocket chat message template
 var wstemp = {};
-
 wstemp.msg = "<div class='msg_body'><div class='msg_sender'>{sderalias}</div><div class='msg_date'>{token}</div><div class='msg_ctn'>{ctn}</div></div>";
-
 wstemp.msg_bubble = function(type){
 	var position = '';
 	var msg 	 = '';
@@ -114,5 +111,15 @@ wstemp.msg_bubble = function(type){
 	'</div>';
 	return FormatModel(msg, {ty: type, pos:position});
 }
-		
+
+var unreadLi = "<li class='{sderalias}'><span class='nm'>[{sderalias}]</span>: <span class='no'>0</span></li>";
+
+//模板格式化（正则替换）
+var FormatModel = function(str,model){
+	for(var k in model){
+		var re = new RegExp("{"+k+"}","g");
+		str = str.replace(re,model[k]);
+	}
+	return str;
+};
 	

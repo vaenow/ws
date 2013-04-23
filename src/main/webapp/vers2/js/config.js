@@ -44,9 +44,11 @@ Core.CST.STATUS ={
 		ONLINE	  :11, 
 		LEAVE	  :12, 
 		INVISIBLE :13,
-		STATUS_CHG:20,
-		// '-1' is an user login token.
-		LOGIN_TOKEN:-1
+		STATUS_CHG:20
+};
+Core.CST.ACT = {
+		LOGIN_TOKEN:-1, // '-1' is an user login token.
+		UNREAD_MSG :30	// unread msg
 };
 /**********************/
 /** constant list end */

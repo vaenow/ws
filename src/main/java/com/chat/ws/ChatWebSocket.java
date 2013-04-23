@@ -184,6 +184,15 @@ public class ChatWebSocket implements OnTextMessage {
 					//消息已读标志
 					isRead = true;
 				}
+				//To specific friend(s) desk notify
+				if (Constant.Common.USR_LOGIN_TOKEN == user.getWsInitial().getReciever()
+						&& wsInitial.getReciever() == user.getWsInitial().getSender()) {
+					WSMessageTO message_ = message;
+					message_.setMsgType(Constant.Common.SHOW_UNREAD_MSG);
+					log.info(message_);
+					log.info("message_："+WSUtil.stringifyJSON(message_));
+					sendWSMessage(user.connection, message_);
+				}
 			}
 		}
 		//To yourself.
@@ -227,7 +236,7 @@ public class ChatWebSocket implements OnTextMessage {
 	 * @return
 	 */
 	private boolean isUserLogin(ChatWebSocket chatWebSocket){
-		return chatWebSocket.getWsInitial().getReciever()==-1;
+		return chatWebSocket.getWsInitial().getReciever()==Constant.Common.USR_LOGIN_TOKEN;
 	}
 	
 	/**

@@ -38,15 +38,8 @@
 $("#message_face").jqfaceedit({txtAreaObj:$("#msg_"),containerObj:$('#vid_chat'),top:-228,left:5,textareaid:'msg_'});
 </script>
 <script>
+//头像
 var user = window.parent.Core.userinfo.getInfo();
 $(".u_head").css({'background-image': 'url(img/avatar/'+user.headImg+')'});
-</script>
-<script>
-//自定义滚动条
-(function($){
-    $(window).load(function(){
-       // $(".vid_chat_content").mCustomScrollbar();
-    });
-})(jQuery);
 </script>
 </html>

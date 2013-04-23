@@ -204,7 +204,10 @@ public class Constant {
 		byte USR_INVISIBLE				= 13;	//user status invisible
 		
 		byte USR_STATUS_CHG				= 20;	//user status changed
+
+		byte USR_LOGIN_TOKEN 			= -1;	// '-1' is an user login token.
 		
+		byte SHOW_UNREAD_MSG 			= 30;	// show unread messages
 		
 	}
 }

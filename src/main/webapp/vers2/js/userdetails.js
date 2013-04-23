@@ -38,7 +38,7 @@ Core.initws = function(){
 		alert("WebSocket not supported by this browser!");
 	var wsinitial 		= Core.config.infostruct.wsinit();
 	wsinitial.sender	= GetStoragedUID();
-	wsinitial.reciever	= Core.CST.STATUS.LOGIN_TOKEN;
+	wsinitial.reciever	= Core.CST.ACT.LOGIN_TOKEN;
 	// 创建WebSocket
 	ws = new WebSocket("ws://"+Core.CST.HOST+"/mychat/ws?wsinitial="+JSON.stringify(wsinitial));
 	// 收到消息时在消息框内显示
@@ -52,6 +52,8 @@ Core.initws = function(){
 		var data = JSON.parse(evt.data);
 		if(data.msgType === Core.CST.STATUS.STATUS_CHG){
 			Core.updateUserStatus();
+		}else if(data.msgType === Core.CST.ACT.UNREAD_MSG){
+			Core.showUnreadMsg(data);
 		}
 	}
 };
@@ -81,6 +83,25 @@ Core.updateUserStatus = function(window_warp){
 			}
 //			Core.sortUserLit();
 		});
+	});
+}
+
+Core.showUnreadMsg = function(data) {
+	var ele = FormatModel(unreadLi, data);
+	var ul  = $('.unreadmsg ul');
+	var increase = function(el,max){
+		var no  = el.children().eq(1);
+		var num = Number(no.html());
+		if(num>=0) no.html(num>=(max||9)?num+'+':++num);
+	}
+	if(!ul.children().hasClass(data.sderalias)){
+		ul.append(ele);
+	}
+	ul.children().each(function(index,el){
+		if(el.className===data.sderalias){
+			increase($(el).siblings().eq(0));	//total number
+			increase($(el));					//item number
+		}
 	});
 }
 
