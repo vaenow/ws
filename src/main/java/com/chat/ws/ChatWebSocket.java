@@ -143,17 +143,21 @@ public class ChatWebSocket implements OnTextMessage {
 		int size = list.size();
 		String msgNote = "";
 		WSMessageTO wsmto = new WSMessageTO();
-		if (size > 0) {
-			msgNote = "You have unread message(s): " + size;
-		} else {
-			msgNote = "You have no unread messages";
-		}
-		wsmto.setCtn(msgNote);
+//		if (size > 0) {
+//			msgNote = "You have unread message(s): " + size;
+//		} else {
+//			msgNote = "You have no unread messages";
+//		}
+//		wsmto.setCtn(msgNote);
 		wsmto.setSder(Constant.Common.WSMSG_SENDER_SYSTEM);
-		sendMsg(wsmto, true, false);
+//		sendMsg(wsmto, true, false);
 		
 		for(int i = 0; i<size; i++){
 			wsmto.setCtn(list.get(i).getMsg_cnt());
+			sendMsg(wsmto, true, false);
+		}
+		if (size > 0) {
+			wsmto.setCtn("----------↑-未读消息-↑---------");
 			sendMsg(wsmto, true, false);
 		}
 		if(size>0){

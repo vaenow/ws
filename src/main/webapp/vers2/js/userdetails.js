@@ -96,6 +96,7 @@ Core.showUnreadMsg = function(data) {
 	}
 	if(!ul.children().hasClass(data.sderalias)){
 		ul.append(ele);
+		Core.addInfo(ul.children().last(),data);
 	}
 	ul.children().each(function(index,el){
 		if(el.className===data.sderalias){
@@ -139,14 +140,33 @@ Core.isoffline = function(li){
 }
 
 Core.fetchAllUnreadMsg = function(){
-	$.get(Core.url+"?act=gaurmsg&uid="+GetStoragedUID(),function(res){
-		res = JSON.parse(res);
-		console.log(res);
-		for(var i in res){
-			for(var j=0;j<Number(res[i].ctn);j++)
-				Core.showUnreadMsg(res[i]);
+	$.get(Core.url+"?act=gufl&uid="+GetStoragedUID(),function(res){
+		var r = JSON.parse(res);
+		console.log(r);
+		_cache.gufl = r;
+		//为ChatFrames存储备用信息
+		for(var i in r){
+			if(r[i]['friendDetailsTO'])
+				Core.config.frd[r[i]['friendDetailsTO']['uid']] = r[i];
 		}
+		$.get(Core.url+"?act=gaurmsg&uid="+GetStoragedUID(),function(res){
+			res = JSON.parse(res);
+			console.log(res);
+			for(var i in res){
+				for(var j=0;j<Number(res[i].ctn);j++)
+					Core.showUnreadMsg(res[i]);
+			}
+		});
 	});
+}
+
+Core.addInfo = function(o,data){
+	if(!o.data('info')){
+		for(var i in _cache.gufl){
+			if(data.sder===_cache.gufl[i].friend)
+				o.data('info', _cache.gufl[i]);
+		}
+	}
 }
 
 

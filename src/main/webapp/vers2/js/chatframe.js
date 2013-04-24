@@ -41,12 +41,14 @@ S.startWebSocket = function(wsinitial) {
 	};
 	// 断开时会走这个方法
 	S.ws.onclose = function() {
-		S.wsmsg.ctn 	= 'websocket closed';
+		//S.wsmsg.ctn 	= 'websocket closed';
+		S.wsmsg.ctn 	= '-----------失去连接---------';
 		appendMsg(JSON.stringify(S.wsmsg));
 	};
 	// 连接上时走这个方法
 	S.ws.onopen = function() {
-		S.wsmsg.ctn 	= 'websocket opened';
+		//S.wsmsg.ctn 	= 'websocket opened';
+		S.wsmsg.ctn 	= '----------连接已打开----------';
 		appendMsg(JSON.stringify(S.wsmsg));
 	};
 }

@@ -105,8 +105,9 @@ Core.init = function(update){
 };
 
 //创建窗体
-Core.create = function(obj,opt){
+Core.create = function(obj,opt,fn){
 	var options = {};
+	var fn 	= fn || function(){};
 	if(obj==""){
 		options = {
 			num		:Date.parse(new Date()),
@@ -155,6 +156,7 @@ Core.create = function(obj,opt){
 			//改变窗口遮罩层样式
 			$('.window-frame').children('div.mask').show();
 			$('#'+window_inner+' .window-frame').children('div.mask').hide();
+			fn();
 		}
 	});
 	if(iswindowopen == 0){
@@ -602,10 +604,6 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 		for ( var i = 0; i < result.length; i++) {
 			b.append(FormatModel(listEle, eledata(result, i)));
 			b.children().last().data('info', result[i]);
-			//为ChatFrames存储备用信息
-			if(result[i]['friendDetailsTO']){
-				Core.config.frd[result[i]['friendDetailsTO']['uid']] = result[i];
-			}
 		}
 		hideLoading(window_inner);				//隐藏背景遮罩
 		Core.updateUserStatus(window_inner);	//更新用户在线状态
@@ -615,55 +613,10 @@ var listUsers = function(url, window_warp, window_inner, eledata) {
 Core.bindUserListEvent = function(){
 	var desk = $('#desk');
 	//好友列表的监听器
-	desk.delegate('.window-frame:has(.u_banner) ul li', 'click', function(e) {
-		var me 			= $(this).data('info');
-		var t			= me.friend;
-		var chatFrame 	= {
-			"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
-			"iconUrl" : "img/avatar/"+me.friendDetailsTO.headImg,
-			"iconName" : "与【"+me.friendDetailsTO.alias+"】交流",
-			"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
-			"width" : 447,
-			"height" : 322,
-			"resize" : true
-			//"conf" : {
-			//"frameCont" : "labelContTemp"
-			//}
-		};
-		var isContains = false;
-		for ( var el in jsonsc.data) {
-			if (jsonsc.data[el].id === chatFrame.id)
-				isContains = true;
-		}
-		if (!isContains)
-			jsonsc['data'].push(chatFrame);
-
-		//取消绑定。
-		Core.stopPropagation(e);
-		//创建窗口
-		Core.create(chatFrame);
-		
-//		$('#window_'+chatFrame.id+'_warp').delegate('iframe', 'load', function(){
-//			call javascript function from outside an iframe
-//			var ifrm = $('iframe')[0];
-//			初始化WebSocket连接
-//			ifrm.contentWindow.S.startWebSocket();
-//			console.log(arguments);
-//		});
-		
-		$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
-			var ifrm 	= this.contentWindow.S;
-			//var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
-			var wsinit	= Core.config.infostruct.wsinit();
-			wsinit.sender	= me.owner;
-			wsinit.reciever	= me.friend;
-			//启用 WebSocket
-			ifrm.startWebSocket(JSON.stringify(wsinit));
-			//update friends info
-			ifrm.frd = Core.config.frd;
-		});
-		
-	});
+	desk.delegate('.window-frame:has(.u_banner) ul li', 'click', function(e) {Core.openChattingWindow(e, this);});
+	
+	//未读消息列表的监听器
+	$('.unreadmsg').delegate('ul li', 'click', function(e) {Core.openChattingWindow(e, this);});
 	
 	//监听-用户资料修改
 	desk.delegate('.window-frame .u_banner [class^=ub]', 'mouseover click change focus', function(evt){
@@ -689,8 +642,6 @@ Core.bindUserListEvent = function(){
 				Core.updateDetails('phrase', me.value, status);
 			}
 		}
-			
-		
 	});
 	
 	//新用户列表添加监听器
@@ -718,6 +669,57 @@ Core.bindUserListEvent = function(){
 			$(this).append($('.window-loading').eq(0).fadeIn());
 			handleUser(act, data, $(this));
 		}
+	});
+}
+
+//打开对话窗口
+Core.openChattingWindow = function(e, m){
+	var me 			= $(m).data('info');
+	if(!me) alert("陌生人，请先加为好友！");
+	var t			= me.friend;
+	var chatFrame 	= {
+		"id" : me.owner+'-'+me.friend,/* "title":"{title}","imgsrc":"{imgsrc}", */
+		"iconUrl" : "img/avatar/"+me.friendDetailsTO.headImg,
+		"iconName" : "与【"+me.friendDetailsTO.alias+"】交流",
+		"url" : Core.CST.ORIGIN+"/vers2/chatframe.html?t="+t,
+		"width" : 447,
+		"height" : 322,
+		"resize" : true
+		//"conf" : {
+		//"frameCont" : "labelContTemp"
+		//}
+	};
+	var isContains = false;
+	for ( var el in jsonsc.data) {
+		if (jsonsc.data[el].id === chatFrame.id)
+			isContains = true;
+	}
+	if (!isContains)
+		jsonsc['data'].push(chatFrame);
+
+	//取消绑定。
+	Core.stopPropagation(e);
+	//创建窗口
+	Core.create(chatFrame);
+	
+//	$('#window_'+chatFrame.id+'_warp').delegate('iframe', 'load', function(){
+//		call javascript function from outside an iframe
+//		var ifrm = $('iframe')[0];
+//		初始化WebSocket连接
+//		ifrm.contentWindow.S.startWebSocket();
+//		console.log(arguments);
+//	});
+	
+	$('#window_'+chatFrame.id+'_warp iframe').bind('load', function(){
+		var ifrm 	= this.contentWindow.S;
+		//var wsinit	= JSON.stringify({sender:me.owner,reciever:me.friend});
+		var wsinit	= Core.config.infostruct.wsinit();
+		wsinit.sender	= me.owner;
+		wsinit.reciever	= me.friend;
+		//启用 WebSocket
+		ifrm.startWebSocket(JSON.stringify(wsinit));
+		//update friends info
+		ifrm.frd = Core.config.frd;
 	});
 }
 
