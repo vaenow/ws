@@ -22,9 +22,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.chat.jdbc.dao.IBaseConnectorDAO;
+import com.chat.jdbc.to.MsgInfoTO;
 import com.chat.util.Constant;
 import com.chat.util.WSCaches;
 
@@ -64,10 +66,27 @@ public  class BaseConnectorDAOImpl implements IBaseConnectorDAO {
 	}
 
 
+	/**
+	 * 查询建立映射关系
+	 */
+	protected ParameterizedRowMapper<MsgInfoTO> wsChatMsgInfoMapper = new ParameterizedRowMapper<MsgInfoTO>() {
+		@Override
+		public MsgInfoTO mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+			MsgInfoTO record = new MsgInfoTO();
+			record.setMsg_id(rs.getLong(1));
+			record.setMsg_from(rs.getLong(2));
+			record.setMsg_to(rs.getLong(3));
+			record.setMsg_ty(rs.getByte(4));
+			record.setMsg_cnt(rs.getString(5));
+			record.setMsg_crt_dttm(rs.getDate(6));
+			record.setMsg_crt_ip(rs.getString(7));
+			record.setMsg_unread(rs.getByte(8));
+			record.setMsg_isdelete(rs.getByte(9));
+			return record;
+		}
+	};
 
-	
-	
-	
 	
 	// ///////////////////////////////////////////////////////////////////////////
 	// -------------------------------------------------------------------------//

@@ -87,6 +87,8 @@ public class AjaxServlet extends ApplicationObjectSupport{
 			result = updateUserInfo(req);
 		}else if(action.equals(Constant.ACTION_TYPE.GET_USR_STATUS)){
 			result = getUserStatus(req);
+		}else if(action.equals(Constant.ACTION_TYPE.GET_ALL_UNREAD_MSG)){
+			result = getAllUnreadMsg(req);
 		}
 
 		System.out.println("action: " + action);
@@ -94,6 +96,12 @@ public class AjaxServlet extends ApplicationObjectSupport{
 		//WSUtil.logGettingMethods(req, req.getClass());	//log request 'get' properties.
 		
 		resp.getWriter().write(result.replaceAll("'", "\""));
+	}
+
+	private String getAllUnreadMsg(HttpServletRequest req) {
+		long uid = this.parseUID(req);
+		List<WSMessageTO> wsmsgto = JDBCService.getAllUnreadMsg(uid);
+		return WSUtil.stringifyJSON(wsmsgto);
 	}
 
 	private String getUserStatus(HttpServletRequest req) {

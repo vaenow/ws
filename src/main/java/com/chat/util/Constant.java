@@ -52,6 +52,8 @@ public class Constant {
 		String UPD_USR_INFO				= "UPDATE u_details SET  u_alias=:alias, u_img_head=:headImg, u_phrase=:phrase WHERE u_id=:uid";
 		//未读消息更新为已读
 		String UPD_UNREAD_MSG 			= "UPDATE msg_info SET msg_unread=0 WHERE msg_unread=1 AND msg_from=:reciever AND msg_to=:sender";
+		//某用户所有未读消息数量
+		String GET_ALL_UNREAD_MSG 		= "SELECT d.u_alias, m.msg_from, d2.u_alias, m.msg_to, COUNT(m.msg_from) AS cnt FROM msg_info m, u_details d, u_details d2 WHERE m.msg_to=d2.u_id AND m.msg_from=d.u_id AND m.msg_unread=1 AND m.msg_to=:uid GROUP BY m.msg_from";
 	}
 
 	// Database Base Connection.
@@ -117,6 +119,9 @@ public class Constant {
 
 		// get user status - online,offLine etc.
 		String GET_USR_STATUS 			= "gus";
+
+		//get all unread messages
+		String GET_ALL_UNREAD_MSG 		= "gaurmsg";
 		
 	}
 

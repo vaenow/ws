@@ -15,6 +15,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
@@ -42,5 +43,7 @@ public interface IJDBCService {
 	boolean checkUserFriendDuplicated(UserFriendsTO ufriendsTO);
 
 	int updateUserInfo(WSUpdateInfoTO updinfo);
+
+	List<WSMessageTO> getAllUnreadMsg(long uid);
 
 }

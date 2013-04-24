@@ -24,10 +24,12 @@ import org.springframework.stereotype.Repository;
 
 import com.chat.jdbc.dao.IOperatorDAO;
 import com.chat.jdbc.to.DBQueryTO;
+import com.chat.jdbc.to.MsgInfoTO;
 import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 import com.chat.util.Constant;
 import com.chat.util.WSCaches;
@@ -101,6 +103,21 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		}
 	};
 	
+	private ParameterizedRowMapper<WSMessageTO> WSMessageTOMapper = new ParameterizedRowMapper<WSMessageTO>() {
+		@Override
+		public WSMessageTO mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+			WSMessageTO record = new WSMessageTO();
+			record.setSderalias(rs.getString(1));
+			record.setSder(rs.getLong(2));
+			record.setRcveralias(rs.getString(3));
+			record.setRcver(rs.getLong(4));
+			record.setCtn(rs.getInt(5)+"");
+			record.setMsgType(Constant.Common.SHOW_UNREAD_MSG);
+			record.setToken(System.currentTimeMillis());
+			return record;
+		}
+	};
 	/**
 	 * 得到指定用户的朋友
 	 * */
@@ -284,6 +301,18 @@ public class OperatorDAOImpl extends BaseConnectorDAOImpl implements IOperatorDA
 		String sql = Constant.JDBCConnection.UPD_USR_INFO;
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(updinfoTO);
 		return this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+	}
+
+	@Override
+	public List<WSMessageTO> getAllUnreadMsg(long uid) {
+		// TODO Auto-generated method stub
+		logger.fatal("getAllUnreadMsg: " + WSUtil.stringifyJSON(uid));
+		
+		DBQueryTO dbquery = new DBQueryTO();
+		dbquery.setUid(uid);
+		String sql = Constant.JDBCConnection.GET_ALL_UNREAD_MSG;
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(dbquery);
+		return this.getNamedParameterJdbcTemplate().query(sql, namedParameters, WSMessageTOMapper);
 	}
 	
 	

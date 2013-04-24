@@ -31,28 +31,6 @@ import com.chat.util.WSUtil;
  */
 @Repository
 public class WSDAOImpl extends BaseConnectorDAOImpl implements IWSDAO {
-
-	/**
-	 * 查询建立映射关系
-	 */
-	private ParameterizedRowMapper<MsgInfoTO> wsChatMsgInfoMapper = new ParameterizedRowMapper<MsgInfoTO>() {
-		@Override
-		public MsgInfoTO mapRow(ResultSet rs, int rowNum)
-				throws SQLException {
-			MsgInfoTO record = new MsgInfoTO();
-			record.setMsg_id(rs.getLong(1));
-			record.setMsg_from(rs.getLong(2));
-			record.setMsg_to(rs.getLong(3));
-			record.setMsg_ty(rs.getByte(4));
-			record.setMsg_cnt(rs.getString(5));
-			record.setMsg_crt_dttm(rs.getDate(6));
-			record.setMsg_crt_ip(rs.getString(7));
-			record.setMsg_unread(rs.getByte(8));
-			record.setMsg_isdelete(rs.getByte(9));
-			return record;
-		}
-	};
-	
 	
 	/* (non-Javadoc)
 	 * @see com.chat.jdbc.dao.IWSServiceDAO#saveMessage(java.lang.String)

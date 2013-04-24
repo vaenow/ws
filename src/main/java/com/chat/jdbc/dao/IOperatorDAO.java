@@ -15,6 +15,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
@@ -94,4 +95,11 @@ public interface IOperatorDAO {
 	 * @return
 	 */
 	public int updateUserInfo(WSUpdateInfoTO updinfo);
+
+	/**
+	 * 得到某用户所有未读消息数
+	 * @param uid
+	 * @return
+	 */
+	public List<WSMessageTO> getAllUnreadMsg(long uid);
 }

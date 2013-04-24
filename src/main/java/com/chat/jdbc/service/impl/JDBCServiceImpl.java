@@ -20,6 +20,7 @@ import com.chat.jdbc.to.UserDetailsTO;
 import com.chat.jdbc.to.UserFriendsTO;
 import com.chat.jdbc.to.UserInfoTO;
 import com.chat.jdbc.ws.to.QueryUserTO;
+import com.chat.jdbc.ws.to.WSMessageTO;
 import com.chat.jdbc.ws.to.WSUpdateInfoTO;
 
 /**
@@ -90,6 +91,12 @@ public class JDBCServiceImpl implements IJDBCService {
 	public int updateUserInfo(WSUpdateInfoTO updinfo) {
 		// TODO Auto-generated method stub
 		return operatorDAOImpl.updateUserInfo(updinfo);
+	}
+
+	@Override
+	public List<WSMessageTO> getAllUnreadMsg(long uid) {
+		// TODO Auto-generated method stub
+		return operatorDAOImpl.getAllUnreadMsg(uid);
 	}
 	
 }

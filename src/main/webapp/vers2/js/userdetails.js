@@ -46,7 +46,7 @@ Core.initws = function(){
 	// 断开时会走这个方法
 	ws.onclose = function() {};
 	// 连接上时走这个方法
-	ws.onopen = function() {};
+	ws.onopen = function() {Core.fetchAllUnreadMsg();};
 	
 	var onmessage = function(evt) {
 		var data = JSON.parse(evt.data);
@@ -134,7 +134,19 @@ Core.sortList = (function() {
 	}
 })(); 
 
-
 Core.isoffline = function(li){
 	return li.has('.f_img_hide').length>0;
 }
+
+Core.fetchAllUnreadMsg = function(){
+	$.get(Core.url+"?act=gaurmsg&uid="+GetStoragedUID(),function(res){
+		res = JSON.parse(res);
+		console.log(res);
+		for(var i in res){
+			for(var j=0;j<Number(res[i].ctn);j++)
+				Core.showUnreadMsg(res[i]);
+		}
+	});
+}
+
+
