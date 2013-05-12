@@ -122,4 +122,6 @@ var FormatModel = function(str,model){
 	}
 	return str;
 };
+
+var dateFormate = '<span>{HH}:{mm}:{ss}</span><br/><span>{yyyy}-{MM}-{dd}</span>';
 	

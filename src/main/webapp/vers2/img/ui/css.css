@@ -41,12 +41,13 @@ body{background:url(../bg3-2.jpg) no-repeat right bottom transparent;background-
 .task-window b.focus{border-color:#B8BFCA #9EA8B7 #8A99A9;background-position:0 -75px}
 .task-window img{position:absolute;top:5px;left:5px;width:16px;height:16px;border-radius:3px}
 .task-window span{display:block;width:95px;height:24px;padding-left:25px;line-height:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.task-panel{position:absolute;top:0;right:0;padding:4px 5px 0 0}
+.task-date, .task-panel{position:absolute;top:0;right:0;padding:4px 5px 0 0}
 .task-panel li{float:left}
 .task-panel b{float:left;width:22px;height:22px;line-height:10;overflow:hidden;background-image:url(desktop_view.png);background-repeat:no-repeat}
 .desktop-view{cursor:pointer;background-position:0 0}
 .desktop-view:hover{background-position:-23px 0}
 .desktop-view:active{background-position:-46px 0}
+.task-date li{color:white}
 
 /*桌面*/
 #desk{position:absolute;top:0;bottom:30px;width:100%;overflow:hidden;*z-index:2}

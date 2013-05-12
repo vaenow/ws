@@ -101,6 +101,8 @@ Core.init = function(update){
 		});
 		//绑定用户列表点击事件
 		Core.bindUserListEvent();
+		//时间日期
+		Core.printDesktopDT();
 	}
 };
 
@@ -649,7 +651,7 @@ Core.bindUserListEvent = function(){
 		var childs = $(this).find('.f_right').children();
 		if (event.type == "mouseover") {
 			childs.eq(0).html("添加好友");
-			childs.eq(1).html("删除");
+			childs.eq(1).html("解除好友");
 		} else if (event.type == "mouseout") {
 			childs.eq(0).html("");
 			childs.eq(1).html("");
@@ -799,3 +801,12 @@ Core.updateDetails = function(key,val,status){
 		
 	});
 }
+
+//时间日期
+Core.printDesktopDT = function(){
+	var li=$('#task-bar .task-date li');
+	Core.clock = setInterval(function(){
+		li.html(new Date().format(dateFormate));
+	},1000);
+}
+
