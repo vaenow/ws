@@ -27,6 +27,12 @@ $(document).ready(function(){
 	})	
 });
 
+/**
+ * 登录数据处理
+ * 
+ * 如果验证成功，则自动跳转至登录页面
+ * 如果验证失败，返回false，阻止跳转
+ */
 formAction = function() {
 	var action = '';
 	$('form input[name=submit]').val()=='GO'?
